@@ -1,0 +1,40 @@
+{
+  "name": "dreamcatchr",
+  "version": "1.0.0",
+  "description": "Dream Catcher Project",
+  "keywords": [
+    "node",
+    "express",
+    "web",
+    "server",
+    "api",
+    "dreams",
+    "mongoDB",
+    "mongoose",
+    "dreamcatchr",
+    "opensource"
+  ],
+  "homepage": "https://github.com/smihallari/dream#readme",
+  "bugs": {
+    "url": "https://github.com/smihallari/dream/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smihallari/dream.git"
+  },
+  "license": "MIT",
+  "author": "Stefano Mihallari | Dimitris Papangelis | Alisa Bajgora | Iulia Chindris",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \" No test\" && exit 1"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.4",
+    "nodemon": "^3.1.9"
+  }
+}
