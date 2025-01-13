@@ -6,6 +6,8 @@ const app = express();
 const PORT = process.env.PORT ;
 const MONGODB_URI = process.env.MONGODB_URI ;
 
+
+
 // Middleware
 app.use(express.json());
 
@@ -14,19 +16,19 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Routes
-// app.use('/api/auth', authRoutes);
-// app.use('/api', postRoutes);
 
+
+const signuploginRoutes = require('./routes/signuplogin');
+const authentication = require('./routes/authenticationWare');
 
 const indexRoutes = require('./routes/index');
 const dreamsRoutes = require('./routes/dreamList');
-
 app.use('/', indexRoutes);
 app.use('/dreamList', dreamsRoutes);
 
 
 // Connect to MongoDB and start server
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGODB_URI)// warnigns from node to remove unified topology and urlparser
   .then(() => {
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   })
