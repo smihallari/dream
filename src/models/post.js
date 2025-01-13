@@ -14,7 +14,7 @@ const PostSchema = new mongoose.Schema({
     tags: 
         { type: [String], required: true },
     likes: 
-        [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+        [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',  timestamp: { type: Date, default: Date.now } }],
     comments: 
         [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
 

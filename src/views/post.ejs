@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= post.title %></title>
+</head>
+<body>
+  <h1><%= post.title %></h1>
+  <p><%= post.content %></p>
+  <p>Likes: <%= post.likes.length %></p>
+  <p>Comments: <%= post.comments.length %></p>
+
+  <h3>Comments:</h3>
+  <ul>
+    <% post.comments.forEach(comment => { %>
+      <li>
+        <strong><%= comment.user.name %>:</strong> <%= comment.content %>
+      </li>
+    <% }); %>
+  </ul>
+
+  <% if (user) { %>
+    <form action="/posts/<%= post._id %>/comment" method="POST">
+      <textarea name="comment" required></textarea>
+      <button type="submit">Add Comment</button>
+    </form>
+  <% } else { %>
+    <p><a href="/login">Log in to comment</a></p>
+  <% } %>
+</body>
+</html>

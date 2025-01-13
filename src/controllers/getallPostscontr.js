@@ -1,28 +1,59 @@
 const express = require('express');
-const authentication = require('./authenticationWare');
+const authentication = require('../middleware/authenticationWare');
 const router = express.Router();
 const Post = require('../models/post');
 
-
 router.get('/', async (req, res) => {
   try {
-    const posts = await Post.find().populate('comments').lean();
+    const { order } = req.query;
+    const userId = req.user ? req.user._id : null;
+    
+    let posts;
 
-    // Map posts to include the number of likes & comments
+    if (order === 'hot') {
+      const hours = 6;
+      const HoursAgo = new Date(Date.now() - hours * 60 * 60 * 1000);
 
-    const postsWithCounts = posts.map(post => ({
+      posts = await Post.find()
+        .populate('comments')
+        .lean();
+
+      // Filter likes within the last 6 hours and count them
+      const postsWithCounts = posts.map(post => {
+        const recentLikes = post.likes.filter(like => new Date(like.timestamp) >= sixHoursAgo);
+        return {
+          ...post,
+          likesCount: post.likes.length,
+          recentLikesCount: recentLikes.length,
+          commentsCount: post.comments.length,
+          hasLiked: userId ? post.likes.some(like => like.user.equals(userId)) : false
+        };
+      });
+
+      // Sort posts by 6 hours ago likes in descendng order
+      postsWithCounts.sort((a, b) => b.recentLikesCount - a.recentLikesCount);
+      res.render('posts', { posts: postsWithCounts });
+
+    } else {
+      // newest or oldest posts
+      const sortCriteria = order === 'oldest' ? { createdAt: 1 } : { createdAt: -1 };
+      posts = await Post.find().populate('comments').sort(sortCriteria).lean();
+
+      const postsWithCounts = posts.map(post => ({
         ...post,
-        likesCount: post.likes.length, 
+        likesCount: post.likes.length,
         commentsCount: post.comments.length,
-        hasLiked: userId ? post.likes.some(id => id.equals(userId)) : false
+        hasLiked: userId ? post.likes.some(like => like.user.equals(userId)) : false
       }));
 
-    res.render('posts', { posts: postsWithCounts });
+      res.render('posts', { posts: postsWithCounts });
+    }
   } catch (err) {
-    console.error('Error fetching the post:', err);
+    console.error('Error fetching posts:', err);
     res.status(500).send('Server error');
   }
 });
+
 // Like a post (authentication required)
 router.post('/posts/:id/like', authentication, async (req, res) => {
     try{

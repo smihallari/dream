@@ -1,43 +1,51 @@
 const express = require('express');
-const authentication = require('./authenticationWare');
 const router = express.Router();
-const Post = require('../models/post');
+const { getAllPosts, likePost, sortPosts } = require('../controllers/getallPostscontr');
+const { searchPosts } = require('../controllers/searchController');
+const authentication = require('../middleware/authenticationWare');
 
-
-router.get('/', async (req, res) => {
+// Route to display all posts
+router.get('/posts', async (req, res) => {
   try {
-    // Fetch all posts along with the count of comments
-    const posts = await Post.find().populate('comments').lean();
-
-    // Map posts to include the number of comments
-    const postsWithCounts = posts.map(post => ({
-      ...post,
-      commentsCount: post.comments.length
-    }));
-
-    res.render('posts', { posts: postsWithCounts });
+    const posts = await getAllPosts();
+    res.render('dreamList', { posts });
   } catch (err) {
     console.error('Error fetching posts:', err);
     res.status(500).send('Server error');
   }
 });
-// Like a post (authentication required)
-router.post('/posts/:id/like', authentication, (req, res) => {
-  const post = posts.find(p => p.id == req.params.id);
-  if (!post) return res.status(404).json({ message: 'Post not found' });
 
-  post.likes += 1;
-  res.json({ message: 'Post liked', post });
+// Route to like a post
+router.post('/posts/:id/like', authentication, async (req, res) => {
+  try {
+    await likePost(req, res);
+  } catch (err) {
+    console.error('Error liking post:', err);
+    res.status(500).send('Server error');
+  }
 });
 
-// Comment on a post (authentication required)
-router.post('/posts/:id/comment', authentication, (req, res) => {
-  const { comment } = req.body;
-  const post = posts.find(p => p.id == req.params.id);
-  if (!post) return res.status(404).json({ message: 'Post not found' });
+// Route to sort posts
+router.get('/posts/sort', async (req, res) => {
+  try {
+    const posts = await sortPosts(req.query.order);
+    res.render('dreamList', { posts });
+  } catch (err) {
+    console.error('Error sorting posts:', err);
+    res.status(500).send('Server error');
+  }
+});
 
-  post.comments.push({ user: req.user.id, comment });
-  res.json({ message: 'Comment added', post });
+// Route to search posts
+router.get('/search', async (req, res) => {
+  try {
+    const query = req.query.q;
+    const posts = await searchPosts(query);
+    res.render('dreamList', { posts });
+  } catch (err) {
+    console.error('Error searching posts:', err);
+    res.status(500).send('Server error');
+  }
 });
 
 module.exports = router;
