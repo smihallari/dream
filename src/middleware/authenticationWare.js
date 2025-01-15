@@ -1,17 +1,12 @@
-const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET ;
 
-const authentication = (req, res, next) => {
-  const token = req.header('Authorization');
-  if (!token) return res.status(401).json({ message: 'Access Denied' });
-
-  try {
-    const verified = jwt.verify(token, JWT_SECRET);
-    req.user = verified;
-    next();
-  } catch (error) {
-    res.status(400).json({ message: 'Invalid Token' });
+const authenticationWare = (req, res, next) => {
+  if (req.session && req.session.user) {
+    req.user = req.session.user; // Attach user info to request object
+    req.isLoggedIn = true;
+  } else {
+    req.isLoggedIn = false;
   }
+  next();
 };
 
-module.exports = authentication;
+module.exports = authenticationWare;

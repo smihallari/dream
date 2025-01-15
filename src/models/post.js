@@ -11,13 +11,10 @@ const PostSchema = new mongoose.Schema({
         { type: Date, default: Date.now },
     category: 
         { type: String, required: true },
-    tags: 
-        { type: [String], required: true },
     likes: 
         [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',  timestamp: { type: Date, default: Date.now } }],
     comments: 
         [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
-
     image: 
         { type: String, default: '' },
     
