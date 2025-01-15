@@ -21,9 +21,8 @@ const login = [
 
       // Set up the session
       req.session.user = { id: user.id, email: user.email };
-
-      // Redirect to the index page
-      res.redirect('/');
+      
+      res.json({ success: true, redirectUrl: '/' });
     } catch (err) {
       console.error('Error during login:', err);
       res.status(500).send('Server error');

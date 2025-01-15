@@ -33,12 +33,17 @@ const indexRoute = require('./routes/index');
 const dreamsRoute = require('./routes/dreamList');
 const postsRoute = require('./routes/posts');
 const commentRoute = require('./routes/comments');
-const logoutRoutes = require('./routes/logout');
-
+const logoutRoute = require('./routes/logout');
+app.use((req, res, next) => {
+  res.locals.currentPath = req.path;
+  next();
+});
 app.use('/', indexRoute);
 app.use('/dreamList', dreamsRoute);
 app.use('/signup',signupRoute); 
-app.use('/', logoutRoutes);
+app.use('/logout',logoutRoute);
+
+//  
 // Connect to MongoDB and start server
 mongoose.connect(MONGODB_URI)// warnigns from node to remove unified topology and urlparser
   .then(() => {
