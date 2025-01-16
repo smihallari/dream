@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <h1>My Profile</h1>
+
+  <!-- Display user profile information -->
+  <div class="profile-info">
+    <p><strong>Name:</strong> <%= user.name %></p>
+    <p><strong>Email:</strong> <%= user.email %></p>
+    <p><strong>Bio:</strong> <%= user.bio || "No bio available" %></p>
+
+    <% if (user.profileImage) { %>
+      <p><strong>Profile Image:</strong></p>
+      <img src="data:image/jpeg;base64,<%= user.profileImage.toString('base64') %>" alt="Profile Image" width="150">
+    <% } else { %>
+      <p><em>No profile image uploaded</em></p>
+    <% } %>
+  </div>
+
+  <hr>
+
+  <!-- Form to edit profile -->
+  <h2>Edit Profile</h2>
+  <form action="/api/editprofile" method="POST" enctype="multipart/form-data">
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" value="<%= user.name %>" required>
+
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" value="<%= user.email %>" required>
+
+    <label for="bio">Bio:</label>
+    <textarea name="bio" id="bio" rows="4"><%= user.bio %></textarea>
+
+    <label for="profileImage">Upload New Profile Image:</label>
+    <input type="file" name="profileImage" id="profileImage" accept="image/*">
+
+    <button type="submit">Save Changes</button>
+  </form>
+</body>
+</html>

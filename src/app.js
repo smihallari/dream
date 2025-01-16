@@ -27,13 +27,13 @@ const authentication = require('./middleware/authenticationWare');
 app.use(authentication);
 
 const signupRoute = require('./routes/signup');
-
-
 const indexRoute = require('./routes/index');
 const dreamsRoute = require('./routes/dreamList');
 const postsRoute = require('./routes/posts');
 const commentRoute = require('./routes/comments');
 const logoutRoute = require('./routes/logout');
+const createPostRoute = require('./routes/create_post');
+
 app.use((req, res, next) => {
   res.locals.currentPath = req.path;
   next();
@@ -42,11 +42,13 @@ app.use('/', indexRoute);
 app.use('/dreamList', dreamsRoute);
 app.use('/signup',signupRoute); 
 app.use('/logout',logoutRoute);
+app.use('/create_post',createPostRoute);
 
-//  
 // Connect to MongoDB and start server
 mongoose.connect(MONGODB_URI)// warnigns from node to remove unified topology and urlparser
   .then(() => {
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    const now = new Date();
+    const currentTime = `${now.getHours()}:${now.getMinutes()}`;
+    app.listen(PORT, () => console.log(`Server running on port ${PORT} at ${currentTime}`));
   })
   .catch(err => console.error('MongoDB connection error:', err));

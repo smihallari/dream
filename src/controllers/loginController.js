@@ -20,7 +20,8 @@ const login = [
       if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
       // Set up the session
-      req.session.user = { id: user.id, email: user.email };
+      
+      req.session.user = { id: user.id, email: user.email , username: user.username, role: user.role };
       
       res.json({ success: true, redirectUrl: '/' });
     } catch (err) {

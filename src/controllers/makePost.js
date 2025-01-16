@@ -1,47 +1,57 @@
 const Post = require('../models/post');
-const multer = require('multer');
 const sharp = require('sharp');
-const express = require('express');
-const router = express.Router();
-const upload = multer({ storage: multer.memoryStorage() });
+const axios = require('axios');
 
 const createPost = async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, category,content, imageUrl } = req.body;
+    const author = req.user.id;
     let imageBuffer = null;
 
     if (req.file) {
+      // Handle uploaded file
       imageBuffer = await sharp(req.file.buffer)
         .resize(300, 300)
         .jpeg({ quality: 80 })
         .toBuffer();
+    } else if (imageUrl) {
+      // Handle image from URL
+      try {
+        const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+        imageBuffer = await sharp(response.data)
+          .resize(300, 300)
+          .jpeg({ quality: 80 })
+          .toBuffer();
+      } catch (err) {
+        console.error('Failed to download image from URL:', err.message);
+        return res.status(400).json({ error: 'Invalid image URL' });
+      }
     }
 
     const newPost = new Post({
+      author,
       title,
+      category,
       content,
       image: imageBuffer,
-      user: req.user._id
+      
     });
 
     await newPost.save();
-    // we omit the image to not send a large data to the client.
+
     res.status(201).json({
       message: 'Post created successfully',
       post: {
         id: newPost._id,
+        author: newPost.author,
         title: newPost.title,
         content: newPost.content,
-        user: newPost.user
-      }
+      },
     });
-    
   } catch (error) {
-    res.status(500).send(error.message);
+    console.error(error.message);
+    res.status(500).send('Failed to create post');
   }
 };
 
-
-router.post('/create', upload.single('image'), createPost);
-
-module.exports = router;
+module.exports = { createPost };

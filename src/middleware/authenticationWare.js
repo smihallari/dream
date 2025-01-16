@@ -10,3 +10,4 @@ const authenticationWare = (req, res, next) => {
 };
 
 module.exports = authenticationWare;
+
