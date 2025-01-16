@@ -46,9 +46,11 @@
         <!-- Sidebar -->
         <aside class="col-md-3 sidebar">
           <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark rounded">
-            <button class="btn btn-primary has-icon btn-block mb-3" type="button" data-toggle="modal" data-target="#threadModal">
+            <form action="/create_post" method="GET">            
+            <button class="btn btn-primary has-icon btn-block mb-3" type="submit" >
               Post a Dream
             </button>
+          </form>
             <ul class="nav nav-pills flex-column mb-auto">
               <!-- Categories Dropdown -->
               <li class="nav-item dropdown">
