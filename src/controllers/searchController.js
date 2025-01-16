@@ -1,49 +1,89 @@
 const Post = require('../models/post');
+const mongoose = require('mongoose');
 
-// Search posts by title, content, and tags with pagination
 const searchPosts = async (req, res) => {
   try {
-    const { query, page = 1 } = req.query; // Get search query and page number (default: 1)
-    const limit = 5; // Number of posts per page
-    const skip = (page - 1) * limit; // Calculate how many results to skip
+    const { query, page = 1 } = req.query; 
+    const limit = 10; 
+    const skip = (page - 1) * limit; 
 
     if (!query) {
       return res.render('search', { posts: [], message: 'Please enter a search term.', query, currentPage: 1, totalPages: 0 });
     }
 
-    // Search in title, content, and tags (case insensitive)
-    const posts = await Post.find({
-      $or: [
-        { title: { $regex: query, $options: 'i' } },
-        { content: { $regex: query, $options: 'i' } },
-        { tags: { $regex: query, $options: 'i' } }
-      ]
-    })
-      .populate('comments')
-      .skip(skip)
-      .limit(limit)
-      .lean();
+    const posts = await Post.aggregate([
+      {
+        $lookup: {
+          from: 'users', 
+          localField: 'author',
+          foreignField: '_id',
+          as: 'authorDetails'
+        }
+      },
+      {
+        $unwind: '$authorDetails'
+      },
+      {
+        $match: {
+          $or: [
+            { 'authorDetails.name': { $regex: query, $options: 'i' } },
+            { title: { $regex: query, $options: 'i' } },
+            { content: { $regex: query, $options: 'i' } },
+            { category: { $regex: query, $options: 'i' } }
+          ]
+        }
+      },
+      {
+        $skip: skip
+      },
+      {
+        $limit: limit
+      },
+      {
+        $project: {
+          title: 1,
+          category: 1,
+          content: 1,
+          date: 1,
+          'authorDetails.name': 1
+        }
+      }
+    ]);
 
-    // Count total results for pagination
-    const totalResults = await Post.countDocuments({
-      $or: [
-        { title: { $regex: query, $options: 'i' } },
-        { content: { $regex: query, $options: 'i' } },
-        { tags: { $regex: query, $options: 'i' } }
-      ]
-    });
+    const totalResults = await Post.aggregate([
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'author',
+          foreignField: '_id',
+          as: 'authorDetails'
+        }
+      },
+      {
+        $unwind: '$authorDetails'
+      },
+      {
+        $match: {
+          $or: [
+            { 'authorDetails.name': { $regex: query, $options: 'i' } },
+            { title: { $regex: query, $options: 'i' } },
+            { content: { $regex: query, $options: 'i' } },
+            { category: { $regex: query, $options: 'i' } }
+          ]
+        }
+      },
+      {
+        $count: 'total'
+      }
+    ]);
 
-    const totalPages = Math.ceil(totalResults / limit); // Calculate total pages
+    const totalPages = Math.ceil((totalResults[0] ? totalResults[0].total : 0) / limit);
 
-    if (posts.length === 0) {
-      return res.render('search', { posts: [], message: 'No posts found for your search.', query, currentPage: page, totalPages });
-    }
-
-    res.render('search', { posts, message: null, query, currentPage: page, totalPages });
+    res.render('search', { posts, query, currentPage: page, totalPages });
   } catch (err) {
     console.error('Error searching posts:', err);
     res.status(500).send('Server error');
   }
 };
 
-module.exports = {searchPosts };
+module.exports = { searchPosts };

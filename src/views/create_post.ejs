@@ -34,11 +34,15 @@
 
   <a href="/">Back to Home</a>
   <script>
+    const logged = '<%= isLoggedIn %>';
     const username = '<%= username %>';
     
     document.getElementById('create-post-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-
+      if (!isLoggedIn) {
+      alert('You need to be logged in to create a post.');
+      return;
+    }
       const formData = new FormData();
       formData.append('author', username);
       formData.append('title', document.getElementById('title').value);
