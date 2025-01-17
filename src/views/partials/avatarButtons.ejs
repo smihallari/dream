@@ -1,0 +1,30 @@
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    if ('<%= isLoggedIn%>' === 'true') {
+      const logoutButton = document.getElementById('logoutbutton');
+      if (logoutButton) {
+        logoutButton.addEventListener('click', async (e) => {
+          e.preventDefault();
+          const res = await fetch('/logout', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          });
+          if (res.ok) {
+            window.location.href = '/'; // Redirect to home after logout
+          } else {
+            console.error('Logout failed');
+          }
+        });
+      }
+      const profileButton = document.getElementById('profile');
+      if (profileButton) {
+        profileButton.addEventListener('click', async (e) => {
+          const username = '<%= user.username %>'; 
+          window.location.href = `/profile/${username}`;
+        });
+      }
+    }
+  });
+</script>

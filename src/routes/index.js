@@ -7,7 +7,11 @@ router.get('/', async (req, res) => {
   .select('title author date content image')
   .limit(3)  
   .lean();
-  res.render('index',{ isLoggedIn: req.isLoggedIn, user: req.user,posts });
+  res.render('index',{ 
+    isLoggedIn: req.isLoggedIn || false,
+    posts,
+    user: req.user || null
+  });
 });
 router.use('/posts', require('./posts'));
 

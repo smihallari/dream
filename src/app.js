@@ -33,7 +33,8 @@ const postsRoute = require('./routes/posts');
 const commentRoute = require('./routes/comments');
 const logoutRoute = require('./routes/logout');
 const createPostRoute = require('./routes/create_post');
-
+const profileRoute = require('./routes/profile');
+const profileSettingsRoute = require('./routes/profile_settings');
 app.use((req, res, next) => {
   res.locals.currentPath = req.path;
   next();
@@ -43,7 +44,8 @@ app.use('/dreamList', dreamsRoute);
 app.use('/signup',signupRoute); 
 app.use('/logout',logoutRoute);
 app.use('/create_post',createPostRoute);
-
+app.use('/profile',profileRoute);
+app.use('/profile_settings',profileSettingsRoute);
 // Connect to MongoDB and start server
 mongoose.connect(MONGODB_URI)// warnigns from node to remove unified topology and urlparser
   .then(() => {
