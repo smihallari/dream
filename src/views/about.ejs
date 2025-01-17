@@ -1,44 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Home</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" >
-    </head>
-    <body>
-        <main class="container">
-            <div class="container">
-                <header class="border-bottom lh-2 py-5"  >
-                    <div class="row flex-nowrap justify-content-between align-items-center">
-                        <div class="col-4 text-center">
-                            <a class="blog-header-logo text-body-emphasis text-decoration-none" href="#">DreamCatchr</a>
-                        </div>
-                        <div class="col-4 d-flex justify-content-end align-items-center">
-                            <form class="d-flex" role="search">
-                                <button class="btn btn-sm" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"></circle><path d="M21 21l-5.2-5.2"></path></svg></button>
-                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            </form>
-                            <%- include('partials/profavatar') %>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>.team-grid {
+        color:#313437;
+        background-color:#fff;
+      }
+      
+      .team-grid p {
+        color:#7d8285;
+      }
+      
+      .team-grid h2 {
+        font-weight:bold;
+        margin-bottom:40px;
+        padding-top:40px;
+        color:inherit;
+      }
+      
+      @media (max-width:767px) {
+        .team-grid h2 {
+          margin-bottom:25px;
+          padding-top:25px;
+          font-size:24px;
+        }
+      }
+      
+      .team-grid .intro {
+        font-size:16px;
+        max-width:500px;
+        margin:0 auto;
+      }
+      
+      .team-grid .intro p {
+        margin-bottom:0;
+      }
+      
+      .team-grid .people {
+        padding:50px 0;
+      }
+      
+      .team-grid .item {
+        margin-bottom:30px;
+      }
+      
+      .team-grid .item .box {
+        text-align:center;
+        background-repeat:no-repeat;
+        background-size:cover;
+        background-position:center;
+        height:280px;
+        position:relative;
+        overflow:hidden;
+      }
+      
+      .team-grid .item .cover {
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-color:rgba(165, 31, 255, 0.75);
+        transition:opacity 0.15s ease-in;
+        opacity:0;
+        padding-top:80px;
+        color:#fff;
+        text-shadow:1px 1px 1px rgba(0,0,0,0.15);
+      }
+      
+      .team-grid .item:hover .cover {
+        opacity:1;
+      }
+      
+      .team-grid .item .name {
+        font-weight:bold;
+        margin-bottom:8px;
+      }
+      
+      .team-grid .item .title {
+        text-transform:uppercase;
+        font-weight:bold;
+        color:#d0afd7;
+        letter-spacing:2px;
+        font-size:13px;
+        margin-bottom:20px;
+      }
+      
+      .team-grid .social {
+        font-size:18px;
+      }
+      
+      .team-grid .social a {
+        color:inherit;
+        margin:0 10px;
+        display:inline-block;
+        opacity:0.7;
+      }
+      
+      .team-grid .social a:hover {
+        opacity:1;
+      }
+      
+      </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" >
+</head>
+
+<body>
+    <div class="container">
+        <header class="border-bottom lh-2 py-5"  >
+            <div class="row flex-nowrap justify-content-between align-items-center">
+                <div class="col-4 text-center">
+                    <a class="blog-header-logo text-body-emphasis text-decoration-none" href="#">DreamCatchr</a>
+                </div>
+                <div class="col-4 d-flex justify-content-end align-items-center">
+                    <form class="d-flex" role="search">
+                        <button class="btn btn-sm" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"></circle><path d="M21 21l-5.2-5.2"></path></svg></button>
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    </form>
+                    <%- include('partials/profavatar') %>
+                </div>
+            </div>
+        </header>
+        <!--Navbar-->
+        <div class="nav-scroller py-1 mb-4 border-bottom">
+            <nav class="nav nav-underline justify-content-around">
+                <a class="nav-item nav-link link-body-emphasis <%= (currentPath === '/' ? 'active' : '') %>" href="/">Home</a>
+                <a class="nav-item nav-link link-body-emphasis <%= (currentPath === '/dreamList' ? 'active' : '') %> " href="/dreamList">Dreams</a>
+                <a class="nav-item nav-link link-body-emphasis <%= (currentPath === '/contest' ? 'active' : '') %>" href="#">Contest</a>
+                <a class="nav-item nav-link link-body-emphasis <%= (currentPath === '/about' ? 'active' : '') %>" href="#">About</a>
+            </nav>
+        </div>
+    </div>
+
+
+
+    <div class="team-grid">
+        <div class="container">
+            <div class="intro">
+                <h2 class="text-center">The Team </h2>
+                <p class="text-center">Meet the people that made this website possible! </p>
+            </div>
+            <div class="row people">
+                <div class="col-md-4 col-lg-3 item">
+                    <div class="box" style="background-image:url(images/avatar.png)">
+                        <div class="cover">
+                            <h3 class="name">Alisa Bajgora</h3>
+                            <p class="title">Developer</p>
+                            <div class="social"><a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-instagram"></i></a></div>
                         </div>
                     </div>
-                </header>
-                <!--Navbar-->
-                <%- include('partials/navbar') %>
+                </div>
+                <div class="col-md-4 col-lg-3 item">
+                    <div class="box" style="background-image:url(images/avatar.png)">
+                        <div class="cover">
+                            <h3 class="name">Dimitris Papangelis</h3>
+                            <p class="title">Developer</p>
+                            <div class="social"><a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-instagram"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 item">
+                    <div class="box" style="background-image:url(images/avatar.png)">
+                        <div class="cover">
+                            <h3 class="name">Stefano Mihallari</h3>
+                            <p class="title">Developer</p>
+                            <div class="social"><a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-instagram"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 item">
+                    <div class="box" style="background-image:url(images/avatar.png)">
+                        <div class="cover">
+                            <h3 class="name">Chindris Iulia-Patricia</h3>
+                            <p class="title">Developer</p>
+                            <div class="social"><a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-instagram"></i></a></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-                <article class="blog-post">
-                    <h2 class="display-5 link-body-emphasis mb-1">About the DreamCatchr Web Page!</h2>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
 
-                    <p>This web page is designed to be a digital dream journal where users can record, explore, and share their dreams. It serves as a platform 
-                        for dream enthusiasts, psychologists, or anyone interested in analyzing and reflecting on their dreams. The interface is user-friendly 
-                        and intuitive, allowing users to easily document their dreams, add relevant details, and track recurring themes or symbols.</p>
-                    <hr>
-                    <h3>Key features</h3>
-                    <ol>
-                        <li><b>Dream Posting</b>Users can write down their dreams, whether it's a vivid and surreal adventure or a simple snippet of a dream that stood out. Each dream 
-                            can be categorized by date and time, making it easy to organize and search through past entries.</li>
-                        <li><b>Dream Contest</b> Check out our Dream Contest section for more information</li>
-                    </ol>
-                </article>
-        </main>
-    </body>
-</html>         
+</html>
