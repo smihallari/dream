@@ -63,19 +63,39 @@
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h4 class="text-right">Profile Settings</h4>
                         </div>
-                        <form action="/profile_settings/<%= user.username %>" method="POST">
-                        <div class="row mt-2">
-                            <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" placeholder="first name" value=""></div>
-                            <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" value="" placeholder="surname"></div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-12"><label class="labels">Username</label><input type="text" class="form-control" placeholder="<%= user.username %>" value=""></div>
-                            <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" placeholder="<%= user.email %>" value=""></div>
-                            <div class="col-md-12"><label class="labels">Password</label><input type="text" class="form-control" placeholder="enter new password" value=""></div>
-                        </div>
-                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
-                    </div>
-                </form>
+                        <form action="/profile_settings/<%= user.username %>" method="post">
+                            <div class="row mt-2">
+                              <div class="col-md-6">
+                                <label class="labels">Name</label>
+                                <input type="text" class="form-control" name="newName"  value="<%= user.name %>">
+                              </div>
+                              <div class="col-md-6">
+                                <label class="labels">Surname</label>
+                                <input type="text" class="form-control" name="newSurname"  value="<%= user.surname %>">
+                              </div>
+                            </div>
+                            <div class="row mt-3">
+                              <div class="col-md-12">
+                                <label class="labels">Username</label>
+                                <input type="text" name="newUsername" id="newUsername" class="form-control" value="<%= user.username %>">
+                              </div>
+                              <div class="col-md-12">
+                                <label class="labels">Email</label>
+                                <input type="text" class="form-control" name="newEmail" id="email" value="<%= user.email %>">
+                              </div>
+                              <div class="col-md-12">
+                                <label class="labels">Password</label>
+                                <input type="password" class="form-control" name="newPassword" id="password" placeholder="enter new password">
+                              </div>
+                            </div>
+                            <% if (typeof errorMessage !== 'undefined') { %>
+                              <div class="alert alert-danger mt-3"><%= errorMessage %></div>
+                            <% } %>
+                            <div class="mt-5 text-center">
+                              <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
+                            </div>
+                          </form>
+                          
                 </div>
                 
             </div>

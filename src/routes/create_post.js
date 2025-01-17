@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
   .lean();
 
   if(req.isLoggedIn){
-    res.render('create_post', { isLoggedIn: req.isLoggedIn, username: req.user.username });
+    res.render('postdream', { isLoggedIn: req.isLoggedIn, username: req.user.username });
   }
   else{
     res.render('dreamList',{ isLoggedIn: req.isLoggedIn, user: req.user,posts });
