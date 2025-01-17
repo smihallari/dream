@@ -1,0 +1,12 @@
+<div class="col-lg-4 col-sm-6 mb-4">
+    <div class="card h-100">
+    <a href="#"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt=""></a>
+    <img src="data:image/jpeg;base64,<%= post.image.toString('base64') %>" alt="Dream Image" width="200" height="250" class="bd-placeholder-img">
+    <div class="card-body">
+        <h4 class="card-title">
+        <a href="#"><%= post.title%></a>
+        </h4>
+        <p class="card-text"><%=  post.content%></p>
+    </div>
+    </div>
+</div>

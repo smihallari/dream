@@ -7,7 +7,8 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 // Signup controller
 
 const signup = [
-    
+  check('name', 'Name is required').not().isEmpty(),
+  check('surname', 'Surrname is required').not().isEmpty(),
   check('username', 'Username is required').not().isEmpty(),
   check('email', 'Please include a valid email').isEmail(),
   check('password', 'Password must be at least 6 characters').isLength({ min: 6 }),
@@ -16,7 +17,7 @@ const signup = [
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
-    const { username, email, password } = req.body;
+    const { name,surname,username, email, password } = req.body;
     try {
       const existingUserEmail = await User.findOne({ email });
       const existingUserName = await User.findOne({ username });
@@ -29,6 +30,8 @@ const signup = [
       //  the password is being hashed. IF i salt it, then its like
       // double salting it, then I can't access it?????
       const user = new User({
+        name,
+        surname,
         username,
         email,
         password: password

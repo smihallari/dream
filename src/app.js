@@ -30,29 +30,25 @@ app.set('views', path.join(__dirname, 'views'));
 const authentication = require('./middleware/authenticationWare');
 app.use(authentication);
 
-const signupRoute = require('./routes/signup');
+
 const indexRoute = require('./routes/index');
 const dreamsRoute = require('./routes/dreamList');
-const postsRoute = require('./routes/posts');
-const commentRoute = require('./routes/comments');
-const logoutRoute = require('./routes/logout');
+const signOutRoute = require('./routes/signout');
 const createPostRoute = require('./routes/create_post');
 const profileRoute = require('./routes/profile');
 const profileSettingsRoute = require('./routes/profile_settings');
-
+const signUpRoute = require('./routes/signup');
+const signInRoute= require('./routes/signin');
 app.use((req, res, next) => {
   res.locals.currentPath = req.path;
   next();
 });
-const fs = require('fs');
-const filePath = path.join(__dirname, '..', 'public', 'photos', 'p.jpg');
-console.log(fs.existsSync(filePath));
-console.log('Relative Path:', path.resolve(__dirname, '../public/photos/p.jpg'));
-console.log('Absolute Path:', filePath);
+
 app.use('/', indexRoute);
 app.use('/dreamList', dreamsRoute);
-app.use('/signup',signupRoute); 
-app.use('/logout',logoutRoute);
+app.use('/signup',signUpRoute); 
+app.use('/signin',signInRoute);
+app.use('/signout',signOutRoute);
 app.use('/create_post',createPostRoute);
 app.use('/profile',profileRoute);
 app.use('/profile_settings',profileSettingsRoute);

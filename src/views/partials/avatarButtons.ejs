@@ -5,14 +5,17 @@ document.addEventListener('DOMContentLoaded', () => {
       if (logoutButton) {
         logoutButton.addEventListener('click', async (e) => {
           e.preventDefault();
-          const res = await fetch('/logout', {
+          const res = await fetch('/signout', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             }
           });
           if (res.ok) {
-            window.location.href = '/'; // Redirect to home after logout
+            const data = await res.json();
+            if (data.message === 'Logout successful') {
+            window.location.reload();
+          }
           } else {
             console.error('Logout failed');
           }

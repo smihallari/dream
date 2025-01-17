@@ -19,7 +19,7 @@ const login = [
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
-      // Set up the session
+      console.log('User logged in:', user.email);
       
       req.session.user = { id: user.id, email: user.email , username: user.username, role: user.role };
       

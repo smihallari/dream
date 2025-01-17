@@ -4,7 +4,7 @@ const logout = (req, res) => {
       if (err) {
         return res.status(500).json({ message: 'Failed to logout' });
       }
-      res.redirect('/',{isLoggedIn: false});
+      res.json({ message: 'Logout successful' });
     });
   };
   
