@@ -34,7 +34,7 @@ app.use(authentication);
 const indexRoute = require('./routes/index');
 const dreamsRoute = require('./routes/dreamList');
 const signOutRoute = require('./routes/signout');
-const createPostRoute = require('./routes/create_post');
+const createPostRoute = require('./routes/postdream');
 const profileRoute = require('./routes/profile');
 const profileSettingsRoute = require('./routes/profile_settings');
 const signUpRoute = require('./routes/signup');
@@ -52,7 +52,6 @@ app.use('/signout',signOutRoute);
 app.use('/create_post',createPostRoute);
 app.use('/profile',profileRoute);
 app.use('/profile_settings',profileSettingsRoute);
-// Connect to MongoDB and start server
 mongoose.connect(MONGODB_URI)// warnigns from node to remove unified topology and urlparser
   .then(() => {
     const now = new Date();

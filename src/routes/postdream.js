@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createPost } = require('../controllers/makePost'); // Import only the function
+const { createPost } = require('../controllers/makePost');
 const multer = require('multer');
 const Post = require('../models/post');
 

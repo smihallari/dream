@@ -24,11 +24,11 @@
 
       <div class="d-flex justify-content-center text-center">
         <div class="col-md-8 order-md-1">
-          <form class="needs-validation" novalidate="">
+          <form class="needs-validation" id="create-post-form" novalidate="">
             <div class="row">
               <div class="col-md-12 mb-4">
                 <label for="title"><h4 class="mb-4">Choose a title</h4></label>
-                <input type="text" class="form-control" id="title" placeholder="Title" value="" required="">
+                <input type="text" class="form-control" id="title" placeholder="Title" value="" required>
                 <div class="invalid-feedback">
                   A dream title is required.
                 </div>
@@ -37,8 +37,8 @@
             </div>
 
             <div class="mb-4">
-              <label for="dream"><h4 class="mb-3">Write about your dream</h4></label>
-              <textarea type="text" rows="8" class="form-control" id="dream" placeholder="e.g. what happened in the dream? Who was there? How did it make you feel?" required=""></textarea>
+              <label for="content"><h4 class="mb-3">Write about your dream</h4></label>
+              <textarea type="text" rows="8" class="form-control" id="content" placeholder="e.g. what happened in the dream? Who was there? How did it make you feel?" required></textarea>
               <div class="invalid-feedback">
                 You need to write something to post.
               </div>
@@ -46,10 +46,13 @@
 
             <div class="mb-3">
               <div class="col-md-6 mb-3 offset-md-3">
-                <label for="dreamcat">Category</label>
-                <select class="custom-select d-block w-100" id="dreamcat" required="">
+                <label for="category">Category</label>
+                <select class="custom-select d-block w-100" id="category" required="">
                   <option value="">Choose a category</option>
-                  <option>OPTION_VAR</option>
+                  <option>Delirious</option>
+                  <option>Simple</option>
+                  <option>Historic</option>
+                  <option>Harambe</option>
                 </select>
                 <div class="invalid-feedback">
                   Please choose a category.
@@ -59,19 +62,18 @@
             </div>
             <div class="mb-4 ">
               <div class="col-md-6 mb-3 offset-md-3">
-                <label for="dreamimage">Upload an image (optional):</label>
+                <label for="dreamimage">Upload an image via upload(optional):</label>
                 <input type="file" id="dreamimage" name="dreamimage">
-                <button class="btn btn-primary btn-sm btn-block" type="submit">Upload image</button>
-                
+                <label for="imageUrl">Or upload an image via url(optional):</label>
+                <input type="url" name="imageUrl" id="imageUrl" placeholder="https://example.com/image.jpg">
               </div>
-              
               
             </div>
             <hr class="mb-4">
               
             <div class="custom-control custom-checkbox col-md-6 mb-3 offset-md-3">
-              <input type="checkbox" class="custom-control-input" id="allowcomments">
-              <label class="custom-control-label" for="allowcomments">Allow comments on my dream</label>
+              <input type="checkbox" class="custom-control-input" id="allowComments">
+              <label class="custom-control-label" for="allowComments">Allow comments on my dream</label>
             </div>
            
 
@@ -82,11 +84,46 @@
 
             <div class="mb-4"></div>
           </form>
-
-          
-
-  
         </div>
       </div>
-  </body>
-</html>
+      <script>
+        const logged = '<%= isLoggedIn %>';
+        const username = '<%= username %>';
+        
+        document.getElementById('create-post-form').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          if (!logged) {
+          alert('You need to be logged in to create a post.');
+          return;
+        }
+          const formData = new FormData();
+          
+          formData.append('author', username);
+          formData.append('title', document.getElementById('title').value);
+          formData.append('content', document.getElementById('content').value);
+          formData.append('category', document.getElementById('category').value);
+          formData.append('allowComments', document.getElementById('allowComments').checked);          
+          const imageFile = document.getElementById('dreamimage').files[0];
+          if (imageFile) {
+            formData.append('image', imageFile);
+          } else {
+            formData.append('imageUrl', document.getElementById('imageUrl').value);
+          }
+    
+          const res = await fetch('/create_post/create', {
+            method: 'POST',
+            body: formData,
+          });
+    
+          if (res.ok) {
+            window.location.href = '/dreamList'; // Redirect to dreamList page
+          } else {
+            const data = await res.json();
+            alert(data.message || 'Post creation failed');
+          }
+        });
+      </script>
+    </body>
+    
+    </html>
+    

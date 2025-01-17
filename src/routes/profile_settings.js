@@ -23,13 +23,11 @@ router.post('/:username', async (req, res) => {
     const { username } = req.params;
     const { newName, newSurname, newUsername, newEmail, newPassword } = req.body;
     console.log(req.body);
-    // Find the user by username
     const user = await User.findOne({ username });
     if (!user) {
       return res.status(404).send('User not found');
     }
     const pass = await bcrypt.hash(newPassword,10);
-    // Prepare fields to update
     const updateFields = {
         name: newName || user.name,
         surname: newSurname || user.surname,
@@ -38,7 +36,6 @@ router.post('/:username', async (req, res) => {
         password : pass || user.password
     };
 
-    // Check for duplicate email or username
     if (updateFields.email !== user.email || updateFields.username !== user.username) {
       const duplicateUser = await User.findOne({
         $or: [
@@ -59,7 +56,6 @@ router.post('/:username', async (req, res) => {
 
    
 
-    // Update user
     const updatedUser = await User.findByIdAndUpdate(user._id, updateFields, {
       runValidators: true,
       new: true,
@@ -69,7 +65,6 @@ router.post('/:username', async (req, res) => {
       return res.status(404).send('User not found');
     }
 
-    // Redirect to updated profile
     res.redirect(`/profile/${updatedUser.username}`);
   } catch (error) {
     console.error('Error updating user:', error);
