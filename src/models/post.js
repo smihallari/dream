@@ -15,14 +15,13 @@ const PostSchema = new mongoose.Schema({
     category: 
         { type: String, required: true },
     likes: 
-        [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',  timestamp: { type: Date, default: Date.now } }],
-    comments: 
-        [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+        [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
     image: 
         { type: Buffer },
     commentsAllowed:{
-        type: Boolean,
-        default: true
+        type: Boolean,default: true
     },
 
     

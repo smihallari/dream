@@ -62,6 +62,8 @@ const profileSettingsRoute = require('./routes/profile_settings');
 const signUpRoute = require('./routes/signup');
 const signInRoute= require('./routes/signin');
 const aboutRoute = require('./routes/about');
+const seePostRoute = require('./routes/oneDream');
+const postCommentRoute = require('./routes/comments');
 app.use((req, res, next) => {
   res.locals.currentPath = req.path;
   next();
@@ -76,6 +78,8 @@ app.use('/create_post',postDreamRoute);
 app.use('/profile',profileRoute);
 app.use('/profile_settings',profileSettingsRoute);
 app.use('/about',aboutRoute);
+app.use('/post',seePostRoute);
+app.use('/comments',postCommentRoute);
 mongoose.connect(MONGO_URI)// warnigns from node to remove unified topology and urlparser
   .then(() => {
     const now = new Date();

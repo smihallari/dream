@@ -1,10 +1,10 @@
 <div class="d-flex text-muted pt-3">
+  <a href="/profview/<%= post.author %>>
   <img class="bd-placeholder-img flex-shrink-0 me-2 rounded"
   src="<%= post.author.image && post.author.image.length ? `data:image/jpeg;base64,${post.author.image.toString('base64')}` : '/photos/p.jpg' %>"
-   alt="Dream Image" width="32" height="32" >
+   alt="Dream Image" width="32" height="32" ></a>
     <strong class="d-block text-gray-dark">
-      <a href="#" class="text-decoration-none text-body"><%= post.title %></a>
-      
+      <a href="/post/<%= post._id %>" class="text-decoration-none text-body"><%= post.title %></a>
     </strong>
     Category: <%= post.category %>
   </p>

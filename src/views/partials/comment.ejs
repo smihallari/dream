@@ -1,0 +1,6 @@
+<div class="comment">
+    <p><strong><a href="/profview/<%= comment.author._id %>"><%= comment.author.username %></a></strong> <%= new Date(comment.createdAt).toLocaleDateString() %></p>
+    <p><%= comment.content %></p>
+  </div>
+  <hr>
+
