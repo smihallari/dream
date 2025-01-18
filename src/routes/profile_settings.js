@@ -21,20 +21,29 @@ router.get('/:username', async (req, res) => {
 router.post('/:username', async (req, res) => {
   try {
     const { username } = req.params;
-    const { newName, newSurname, newUsername, newEmail, newPassword } = req.body;
+    const { newName, newSurname, newUsername, newEmail, newPassword,newBio,
+      newTwitter,newFacebook,NewInstagram } = req.body;
     console.log(req.body);
     const user = await User.findOne({ username });
     if (!user) {
       return res.status(404).send('User not found');
     }
-    const pass = await bcrypt.hash(newPassword,10);
+    
     const updateFields = {
         name: newName || user.name,
         surname: newSurname || user.surname,
         username: newUsername || user.username,
         email: newEmail || user.email,
-        password : pass || user.password
+        password : user.password,
+        bio: newBio || user.bio,
+        twitter: newTwitter || user.twitter,
+        facebook: newFacebook || user.facebook,
+        instagram: NewInstagram || user.instagram,
     };
+    if (newPassword && newPassword.trim() !== '') {
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      updateFields.password = hashedPassword;
+    }
 
     if (updateFields.email !== user.email || updateFields.username !== user.username) {
       const duplicateUser = await User.findOne({
@@ -55,16 +64,16 @@ router.post('/:username', async (req, res) => {
     }
 
    
-
+    
     const updatedUser = await User.findByIdAndUpdate(user._id, updateFields, {
       runValidators: true,
       new: true,
     });
-
+    
     if (!updatedUser) {
       return res.status(404).send('User not found');
     }
-
+    req.session.user = updatedUser;
     res.redirect(`/profile/${updatedUser.username}`);
   } catch (error) {
     console.error('Error updating user:', error);

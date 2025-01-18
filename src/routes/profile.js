@@ -13,7 +13,7 @@ router.get('/:username', async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(3)
       .populate('author', 'name') 
-      .select('title content image') 
+      .select('title content image ') 
       .lean();
     res.render('profile', { user, isLoggedIn: req.isLoggedIn,posts });
     

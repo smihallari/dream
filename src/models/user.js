@@ -10,10 +10,26 @@ const UserSchema = new mongoose.Schema({
         { type: String, required: true, unique: true },
     email: 
         { type: String, required: true, unique: true },
+    bio: 
+        { type: String, default: 'This user has not set a bio yet.' },
+    facebook:{
+        type: String,
+        default: 'https://www.facebook.com/'
+    },
+    twitter:{
+        type: String,
+        default: 'https://twitter.com/'
+    },
+    instagram:{
+        type: String,
+        default: 'https://www.instagram.com/'
+    },
     password: 
         { type: String, required: true },
     role: 
         { type: String, default: 'user' },
+    profilePic: 
+        { type: Buffer, default:''}
 
 }, { timestamps: true });
 

@@ -110,8 +110,12 @@
 
       document.getElementById('create-post-form').addEventListener('submit', function (e) {
       if (!isLoggedIn) {
-        e.preventDefault();
-        alert('You need to be logged in to create a post.');
+        const confirm =confirm('You need to be logged in to create a post.');
+        if(confirm){
+          window.location.href = '/signin';
+        } else {
+          e.preventDefault();
+        }
       }
     });
     </script>

@@ -34,11 +34,12 @@ app.use(authentication);
 const indexRoute = require('./routes/index');
 const dreamsRoute = require('./routes/dreamList');
 const signOutRoute = require('./routes/signout');
-const createPostRoute = require('./routes/postdream');
+const postDreamRoute = require('./routes/postdream');
 const profileRoute = require('./routes/profile');
 const profileSettingsRoute = require('./routes/profile_settings');
 const signUpRoute = require('./routes/signup');
 const signInRoute= require('./routes/signin');
+const aboutRoute = require('./routes/about');
 app.use((req, res, next) => {
   res.locals.currentPath = req.path;
   next();
@@ -49,9 +50,10 @@ app.use('/dreamList', dreamsRoute);
 app.use('/signup',signUpRoute); 
 app.use('/signin',signInRoute);
 app.use('/signout',signOutRoute);
-app.use('/create_post',createPostRoute);
+app.use('/create_post',postDreamRoute);
 app.use('/profile',profileRoute);
 app.use('/profile_settings',profileSettingsRoute);
+app.use('/about',aboutRoute);
 mongoose.connect(MONGODB_URI)// warnigns from node to remove unified topology and urlparser
   .then(() => {
     const now = new Date();
