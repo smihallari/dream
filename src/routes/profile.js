@@ -3,6 +3,9 @@ const router = express.Router();
 const User = require('../models/user'); 
 const Post = require('../models/post');
 // const { isAuthenticated, hasRole } = require('../middleware/authenticationWare');
+const authentication = require('../middleware/authenticationWare');
+router.use(authentication);
+
 
 router.get('/:username', async (req, res) => {
   try {

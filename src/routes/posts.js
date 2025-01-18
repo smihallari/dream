@@ -3,6 +3,7 @@ const router = express.Router();
 const { getAllPosts, likePost, sortPosts } = require('../controllers/getallPostscontr');
 const { searchPosts } = require('../controllers/searchController');
 const authentication = require('../middleware/authenticationWare');
+const postController = require('../controllers/getallPostscontr');
 
 // Route to display all posts
 router.get('/posts', async (req, res) => {
