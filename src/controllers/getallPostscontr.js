@@ -76,3 +76,57 @@ router.post('/posts/:id/like', authentication, async (req, res) => {
     }
 });
 module.exports = router;
+
+// exports.getFilteredPosts = async (req, res) => {
+//   try {
+//     const { category, author, date } = req.query; // filter parameters
+//     const filters = {};
+
+//     if (category) filters.category = category;
+//     if (author) filters.author = author;
+//     if (date) filters.createdAt = { $gte: new Date(date) };
+
+//     const posts = await Post.find(filters)
+//       .sort({ createdAt: -1 }) // sort by latest
+//       .limit(10); // pagination per 10 posts
+
+//     res.json(posts);
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error fetching posts', error });
+//   }
+// };
+
+
+// const Post = require('../models/post');
+
+// exports.getFilteredPosts = async (req, res) => {
+//   try {
+//     const { category, user, date } = req.query; // Read query parameters
+//     const filters = {};
+
+//     if (category) {
+//       filters.category = category; // match category
+//     }
+//     if (author) {
+//       filters.author = author; // match user ID or username
+//     }
+//     if (date) {
+//       const parsedDate = new Date(date);
+//       filters.createdAt = { 
+//         $gte: parsedDate, // start date
+//         $lt: new Date(parsedDate.getTime() + 24 * 60 * 60 * 1000), // end of the same day
+//       };
+//     }
+
+//     // query the database with the filter
+//     const posts = await Post.find(filters)
+//       .sort({ createdAt: -1 }) // Sort by newest
+//       .exec();
+
+//     // Send the filtered posts as a response
+//     res.status(200).json(posts);
+//   } catch (error) {
+//     console.error('Error fetching filtered posts:', error);
+//     res.status(500).json({ message: 'Error fetching posts', error });
+//   }
+// };

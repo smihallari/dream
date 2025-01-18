@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+// const express = require('express');
+// const { getFilteredPosts } = require('../controllers/getallPostscontr');
+// const router = express.Router();
 
 const PostSchema = new mongoose.Schema({
     author: 
@@ -29,3 +32,6 @@ const PostSchema = new mongoose.Schema({
 
 const Post = mongoose.model('Post', PostSchema);
 module.exports = Post;
+
+//router.get('/filter', getFilteredPosts);
+//module.exports = router;
