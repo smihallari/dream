@@ -26,7 +26,7 @@
   <% } else { %>
     <a class="btn btn-sm btn-outline-secondary" href="/signup">Sign in</a>
   <% } %>
-  <% if (isLoggedIn) { %>
+  <% if (typeof isLoggedIn !== 'undefined' && isLoggedIn) { %>
     <%- include('avatarButtons') %>
   <% } %>
 

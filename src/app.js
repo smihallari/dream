@@ -35,10 +35,6 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(cookieParser());
 app.use(cookieParser());
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use('/search', searchRoutes);
-app.use(helmet());
-
-app.use('/search', searchRoutes);
 app.use(helmet());
 
 
@@ -46,8 +42,9 @@ app.use(helmet());
 // Middleware
 app.use(express.json());
 app.use(errorHandler);
-app.use('/posts', postRoutes);
+
 module.exports = app;
+
 
 
 app.use(session({
@@ -105,6 +102,14 @@ app.use((req, res, next) => {
   res.locals.currentPath = req.path;
   next();
 });
+app.use((req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+});
+app.use((req, res, next) => {
+  res.locals.isLoggedIn = req.isLoggedIn || false;
+  next();
+});
 
 app.use('/', indexRoute);
 app.use('/dreamList', dreamsRoute);
@@ -114,6 +119,7 @@ app.use('/signout',signOutRoute);
 app.use('/create_post',postDreamRoute);
 app.use('/profile',profileRoute);
 app.use('/profile_settings',profileSettingsRoute);
+app.use('/posts', postRoutes);
 app.use('/about',aboutRoute);
 app.use('/contest', contestRoutes);
 app.use('/search', searchRoutes);
