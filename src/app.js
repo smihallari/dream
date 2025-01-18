@@ -76,7 +76,7 @@ app.use('/create_post',postDreamRoute);
 app.use('/profile',profileRoute);
 app.use('/profile_settings',profileSettingsRoute);
 app.use('/about',aboutRoute);
-mongoose.connect(MONGODB_URI)// warnigns from node to remove unified topology and urlparser
+mongoose.connect(MONGO_URI)// warnigns from node to remove unified topology and urlparser
   .then(() => {
     const now = new Date();
     const currentTime = `${now.getHours()}:${now.getMinutes()}`;
