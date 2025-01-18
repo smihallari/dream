@@ -76,3 +76,22 @@ router.post('/posts/:id/like', authentication, async (req, res) => {
     }
 });
 module.exports = router;
+
+// exports.getFilteredPosts = async (req, res) => {
+//   try {
+//     const { category, author, date } = req.query; // filter parameters
+//     const filters = {};
+
+//     if (category) filters.category = category;
+//     if (author) filters.author = author;
+//     if (date) filters.createdAt = { $gte: new Date(date) };
+
+//     const posts = await Post.find(filters)
+//       .sort({ createdAt: -1 }) // sort by latest
+//       .limit(10); // pagination per 10 posts
+
+//     res.json(posts);
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error fetching posts', error });
+//   }
+// };
