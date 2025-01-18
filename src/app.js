@@ -22,6 +22,8 @@ const COOKIE_SECRET = process.env.COOKIE_SECRET
 const cookieParser = require('cookie-parser');
 const methodOverride = require('method-override');
 const searchRoutes = require('./routes/search');
+
+const contestRoutes = require('./routes/contest');
 const helmet = require('helmet');
 const errorHandler = require('./middleware/errorHandler');
 
@@ -44,12 +46,6 @@ app.use(helmet());
 // Middleware
 app.use(express.json());
 app.use(errorHandler);
-
-app.use('/posts', postRoutes);
-module.exports = app;
-
-app.use(errorHandler);
-
 app.use('/posts', postRoutes);
 module.exports = app;
 
@@ -114,13 +110,14 @@ app.use('/', indexRoute);
 app.use('/dreamList', dreamsRoute);
 app.use('/auth/signup',signUpRoute); 
 app.use('/auth/signin',signInRoute);
-app.use('/auth/signup',signUpRoute); 
-app.use('/auth/signin',signInRoute);
 app.use('/signout',signOutRoute);
 app.use('/create_post',postDreamRoute);
 app.use('/profile',profileRoute);
 app.use('/profile_settings',profileSettingsRoute);
 app.use('/about',aboutRoute);
+app.use('/contest', contestRoutes);
+app.use('/search', searchRoutes);
+app.use('/posts', postRoutes);
 mongoose.connect(MONGO_URI)// warnigns from node to remove unified topology and urlparser
   .then(() => {
     const now = new Date();

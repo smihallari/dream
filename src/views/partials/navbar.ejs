@@ -2,12 +2,9 @@
     <nav class="nav nav-underline justify-content-around">
         <a class="nav-item nav-link link-body-emphasis <%= (currentPath === '/' ? 'active' : '') %>" href="/">Home</a>
         <a class="nav-item nav-link link-body-emphasis <%= (currentPath === '/dreamList' ? 'active' : '') %> " href="/dreamList">Dreams</a> 
-        <a class="nav-item nav-link link-body-emphasis <%= (currentPath === '/contest' ? 'active' : '') %>" href="#">Contest</a>
-        <% if (user && user.username) { %>
-            <a class="nav-item nav-link link-body-emphasis <%= (currentPath === '/about' ? 'active' : '') %>" href="/about/<%= user.username %>">About</a>
-        <% } else { %>
-            <a class="nav-item nav-link link-body-emphasis <%= (currentPath === '/about' ? 'active' : '') %>" href="/about/guest">About</a>
-        <% } %>
+        <a class="nav-item nav-link link-body-emphasis <%= (currentPath === '/contest' ? 'active' : '') %>" href="/contest">Contest</a>
+        <a class="nav-item nav-link link-body-emphasis <%= (currentPath === '/about' ? 'active' : '') %>" href="/about/<%= user ? user.username : 'guest' %>">About</a>
+
         
     </nav>
 </div>
