@@ -6,8 +6,9 @@ const MongoStore = require('connect-mongo');
 require('dotenv').config({ path: './keys.env' });
 const app = express(); 
 const PORT = process.env.PORT ;
-const MONGODB_URI = process.env.MONGODB_URI ;
+const MONGO_URI = process.env.MONGO_URI ;
 const JWT_SECRET = process.env.JWT_SECRET
+const COOKIE_SECRET = process.env.COOKIE_SECRET
 const cookieParser = require('cookie-parser');
 const methodOverride = require('method-override');
 
@@ -15,7 +16,7 @@ const methodOverride = require('method-override');
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, '..', 'public')));
-// app.use(cookieParser(process.env.COOKIE_SECRET || '2bddv32ngr8gmo2q95f5o7sdb71uf1ig'));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 
 // Middleware
@@ -26,22 +27,22 @@ app.use(session({
   secret: JWT_SECRET ,
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({ mongoUrl: MONGODB_URI }),
+  store: MongoStore.create({ mongoUrl: MONGO_URI }),
   cookie: { secure: false, httpOnly: true } 
 }));
 
-// app.use(session({
-//   secret: process.env.SESSION_SECRET, // Use the session secret from keys.env
-//   resave: false,
-//   saveUninitialized: false, 
-//   store: MongoStore.create({ 
-//     mongoUrl: process.env.MONGO_URI
-//   }),
-//   cookie: {
-//     maxAge: 3600000, //seconds: 1 hour
-//     httpOnly: true // Prevents client-side JavaScript from accessing the cookie
-//   }
-// }));
+app.use(session({
+  secret: process.env.SESSION_SECRET, // Use the session secret from keys.env
+  resave: false,
+  saveUninitialized: false, 
+  store: MongoStore.create({ 
+    mongoUrl: process.env.MONGO_URI
+  }),
+  cookie: {
+    maxAge: 3600000, //seconds: 1 hour
+    httpOnly: true // Prevents client-side JavaScript from accessing the cookie
+  }
+}));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
