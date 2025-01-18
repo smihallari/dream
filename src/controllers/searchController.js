@@ -1,9 +1,16 @@
 const Post = require('../models/post');
 const mongoose = require('mongoose');
 
+
 const searchPosts = async (req, res) => {
   try {
-    const { query, page = 1 } = req.query; 
+    
+    const { query } = req.query;
+    const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+    if (!query || query.trim() === '') {
+      return res.render('search', { posts: [], message: 'Please enter a search term.', query: '', currentPage: 1, totalPages: 0 });
+    }
+
     const limit = 10; 
     const skip = (page - 1) * limit; 
 
@@ -79,10 +86,40 @@ const searchPosts = async (req, res) => {
 
     const totalPages = Math.ceil((totalResults[0] ? totalResults[0].total : 0) / limit);
 
-    res.render('search', { posts, query, currentPage: page, totalPages });
+    res.render('search', { 
+      posts: posts || [], 
+      query, 
+      currentPage: page, 
+      totalPages: totalPages || 0,
+    });
   } catch (err) {
     console.error('Error searching posts:', err);
     res.status(500).send('Server error');
+  }
+};
+
+exports.searchPosts = async (req, res) => {
+  try {
+    const { query } = req.query; // extract search query from request
+
+    if (!query) {
+      return res.status(400).json({ message: 'Search query is required' });
+    }
+
+    const results = await Post.find({
+      $text: { $search: query }, // Search title and content
+    })
+      .sort({ createdAt: -1 }); // Sort by newest first
+      // .limit(10); // Limit to 10 results
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'No posts found' });
+    }
+
+    res.status(200).json(results);
+  } catch (error) {
+    console.error('Search error:', error);
+    res.status(500).json({ message: 'An error occurred while searching', error });
   }
 };
 
