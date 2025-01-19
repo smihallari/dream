@@ -6,10 +6,17 @@
                 <a class="blog-header-logo text-body-emphasis text-decoration-none <%= (currentPath === '/' ? 'active' : '') %>" href="/"><img src="/photos/fullbanner2.png" alt="DreamCatchr" style='height: 100%; width: 100%; object-fit: contain'></a>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
-                <form action="/search" method="get">
-                    <input type="text" name="query" placeholder="Search dreams...">
-                    <button type="submit">Search</button>
-                    </form>
+                <form method="GET" action="/search" class="d-flex">
+                    <input 
+                      type="text" 
+                      name="q" 
+                      placeholder="Search..." 
+                      class="form-control" 
+                      value="<%= typeof searchTerm !== 'undefined' ? searchTerm : '' %>" 
+                      required
+                    >
+                    <button type="submit" class="btn btn-primary ms-2 md-3">Search</button>
+                  </form>
                 <%- include('./profavatar') %>
             </div>
         </div>
