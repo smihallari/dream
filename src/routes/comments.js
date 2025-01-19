@@ -12,7 +12,7 @@ const addComment = async (req, res) => {
         }
         const comment = new Comment({
             content: req.body.content,
-            author: req.user.id,
+            author: req.user._id,
             post: req.params.id
         });
         await comment.save();

@@ -1,35 +1,33 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     if ('<%= isLoggedIn%>' === 'true') {
-        document.body.addEventListener('click', async (e) => {
-            // Logout button logic
-            if (e.target.id === 'logoutbutton') {
-                e.preventDefault();
-                const res = await fetch('/signout', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.message === 'Logout successful') {
-                        window.location.reload();
-                    }
-                } else {
-                    console.error('Logout failed');
-                }
+      const logoutButton = document.getElementById('logoutbutton');
+      if (logoutButton) {
+        logoutButton.addEventListener('click', async (e) => {
+          e.preventDefault();
+          const res = await fetch('/signout', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
             }
-
-            // Profile button logic
-            if (e.target.id === 'profile') {
-                e.preventDefault(); // Prevent default `#` navigation
-                const username = '<%= user.username %>';
-                window.location.href = `/profile/${username}`;
-            }
+          });
+          if (res.ok) {
+            const data = await res.json();
+            if (data.message === 'Logout successful') {
+            window.location.reload();
+          }
+          } else {
+            console.error('Logout failed');
+          }
         });
+      }
+      const profileButton = document.getElementById('profile');
+      if (profileButton) {
+        profileButton.addEventListener('click', async (e) => {
+          const username = '<%= user.username %>'; 
+          window.location.href = `/profile/${username}`;
+        });
+      }
     }
-});
-
-
+  });
 </script>

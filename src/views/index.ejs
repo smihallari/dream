@@ -1,32 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <title>Home</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" >
+        <% pageName = "Homepage"; %>
+        <%- include('./partials/head') %>      
     </head>
     <body>
+        <%- include('partials/topbar') %>
         <main class="container">
-            <div class="container">
-                <header class="border-bottom lh-2 py-5"  >
-                    <div class="row flex-nowrap justify-content-between align-items-center">
-                        <div class="col-4 text-center">
-                            <a class="blog-header-logo text-body-emphasis text-decoration-none" href="#">DreamCatchr</a>
-                        </div>
-                        <div class="col-4 d-flex justify-content-end align-items-center">
-                            <form action="/search" method="get">
-                                <input type="text" name="query" placeholder="Search dreams...">
-                                <button type="submit">Search</button>
-                              </form>
-                            <%- include('partials/profavatar') %>
-                        </div>
-                    </div>
-                </header>
-                <!--Navbar-->
-                <%- include('partials/navbar') %>
-            </div>
-            <!--FrontPage Box-->
-
             <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
                 <div class="container d-flex">
                     <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary flex-shrink-1">
@@ -88,143 +68,66 @@
 
 
                 <div class="col-md-5">
-                    <div class="position-sticky" style="top: 2rem;">
+                    <div class="container">
                         <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-indicators">
-                                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                            </div>
-
                             <div class="carousel-inner">
-                                <div class="carousel-item active">
+                                <% if (posts && posts.length > 0) { %>
+                                  <% posts.forEach((post, index) => { %>
+                                    <%- include('partials/carouselItem', { post, isActive: index === 0 }) %>
+                                  <% }); %>
+                                <% } else { %>
+                                  <div class="carousel-item active">
                                     <div class="col-md-12 mx-auto">
-                                        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                                            <div class="col p-4 d-flex flex-column position-static">
-                                                <strong class="d-inline-block mb-2 text-primary-emphasis">Featured dream</strong>
-                                                <h3 class="mb-0"><%= posts[1].title %> </h3>
-                                                <div class="mb-1 text-body-secondary"><%= new Date(posts[1].date).toLocaleDateString() %> </div>
-                                                <p class="card-text mb-auto"><%= posts[1].content  %>...</p>
-                                                <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-                                                    Continue reading
-                                                    <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
-                                                </a>
-                                            </div>
-                                            <div class="col-auto d-none d-lg-block">
-                                                <% if (posts[1].image) { %>
-                                                    <img src="data:image/jpeg;base64,<%= posts[0].image.toString('base64') %>" alt="Dream Image" width="200" height="250" class="bd-placeholder-img">
-                                                <% } else { %>
-                                                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">No image</text></svg>
-                                                <% } %>
-                                            </div>
+                                      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                                        <div class="col p-4 d-flex flex-column position-static">
+                                          <strong class="d-inline-block mb-2 text-primary-emphasis">No Posts Available</strong>
+                                          <h3 class="mb-0">Welcome to Dreamcatchr</h3>
+                                          <div class="mb-1 text-body-secondary">Today</div>
+                                          <p class="card-text mb-auto">No posts are available at the moment. Please check back later or create a new post.</p>
+                                          <a href="/create_post" class="icon-link gap-1 icon-link-hover stretched-link">Create a Post</a>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item ">
-                                    <div class="col-md-12 mx-auto">
-                                        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                                            <div class="col p-4 d-flex flex-column position-static">
-                                                <strong class="d-inline-block mb-2 text-primary-emphasis">Featured dream</strong>
-                                                <h3 class="mb-0"><%= posts[2].title %> </h3>
-                                                <div class="mb-1 text-body-secondary"><%= new Date(posts[2].date).toLocaleDateString() %> </div>
-                                                <p class="card-text mb-auto"><%= posts[0].content ? posts[2].content.substring(0, 100) : '' %>...</p>
-                                                <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-                                                    Continue reading
-                                                    <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
-                                                </a>
-                                            </div>
-                                            <div class="col-auto d-none d-lg-block">
-                                                <% if (posts[2].image) { %>
-                                                    <img src="data:image/jpeg;base64,<%= posts[0].image.toString('base64') %>" alt="Dream Image" width="200" height="250" class="bd-placeholder-img">
-                                                <% } else { %>
-                                                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">No image</text></svg>
-                                                <% } %>
-                                            </div>
+                                        <div class="col-auto d-none d-lg-block">
+                                          <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">No image</text></svg>
                                         </div>
+                                      </div>
                                     </div>
-                                </div>
-                                <div class="carousel-item ">
-                                    <div class="col-md-12 mx-auto">
-                                        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                                            <div class="col p-4 d-flex flex-column position-static">
-                                                <strong class="d-inline-block mb-2 text-primary-emphasis">Featured dream</strong>
-                                                <h3 class="mb-0"><%= posts[0].title %> </h3>
-                                                <div class="mb-1 text-body-secondary"><%= new Date(posts[0].date).toLocaleDateString() %> </div>
-                                                <p class="card-text mb-auto"><%= posts[0].content ? posts[0].content.substring(0, 100) : '' %>...</p>
-                                                <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-                                                    Continue reading
-                                                    <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
-                                                </a>
-                                            </div>
-                                            <div class="col-auto d-none d-lg-block">
-                                                <% if (posts[0].image) { %>
-                                                    <img src="data:image/jpeg;base64,<%= posts[0].image.toString('base64') %>" alt="Dream Image" width="200" height="250" class="bd-placeholder-img">
-                                                <% } else { %>
-                                                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">No image</text></svg>
-                                                <% } %>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                                  </div>
+                                <% } %>
+                              </div>
+                              <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                              </button>
+                              <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
+                              </button>
+                            </div>
 
                         <div class="p-4 mb-3 bg-body-tertiary rounded">
                             <h4 class="fst-italic">Recent dreams</h4>
                             <ul class="list-unstyled">
+                              <% if (recentDreams && recentDreams.length > 0) { %>
+                                <% recentDreams.forEach(dream => { %>
+                                  <%- include('partials/recentDream', { dream }) %>
+                                <% }); %>
+                              <% } else { %>
                                 <li>
-                                    <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
-                                        <svg class="bd-placeholder-img" width="100%" height="96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect></svg>
-                                        <div class="col-lg-8">
-                                            <h6 class="mb-0">Dream title</h6>
-                                            <small class="text-body-secondary">November 15, 2024</small>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
-                                        <svg class="bd-placeholder-img" width="100%" height="96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect></svg>
-                                        <div class="col-lg-8">
-                                            <h6 class="mb-0">Dream title but this one is longer and might span across multiple lines</h6>
-                                            <small class="text-body-secondary">November 14, 2024</small>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
-                                        <svg class="bd-placeholder-img" width="100%" height="96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect></svg>
-                                        <div class="col-lg-8">
-                                            <h6 class="mb-0">Dream title</h6>
-                                            <small class="text-body-secondary">November 13, 2024</small>
-                                        </div>
-                                    </a>
-                                </li>
+                                No recent dreams available. 
+                                <a href="/create_post">Be the first to share your dream!</a>
+                              </li>
+                              <% } %>
                             </ul>
-                        </div>
+                          </div>
+                          
+                        
 
                         <div class="p-4">
                             <h4 class="fst-italic">Archives</h4>
-                            <ol class="list-unstyled mb-0">
-                                <li><a href="#">March 2021</a></li>
-                                <li><a href="#">February 2021</a></li>
-                                <li><a href="#">January 2021</a></li>
-                                <li><a href="#">December 2020</a></li>
-                                <li><a href="#">November 2020</a></li>
-                                <li><a href="#">October 2020</a></li>
-                                <li><a href="#">September 2020</a></li>
-                                <li><a href="#">August 2020</a></li>
-                                <li><a href="#">July 2020</a></li>
-                                <li><a href="#">June 2020</a></li>
-                                <li><a href="#">May 2020</a></li>
-                                <li><a href="#">April 2020</a></li>
+                            <ol class="list-unstyled mb-0" id="archives-list">
+                                <% archives.forEach(archive => { %>
+                                <%- include('partials/archive', { archive }) %>
+                                <% }); %>
                             </ol>
                         </div>
 
@@ -239,6 +142,6 @@
         
         <%- include('partials/footer') %>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" ></script>
+        
     </body>
 </html>

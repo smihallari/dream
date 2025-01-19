@@ -80,40 +80,31 @@
             <hr class="mb-4">
             <div class="row">
               <div class="col-md-5 mb-3">
-                <label for="competingdreamtitle">Enter a title for your dream:</label>
-                <input type="text" class="form-control" id="title" placeholder="Title" value="" required="">
+                <label for="competingdream">Select a dream to enter in the competition:</label>
+                <select class="custom-select d-block w-100" id="country" required="">
+                  <option value="">Choose...</option>
+                  <option>DREAM TITLE</option>
+                </select>
                 <div class="invalid-feedback">
-                  A dream title is required.
+                  Please select a dream to enter.
                 </div>
               </div>
-             </div>
+              
+            </div>
+            <hr class="mb-4">
+            <p>
+              Please note that in order to keep the voting process impartial, your username and original title of the competing dream will be hidden.
+              You can give your dream a different title or submit it with our default competing title.
+            </p>
+            <input type="text" class="form-control" id="compdreamtitle" value="Sample text">
+            <br>
             <div class="mb-4">
-              <label for="content">Write about your dream </label>
-              <textarea type="text" rows="8" class="form-control" id="description" placeholder="e.g. what happened in the dream? Who was there? How did it make you feel?" required=""></textarea>
+              <label for="description">Write a short description <span class="text-muted">(Optional)</span></label>
+              <textarea type="text" rows="8" class="form-control" id="description" placeholder="e.g. why should your dream win? How would you summarize it in a few words?" required=""></textarea>
               <div class="invalid-feedback">
                 You need to write something here.
               </div>
             </div>
-            <hr>
-            <div class="mb-4">
-              <label for="dreamimage">Upload an image (optional):</label>
-              <input type="file" id="dreamimage" name="dreamimage">
-              <button class="btn btn-primary btn-sm btn-block" type="submit">Upload image</button>
-              
-            </div>
-
-            <hr>
-            <div class="mb-4">
-              <label for="description">Select a category</label>
-              <select class="custom-select d-block w-100" id="dreamcat" required="">
-                <option value="">Choose a category</option>
-                <option>OPTION_VAR</option>
-              </select>
-              <div class="invalid-feedback">
-                You need to select a category.
-              </div>
-            </div>
-            <hr>
             <div class="mb-4"></div>
             <p class="lead mb-0 text-body-emphasis fw-bold">May the best dream win!</a></p>
             <div class="mb-4"></div>

@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 // Render the profile settings page
 const getProfileSettings = async (req, res) => {
   try {
-    console.log(req.params.username);
 
     const profileUser = await User.findOne({ username: req.params.username });
     const user = req.user;
@@ -74,7 +73,8 @@ const updateProfileSettings = async (req, res) => {
     if (!updatedUser) {
       return res.status(404).send('User not found');
     }
-    if (req.user.role !== 'admin' || req.user._id.equals(profileUser._id)) {
+    
+    if (req.user.role !== 'admin' || req.user.id === profileUser.id) {
       req.session.user = updatedUser;
     }
     res.redirect(`/profile/${updatedUser.username}`);

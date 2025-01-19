@@ -1,0 +1,11 @@
+<div class="post-result border border-secondary rounded p-3 mb-3">
+    <h5 class="mb-1"><%= post.title %></h5>
+    <p class="mb-2 text-muted">
+      <small>Posted on <%= new Date(post.createdAt).toLocaleDateString() %> in <%= post.category %></small>
+    </p>
+    <% if (post.image) { %>
+      <img src="data:image/jpeg;base64,<%= post.image.toString('base64') %>" class="img-fluid rounded mb-3" alt="<%= post.title %>">
+    <% } %>
+    <a href="/posts/<%= post._id %>" class="btn btn-outline-primary btn-sm">Read more</a>
+  </div>
+  

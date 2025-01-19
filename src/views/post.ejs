@@ -33,7 +33,17 @@
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             </form>
             <div class="dropdown">
-              <%- include('partials/profavatar') %>
+              <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                <strong>mdo</strong>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                <li><a class="dropdown-item" href="#">My dreams</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Sign out</a></li>
+              </ul>
             </div>
           </div>
         </div>
@@ -46,10 +56,41 @@
         <!-- Sidebar -->
         <aside class="col-md-3 sidebar">
           <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark rounded">
+            <button class="btn btn-primary has-icon btn-block mb-3" type="button" data-toggle="modal" data-target="#threadModal">
+              Post a Dream
+            </button>
             <ul class="nav nav-pills flex-column mb-auto">
+              <!-- Categories Dropdown -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-white" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Categories
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Comedic</a></li>
+                  <li><a class="dropdown-item" href="#">Scary</a></li>
+                  <li><a class="dropdown-item" href="#">Creepy</a></li>
+                  <li><a class="dropdown-item" href="#">Fantasy</a></li>
+                  <li><a class="dropdown-item" href="#">Adventure</a></li>
+                </ul>
+              </li>
               <li>
                 <a href="#" class="nav-link text-white">
-                  Dont be shy, post ur dream today!
+                  Popular this week
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link text-white">
+                  Popular all time
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link text-white">
+                  Newest dreams
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link text-white">
+                  Contest winners
                 </a>
               </li>
             </ul>
@@ -60,121 +101,123 @@
         <!-- Dream Post -->
         <main class="col-md-9">
           <article class="blog-post">
-            <h2 class="display-5 link-body-emphasis mb-1"><%=post.title %></h2>
-            <p class="blog-post-meta"><%= new Date(post.createdAt).toLocaleDateString() %> by <a href="/profile/<%=post.author.username %>"><%=post.author.username %></a></p>
+            <h2 class="display-5 link-body-emphasis mb-1">Dreamcatchr Dream Competition! 🌟</h2>
+            <p class="blog-post-meta">November 21, 2024 by <a href="#">DreamAdmin</a></p>
             <hr>
-            <% if (post.image && post.image.length) { %>
-              <img src="data:image/jpeg;base64,<%= post.image.toString('base64') %>" alt="Post Image" class="img-fluid">
-              <% } %>
-              <p><%= post.content %></p> 
-          </article>
+            <h3>How It Works</h3>
+            <ol>
+                <li><b>Submit Your Dream:</b> Share your dream and mark it for the competition during submission.</li>
+                <li><b>Get Votes:</b> Dreams entered into the competition will be open for community votes. Encourage your friends and followers to vote!</li>
+                <li><b>Win and Shine:</b> The dream with the most votes by the end of the month wins!</li>
+            </ol>
+            <p>This is some additional paragraph placeholder content. It's a
+                slightly shorter version of the other highly repetitive body text used
+                throughout.</p>
+            <h3>Prizes</h3>
+            <ul>
+                <li>A special badge on their Dreamcatchr profile.</li>
+                <li>A featured spot on our homepage for a month.</li>
+                <li>Exclusive goodies (details revealed soon!).</li>
+            </ul>
+            <h3>Terms & Conditions</h3>
+            <ol>
+                <li><b>Eligibility: </b>Only registered Dreamcatchr users can enter the competition.</li>
+                <li><b>Original Content: </b>The dream you submit must be your own and not copied or plagiarized.</li>
+                <li><b>One Entry Per Month: </b>Each user can submit only one dream per competition cycle.</li>
+                <li><b>Community Voting: </b>Voting is open to all users, but votes from fake or duplicate accounts will be disqualified.</li>
+                <li><b>Deadline: </b>Dreams can be submitted up until the 20th of each month. Voting will remain open until the last day of the month.</li>
+                <li><b>Judging Criteria: </b>The winner is determined by the highest number of community votes. In case of a tie, our team will select the winner based on creativity and engagement.</li>
+                <li><b>Content Guidelines: </b>Submissions must adhere to Dreamcatchr’s content rules—no offensive, harmful, or inappropriate material will be allowed.</li>
+            </ol>
+            <p>So, what are you waiting for? Submit your dream today, and let’s see if yours will captivate the hearts of our dreamers worldwide! 🌙✨</p>
+
+        </article>
         <!-- Like Post Symbol -->
         <div class="d-flex align-items-center mb-4">
-          <form id="likeForm" action="/post/<%= post._id %>/like" method="POST">
-            <button id="submitComment" style="border: none; background-color: white;">
-              <i id="likeButton"  class="far fa-thumbs-up fs-3 text-primary me-2" style="cursor: pointer;"></i>
-            </button>
-        </form>
-          <span id="likeCount"><%= post.likes.length%> Likes</span>
+          <i id="likeButton" class="far fa-thumbs-up fs-3 text-primary me-2" style="cursor: pointer;"></i>
+          <span id="likeCount">0 Likes</span>
         </div>
-        <%if (commentsAllowed) { %>
+
+        <script>
+          let likeCount = 0;
+          const likeButton = document.getElementById('likeButton');
+          const likeCountDisplay = document.getElementById('likeCount');
+
+          likeButton.addEventListener('click', function () {
+            likeCount++;
+            likeCountDisplay.textContent = `${likeCount} ${likeCount === 1 ? 'Like' : 'Likes'}`;
+            
+            // Change icon to filled thumbs up
+            likeButton.classList.remove('far');
+            likeButton.classList.add('fas');
+            likeButton.style.color = 'red';
+
+            // Disable further likes from the same user
+            likeButton.style.pointerEvents = 'none';
+          });
+        </script>
+
+        <!--The comment section-->
+        <!-- Comment Section -->
         <div class="card mb-4" style="background-color: #f8f9fa;">
             <div class="card-body">
+                <h5 class="card-title">Comments</h5>
+                <!-- Input for new comments -->
                 <div class="mb-3">
                     <textarea id="commentInput" class="form-control" rows="3" placeholder="Add a comment..."></textarea>
                 </div>
-                <form id="commentForm" action="/comments/<%= post._id %>/comment" method="POST">
-                  <button id="submitComment" class="btn btn-primary mb-3">Post Comment</button>
-                </form>
+                <button id="submitComment" class="btn btn-primary mb-3">Post Comment</button>
                 
-                <!-- Comments container -->
-                <div class="comments-container">
-                  <h3>Comments</h3>
-                  <% post.comments.forEach(comment => { %>
-                    <%- include('partials/comment', { comment: comment }) %>
-
-                  <% }); %>
+                <!-- Comments Display -->
+                <div id="commentsContainer">
+                    <!-- Existing comments will appear here -->
                 </div>
             </div>
+            <script>
+                document.getElementById('submitComment').addEventListener('click', function () {
+                    const commentInput = document.getElementById('commentInput');
+                    const commentText = commentInput.value.trim();
+                
+                    if (commentText) {
+                        const commentsContainer = document.getElementById('commentsContainer');
+                        
+                        // Create a new comment card
+                        const newComment = document.createElement('div');
+                        newComment.className = 'd-flex flex-start align-items-center mb-3';
+                
+                        newComment.innerHTML = `
+                            <img class="rounded-circle shadow-1-strong me-3" src="" alt="avatar" width="60" height="60">
+                            <div>
+                                <h6 class="fw-bold text-primary mb-1">New User</h6>
+                                <p class="mt-2 mb-0">${commentText}</p>
+                                <div class="small d-flex justify-content-start mt-2">
+                                    <a href="#!" class="d-flex align-items-center me-3 text-decoration-none">
+                                        <i class="far fa-thumbs-up me-2"></i>
+                                        <p class="mb-0">I like this comment</p>
+                                    </a>
+                                </div>
+                            </div>
+                        `;
+                
+                        // Append new comment
+                        commentsContainer.appendChild(newComment);
+                
+                        // Clear the input
+                        commentInput.value = '';
+                    } else {
+                        alert('Please enter a comment before posting.');
+                    }
+                });
+                </script>
                 
         </div>
-        <% }else{ %>
-          <div class="card mb-4" style="background-color: #f8f9fa;">
-            <div class="card-body">
-              <p>Comments are disabled for this post.</p>
-            </div>
-          </div>
-        <% } %>
+
         </main>
       </div>
     </div>
     
    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" >
-    </script>
-    <script>
-      document.addEventListener('DOMContentLoaded', async function() {
-        const postId = '<%= post._id %>';
-        const response = await fetch(`/post/${postId}/liked`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        const data = await response.json();
-        const likeButton = document.getElementById('likeButton');
-        if (data.liked) {
-            likeButton.classList.remove('far');
-            likeButton.classList.add('fas');
-        } else {
-            likeButton.classList.remove('fas');
-            likeButton.classList.add('far');
-        }
-    });
-      document.getElementById('likeForm').addEventListener('submit', async function(event) {
-          event.preventDefault();
-          const form = event.target;
-          const action = form.action;
-          const response = await fetch(action, {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              }
-          });
-          const data = await response.json();
-          document.getElementById('likeCount').innerText = `${data.likes} Likes`;
-          const likeButton = document.getElementById('likeButton');
-        if (data.liked) {
-            likeButton.classList.remove('far');
-            likeButton.classList.add('fas');
-        } else {
-            likeButton.classList.remove('fas');
-            likeButton.classList.add('far');
-        }
-      });
-      document.getElementById('commentForm').addEventListener('submit', async function(event) {
-        event.preventDefault();
-        console.log("hereree");
-        const form = event.target;
-        const action = form.action;
-        const commentContent = document.getElementById('commentInput').value;
-        
-        const response = await fetch(action, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ content: commentContent })
-        });
-        if (response.ok) {
-            console.log("response ok");
-            const data = await response.json();
-            location.reload();
-        } else {
-            console.error('Failed to post comment');
-        }
-    });
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" ></script>
     
-  </script>
   </body>
 </html>
