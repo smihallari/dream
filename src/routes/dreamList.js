@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/post');
 
+
+
 router.get('/', async (req, res) => {
   try {
     const currentPage = parseInt(req.query.page) || 1; // Current page (default: 1)
@@ -44,6 +46,8 @@ router.get('/', async (req, res) => {
       prev: currentPage > 1 ? `/dreamList?page=${currentPage - 1}&filter=${req.query.filter || ''}&category=${req.query.category || ''}` : null,
       next: currentPage < totalPages ? `/dreamList?page=${currentPage + 1}&filter=${req.query.filter || ''}&category=${req.query.category || ''}` : null,
     };
+
+
 
     res.render('dreamList', {
       appliedFilter: req.query.filter || req.query.category || 'All Posts',

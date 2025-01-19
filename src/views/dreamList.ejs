@@ -3,6 +3,14 @@
   <head>
     <% pageName = "Dreams"; %>
     <%- include('./partials/head') %>
+    <style>
+      .rounded-custom {
+    border-radius: 25%;
+  }
+
+  .fs-5 {
+    font-size: 1.25rem;
+  }
     </style>
   </head>
   <body>
@@ -29,6 +37,7 @@
         
       </div>
     </div>
+    <%- include('partials/footer') %>
     
      <script>
       const isLoggedIn = ' <%= isLoggedIn %>';

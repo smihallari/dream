@@ -1,0 +1,59 @@
+<div class="post-container">
+  <!-- Post Header -->
+  <div class="post-header d-flex">
+    <!-- Picture -->
+    <div class="post-picture">
+      <% if (post.image) { %>
+        <img src="data:image/jpeg;base64,<%= post.image.toString('base64') %>" alt="Post Picture" class="img-fluid rounded" style="width: 100px; height: 100px; object-fit: cover;">
+      <% } else { %>
+        <img src="/public/photos/default.png" alt="Default Picture" class="img-fluid rounded" style="width: 100px; height: 100px; object-fit: cover;">
+      <% } %>
+    </div>
+
+    <!-- Details -->
+    <div class="post-details ms-3">
+      <h3 class="post-title mb-1"><%= post.title %></h3>
+      <p class="post-meta text-muted mb-1">
+        By <a href="/profile/<%= post.author._id %>"><strong><%= post.author.username %></strong></a> | <%= post.timeAgo %> ago | Category: <strong><%= post.category %></strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- Body of the Post -->
+  <div class="post-body mt-3" style="word-wrap: break-word; overflow-wrap: break-word;">
+    <p><%= post.content %></p>
+  </div>
+  
+
+  <!-- Like and Favourite Options -->
+  <div class="post-actions mt-3">
+    <button class="btn btn-outline-primary me-2" onclick="likePost('<%= post.id %>')">
+      <i class="fas fa-thumbs-up"></i> Like (<span id="like-count-<%= post.id %>"><%= 0 + post.likes %></span>)
+    </button>
+    <button class="btn btn-outline-warning" onclick="favouritePost('<%= post.id %>')">
+      <i class="fas fa-heart"></i> Favourite 
+    </button>
+  </div>
+
+  <!-- Comments Section -->
+  <div class="post-comments mt-4">
+    <h5>Comments</h5>
+    
+    <!-- Comment Form -->
+    <form action="/comments/<%= post.id %>/comment" method="POST" class="mb-3">
+      <div class="mb-2">
+        <textarea name="comment" class="form-control" rows="2" placeholder="Write a comment..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Post Comment</button>
+    </form>
+
+    
+
+    <!-- Comment List -->
+    <div class="comment-list">
+      <% comments.forEach(comment => { %>
+        <%- include('./partials/comment', { comment }) %>
+      <% }) %>
+    </div>
+  </div>
+</div>
