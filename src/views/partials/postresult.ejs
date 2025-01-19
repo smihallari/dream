@@ -6,6 +6,6 @@
     <% if (post.image) { %>
       <img src="data:image/jpeg;base64,<%= post.image.toString('base64') %>" class="img-fluid rounded mb-3" alt="<%= post.title %>">
     <% } %>
-    <a href="/posts/<%= post._id %>" class="btn btn-outline-primary btn-sm">Read more</a>
+    <a href="/post/<%= post._id %>" class="btn btn-outline-primary btn-sm">Read more</a>
   </div>
   

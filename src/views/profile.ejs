@@ -93,7 +93,9 @@
                           <hr>
                           <div class="row">
                             <div class="col-sm-12">
-                              <button class="btn btn-primary profile-button"  id="edit_profile" type="button">Edit Profile</button></div>
+                              <form action="/profile_settings/<%= user.username %>" method="GET">
+                              <button class="btn btn-primary profile-button"  id="edit_profile" type="submit">Edit Profile</button></div>
+                              </form>
                             </div>
                           </div>
                         </div>
@@ -121,17 +123,6 @@
   <!-- /.container -->
             </div>
         </div>
-        <script>
-          document.addEventListener('DOMContentLoaded', () => {
-                const editProfile = document.getElementById('edit_profile');
-                if (editProfile) {
-                      editProfile.addEventListener('click', async (e) => {
-                      const username = '<%= user.username %>';
-                      window.location.href = `/profile_settings/${username}`;
-                      
-                  });
-                }
-            });
-          </script>
+        
     </body>
 </html>

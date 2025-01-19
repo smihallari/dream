@@ -21,7 +21,7 @@ router.get('/:username', async (req, res) => {
       .populate('author', 'name') 
       .select('title content image ') 
       .lean();
-    res.render('profile', { profileUser,user, isLoggedIn: req.isLoggedIn,posts,allowedtoEdit });
+    res.render('profile', {  profileUser,user, isLoggedIn: req.isLoggedIn,posts,allowedtoEdit });
     
   } catch (error) {
     console.error(error);

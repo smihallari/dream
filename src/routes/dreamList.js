@@ -58,7 +58,7 @@ router.get('/', async (req, res) => {
       next: currentPage < totalPages ? `/dreamList?page=${currentPage + 1}&filter=${req.query.filter || ''}&category=${req.query.category || ''}` : null,
     };
 
-    res.render('dreamList', {
+    res.render('dreamList', { 
       appliedFilter: req.query.filter || req.query.category || 'All Posts',
       pagination,
       posts,
@@ -66,7 +66,7 @@ router.get('/', async (req, res) => {
     });
   } catch (error) {
     console.error('Error fetching posts:', error);
-    res.render('dreamList', {
+    res.render('dreamList', { 
       appliedFilter: 'Error',
       pagination: { currentPage: 1, totalPages: 0, prev: null, next: null },
       posts: [],

@@ -61,7 +61,7 @@ router.get('/', async (req, res) => {
     });
   } catch (error) {
     console.error('Error fetching contest posts:', error);
-    res.render('contest', {
+    res.render('contest', { 
       appliedFilter: 'Error',
       pagination: { currentPage: 1, totalPages: 0, prev: null, next: null },
       posts: [],

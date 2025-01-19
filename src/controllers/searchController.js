@@ -8,14 +8,14 @@ const searchPosts = async (req, res) => {
     const { query } = req.query;
     const page = Math.max(1, parseInt(req.query.page, 10) || 1);
     if (!query || query.trim() === '') {
-      return res.render('search', { posts: [], message: 'Please enter a search term.', query: '', currentPage: 1, totalPages: 0 });
+      return res.render('search', {  posts: [], message: 'Please enter a search term.', query: '', currentPage: 1, totalPages: 0 });
     }
 
     const limit = 10; 
     const skip = (page - 1) * limit; 
 
     if (!query) {
-      return res.render('search', { posts: [], message: 'Please enter a search term.', query, currentPage: 1, totalPages: 0 });
+      return res.render('search', {  posts: [], message: 'Please enter a search term.', query, currentPage: 1, totalPages: 0 });
     }
 
     const posts = await Post.aggregate([
@@ -89,7 +89,7 @@ const searchPosts = async (req, res) => {
     res.render('search', { 
       posts: posts || [], 
       query, 
-      currentPage: page, 
+      currentPage: page,  
       totalPages: totalPages || 0,
     });
   } catch (err) {

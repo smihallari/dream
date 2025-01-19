@@ -1,11 +1,11 @@
 <div class="carousel-item <%= isActive ? 'active' : '' %>">
-    <div class="card mb-3" style="max-width: 540px;">
+    <a href="/post/<%= post._id %>"><div class="card mb-3" style="max-width: 540px;">
         <div class="row g-0">
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 class="card-title">Featured Post</h5>
                     <h3 class="card-text"><%= post.title %></h3>
-                    <a href="/posts/<%= post._id %>" class="btn btn-secondary">Read More</a>
+                    <p>Read More</p>
                 </div>
             </div>
             <div class="col-md-4">
@@ -13,4 +13,5 @@
             </div>
         </div>
     </div>
+</a>
 </div>

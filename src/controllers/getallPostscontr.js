@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
 
       // Sort posts by 6 hours ago likes in descendng order
       postsWithCounts.sort((a, b) => b.recentLikesCount - a.recentLikesCount);
-      res.render('posts', { posts: postsWithCounts });
+      res.render('posts', {  posts: postsWithCounts });
 
     } else {
       // newest or oldest posts
@@ -46,7 +46,7 @@ router.get('/', async (req, res) => {
         hasLiked: userId ? post.likes.some(like => like.user.equals(userId)) : false
       }));
 
-      res.render('posts', { posts: postsWithCounts });
+      res.render('posts', {  posts: postsWithCounts });
     }
   } catch (err) {
     console.error('Error fetching posts:', err);

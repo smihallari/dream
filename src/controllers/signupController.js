@@ -14,6 +14,7 @@ const signup = [
   check('password', 'Password must be at least 6 characters').isLength({ min: 6 }),
   
   async (req, res) => {
+    
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
@@ -38,10 +39,10 @@ const signup = [
       });
 
       await user.save();
-      const payload = { user: { id: user.id } };
-      const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+      // const payload = { user: { id: user.id } };
+      // const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
 
-      res.status(201).json({ token });
+      res.redirect('/signin');
     } catch (err) {
       console.error('Error during signup:', err);
       res.status(500).send('Server error');

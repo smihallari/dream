@@ -10,7 +10,7 @@ const getProfileSettings = async (req, res) => {
     if (!profileUser) {
       return res.status(404).send('User not found');
     }
-    res.render('profile_settings', { profileUser,user, isLoggedIn: req.isLoggedIn });
+    res.render('profile_settings', {  profileUser,user, isLoggedIn: req.isLoggedIn });
   } catch (error) {
     console.error(error);
     res.status(500).send('Failed to load profile settings');

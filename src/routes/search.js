@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
   try {
     const query = req.query.query || '';
     if (!query.trim()) {
-      return res.render('search', { posts: [], query: '', message: 'Enter a search term.' });
+      return res.render('search', {  posts: [], query: '', message: 'Enter a search term.' });
     }
 
     const regex = new RegExp(query, 'i'); // 'i' makes the search case-insensitive
@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
     })
     .populate('author', 'name')
     .lean();
-    res.render('search', { posts, user: req.user, query, message: null, isLoggedIn: req.isLoggedIn });
+    res.render('search', {  posts, user: req.user, query, message: null, isLoggedIn: req.isLoggedIn });
   } catch (err) {
     console.error('Search error:', err);
     res.status(500).json({ error: { message: 'Internal Server Error' } });

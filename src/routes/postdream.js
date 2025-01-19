@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
     res.render('postdream', { isLoggedIn: req.isLoggedIn, username: req.user.username });
   }
   else{
-    res.render('signin',{ isLoggedIn: req.isLoggedIn, user: req.user,posts });
+    res.render('signin',{  isLoggedIn: req.isLoggedIn, user: req.user,posts });
   }});
 
 router.post('/create', upload.single('image'), createPost);

@@ -8,7 +8,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 // Route to render the contest entry form
 router.get('/', (req, res) => {
-  res.render('contestform', {
+  res.render('contestform', { 
     isLoggedIn: req.isLoggedIn || false,
     username: req.user?.username || null,
   });

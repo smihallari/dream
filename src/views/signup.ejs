@@ -35,39 +35,39 @@
             <br>
             <button class="btn btn-lg btn-primary btn-block col-md-4" type="submit">Sign up</button>
             <p>Already have an account?</p>
-            <button class="btn btn-md btn-ternary btn-block" type="button" onclick="window.location.href='signin'">Sign in</button>
+            <button class="btn btn-md btn-ternary btn-block" type="button" onclick="window.location.href='signin'" >Sign in</button>
             <p class="mt-5 mb-3 text-muted">© Dreamcatchr 2025</p>
         </form>
     </div>
     
 
-    <script>
-    function validatePasswords() {
-        var password = document.getElementById("inputPassword").value;
-        var confirmPassword = document.getElementById("confirmPassword").value;
-        if (password !== confirmPassword) {
-            alert("Passwords do not match.");
-            return false;
+     <script>
+        function validatePasswords() {
+            var password = document.getElementById("inputPassword").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+            return true;
         }
-        return true;
-    }
-    document.getElementById('signup-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name= document.getElementById('name').value;
-      const surname = document.getElementById('surname').value;
-      const username = document.getElementById('username').value;
-      const email = document.getElementById('inputEmail').value;
-      const password = document.getElementById('inputPassword').value;
-
-      const res = await fetch('/signup/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name,surname,username, email, password }),
-      });
-      const data = await res.json();
-      alert(res.ok ? 'Signup successful!' : data.message || 'Signup failed');
-      window.location.href='/signin';
-    });
-    </script>
+        document.getElementById('signup-form').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const name= document.getElementById('name').value;
+          const surname = document.getElementById('surname').value;
+          const username = document.getElementById('username').value;
+          const email = document.getElementById('inputEmail').value;
+          const password = document.getElementById('inputPassword').value;
+    
+          const res = await fetch('/signup/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name,surname,username, email, password }),
+          });
+          const data = await res.json();
+          alert(res.ok ? 'Signup successful!' : data.message || 'Signup failed');
+          window.location.href='/signin';
+        });
+        </script>
 </body>
 </html>

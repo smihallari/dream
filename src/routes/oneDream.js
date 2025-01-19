@@ -17,7 +17,7 @@ router.get('/:id', async (req, res) => {
     if (!post) {
       return res.status(404).send('Post not found');
     }
-    res.render('post', { post, isLoggedIn: req.isLoggedIn, user: req.user,commentsAllowed: post.commentsAllowed });
+    res.render('post', {  post, isLoggedIn: req.isLoggedIn, user: req.user,commentsAllowed: post.commentsAllowed });
   } catch (error) {
     console.error(error);
     res.status(500).send('Failed to load post');
