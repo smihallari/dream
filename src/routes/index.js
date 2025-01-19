@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
     // Fetch recent dreams
     const recentDreams = await Post.find()
       .sort({ createdAt: -1 })
-      .limit(10)
+      .limit(3)
       .select('title createdAt image _id')
       .lean();
 

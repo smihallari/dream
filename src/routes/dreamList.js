@@ -19,7 +19,7 @@ const Post = require('../models/post');
 router.get('/', async (req, res) => {
   try {
     const currentPage = parseInt(req.query.page) || 1; // Current page (default: 1)
-    const limit = 10; // Posts per page
+    const limit = 2; // Posts per page
     const skip = (currentPage - 1) * limit;
     const goat = true;
 
