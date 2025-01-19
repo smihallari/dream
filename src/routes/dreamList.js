@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
   .populate('author', 'username image') 
   .select('title category author image') 
   .lean();
-
+  
   res.render('dreamList',{ isLoggedIn: req.isLoggedIn, user: req.user,posts });
 });
 router.use('/posts', require('./posts'));

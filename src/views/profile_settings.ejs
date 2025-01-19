@@ -32,20 +32,18 @@
                   <!-- /Breadcrumb -->
             
                   <div class="row gutters-sm">
-                    <form action="/profile_settings/<%= user.username %>" method="post">
+                    <form action="/profile_settings/<%= profileUser.username %>" method="post">
                     <div class="col-md-4 mb-3">
                       <div class="card">
                         <div class="card-body">
                           <div class="d-flex flex-column align-items-center text-center">
                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                             <div class="mt-3">
-                              <h4>Username</h4>
                               <button class="btn btn-primary">Upload photo</button>
                             </div>
                           </div>
                         </div>
                       </div>
-
                     </div>
                     <div class="col-md-8">
                       <div class="card mb-3">
@@ -55,7 +53,7 @@
                               <h6 class="mb-0">Name</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                              <input type="text" class="form-control" name="newName"  value="<%= user.name %>">
+                              <input type="text" class="form-control" name="newName"  value="<%= profileUser.name %>">
                             </div>
                           </div>
                           <hr>
@@ -64,7 +62,7 @@
                               <h6 class="mb-0">Surname</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                              <input type="text" class="form-control" name="newSurname"  value="<%= user.surname %>">
+                              <input type="text" class="form-control" name="newSurname"  value="<%= profileUser.surname %>">
                             </div>
                           </div>
                           <hr>
@@ -73,7 +71,7 @@
                               <h6 class="mb-0">Username</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                              <input type="text" class="form-control" name="newUsername"  value="<%= user.username %>">
+                              <input type="text" class="form-control" name="newUsername"  value="<%= profileUser.username %>">
                             </div>
                           </div>
                           <hr>
@@ -82,7 +80,7 @@
                               <h6 class="mb-0">Email</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                              <input type="text" class="form-control" name="newEmail" id="email" value="<%= user.email %>">
+                              <input type="text" class="form-control" name="newEmail" id="email" value="<%= profileUser.email %>">
                             </div>
                           </div>
                           <hr>
@@ -91,7 +89,7 @@
                               <h6 class="mb-0">Bio</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                              <input type="text" class="form-control" name="newBio" id="bio" value="<%= user.bio %>">
+                              <input type="text" class="form-control" name="newBio" id="bio" value="<%= profileUser.bio %>">
                             </div>
                           </div>
                           <hr>
@@ -100,7 +98,7 @@
                               <h6 class="mb-0">Twitter</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                              <input type="text" class="form-control" name="newTwitter" id="twitter" value="<%= user.twitter %>">
+                              <input type="text" class="form-control" name="newTwitter" id="twitter" value="<%= profileUser.twitter %>">
                             </div>
                           </div>
                           <hr>
@@ -109,7 +107,7 @@
                               <h6 class="mb-0">Facebook</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                              <input type="text" class="form-control" name="newFacebook" id="facebook" value="<%= user.facebook %>">
+                              <input type="text" class="form-control" name="newFacebook" id="facebook" value="<%= profileUser.facebook %>">
                             </div>
                           </div>
                           <hr>
@@ -118,7 +116,7 @@
                               <h6 class="mb-0">Instagram</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                              <input type="text" class="form-control" name="newInstagram" id="instagram" value="<%= user.instagram %>">
+                              <input type="text" class="form-control" name="newInstagram" id="instagram" value="<%= profileUser.instagram %>">
                             </div>
                           </div>
                           <hr>

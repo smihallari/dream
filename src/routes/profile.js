@@ -3,24 +3,25 @@ const router = express.Router();
 const User = require('../models/user'); 
 const Post = require('../models/post');
 // const { isAuthenticated, hasRole } = require('../middleware/authenticationWare');
-const authentication = require('../middleware/authenticationWare');
-router.use(authentication);
-
 
 router.get('/:username', async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.params.username }); 
-
+    const profileUser = await User.findOne({ username: req.params.username }); 
+    let allowedtoEdit = false;
+    const user = req.user;
+    if(profileUser._id.equals(req.user._id) || req.user.role === 'admin'){
+      allowedtoEdit = true;
+    }
     if (!user) {
       return res.status(404).send('User not found');
     }
-    const posts = await Post.find({ author: user._id }) 
+    const posts = await Post.find({ author: profileUser._id }) 
       .sort({ createdAt: -1 })
       .limit(3)
       .populate('author', 'name') 
       .select('title content image ') 
       .lean();
-    res.render('profile', { user, isLoggedIn: req.isLoggedIn,posts });
+    res.render('profile', { profileUser,user, isLoggedIn: req.isLoggedIn,posts,allowedtoEdit });
     
   } catch (error) {
     console.error(error);

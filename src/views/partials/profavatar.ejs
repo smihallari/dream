@@ -9,8 +9,9 @@
           height="32"
           class="rounded-circle me-2"
         />
+        <% if (user.username) { %>
           <p style="color:black"><%= user.username %></p>
-       
+        <% } %>
       </a>
       <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
         <li><a class="dropdown-item" href="#">My dreams</a></li>
@@ -28,7 +29,6 @@
   <% if (isLoggedIn) { %>
     <%- include('avatarButtons') %>
   <% } %>
-
 
   
 

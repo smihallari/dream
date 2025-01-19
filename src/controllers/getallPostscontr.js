@@ -97,34 +97,36 @@ module.exports = router;
 // };
 
 
-exports.getFilteredPosts = async (req, res) => {
-  try {
-    const { category, user, date } = req.query; // Read query parameters
-    const filters = {};
+// const Post = require('../models/post');
 
-    if (category) {
-      filters.category = category; // match category
-    }
-    if (author) {
-      filters.author = author; // match user ID or username
-    }
-    if (date) {
-      const parsedDate = new Date(date);
-      filters.createdAt = { 
-        $gte: parsedDate, // start date
-        $lt: new Date(parsedDate.getTime() + 24 * 60 * 60 * 1000), // end of the same day
-      };
-    }
+// exports.getFilteredPosts = async (req, res) => {
+//   try {
+//     const { category, user, date } = req.query; // Read query parameters
+//     const filters = {};
 
-    // query the database with the filter
-    const posts = await Post.find(filters)
-      .sort({ createdAt: -1 }) // Sort by newest
-      .exec();
+//     if (category) {
+//       filters.category = category; // match category
+//     }
+//     if (author) {
+//       filters.author = author; // match user ID or username
+//     }
+//     if (date) {
+//       const parsedDate = new Date(date);
+//       filters.createdAt = { 
+//         $gte: parsedDate, // start date
+//         $lt: new Date(parsedDate.getTime() + 24 * 60 * 60 * 1000), // end of the same day
+//       };
+//     }
 
-    // Send the filtered posts as a response
-    res.status(200).json(posts);
-  } catch (error) {
-    console.error('Error fetching filtered posts:', error);
-    res.status(500).json({ message: 'Error fetching posts', error });
-  }
-};
+//     // query the database with the filter
+//     const posts = await Post.find(filters)
+//       .sort({ createdAt: -1 }) // Sort by newest
+//       .exec();
+
+//     // Send the filtered posts as a response
+//     res.status(200).json(posts);
+//   } catch (error) {
+//     console.error('Error fetching filtered posts:', error);
+//     res.status(500).json({ message: 'Error fetching posts', error });
+//   }
+// };

@@ -4,18 +4,7 @@ const { createPost } = require('../controllers/makePost');
 const multer = require('multer');
 const Post = require('../models/post');
 
-const storage = multer.memoryStorage();
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image/')) {
-    cb(null, true);
-  } else {
-    cb(new Error('Only image files are allowed!'), false);
-  }
-};
-
-const upload = multer({ storage, fileFilter });
-
-// const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ storage: multer.memoryStorage() });
 
 router.get('/', async (req, res) => {
   const posts = await Post.find()

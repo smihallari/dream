@@ -102,124 +102,66 @@
                                         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                                             <div class="col p-4 d-flex flex-column position-static">
                                                 <strong class="d-inline-block mb-2 text-primary-emphasis">Featured dream</strong>
-                                                <!--
-                                                <h3 class="mb-0"><%=// posts[1].title %> </h3>
-                                                <div class="mb-1 text-body-secondary"><%=// new Date(posts[1].date).toLocaleDateString() %> </div>
-                                                <p class="card-text mb-auto"><%=// posts[1].content  %>...</p>
-                                                UPDATED THE ABOVE TO HANDLE CASES WITH FEWER THAN TWO POSTS-->
-                                                <% if (posts.length > 1) { %>
-                                                    <h3 class="mb-0"><%= posts[1].title %> </h3>
-                                                    <div class="mb-1 text-body-secondary"><%= new Date(posts[1].date).toLocaleDateString() %> </div>
-                                                    <p class="card-text mb-auto"><%= posts[1].content %>...</p>
-                                                <% } else { %>
-                                                    <p>No featured dreams available.</p>
-                                                <% } %>
-                                                
+                                                <h3 class="mb-0"><%= posts[1].title %> </h3>
+                                                <div class="mb-1 text-body-secondary"><%= new Date(posts[1].date).toLocaleDateString() %> </div>
+                                                <p class="card-text mb-auto"><%= posts[1].content  %>...</p>
                                                 <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
                                                     Continue reading
                                                     <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
                                                 </a>
                                             </div>
                                             <div class="col-auto d-none d-lg-block">
-                                                <!--
-                                                <%// if (posts[1].image) { %>
-                                                    <img src="data:image/jpeg;base64,<%=// posts[0].image.toString('base64') %>" alt="Dream Image" width="200" height="250" class="bd-placeholder-img">
-                                                <%// } else { %>
-                                                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">No image</text></svg>
-                                                <%// } %>
-                                                -->
-                                                <% if (posts.length > 1 && posts[1].image) { %>
-                                                    <img src="data:image/jpeg;base64,<%= posts[1].image.toString('base64') %>" alt="Dream Image" width="200" height="250" class="bd-placeholder-img">
-                                                <% } else { %>
-                                                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">No image</text></svg>
-                                                <% } %>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item ">
-                                    <div class="col-md-12 mx-auto">
-                                        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                                            <!--
-                                            <div class="col p-4 d-flex flex-column position-static">
-                                                <strong class="d-inline-block mb-2 text-primary-emphasis">Featured dream</strong>
-                                                <h3 class="mb-0"><%=// posts[2].title %> </h3>
-                                                <div class="mb-1 text-body-secondary"><%=// new Date(posts[2].date).toLocaleDateString() %> </div>
-                                                <p class="card-text mb-auto"><%=// posts[0].content ? posts[2].content.substring(0, 100) : '' %>...</p>
-                                            -->
-                                            <% if (posts.length > 2) { %>
-                                                <div class="col p-4 d-flex flex-column position-static">
-                                                    <strong class="d-inline-block mb-2 text-primary-emphasis">Featured dream</strong>
-                                                    <h3 class="mb-0"><%= posts[2].title %> </h3>
-                                                    <div class="mb-1 text-body-secondary"><%= new Date(posts[2].date).toLocaleDateString() %> </div>
-                                                    <p class="card-text mb-auto"><%= posts[2].content ? posts[2].content.substring(0, 100) : '' %>...</p>
-                                                    <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">Read more</a>
-                                                </div>
-                                            <% } else { %>
-                                                <p class="text-muted">Not enough posts to display this section.</p>
-                                            <% } %>
-                                            
-                                                <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-                                                    Continue reading
-                                                    <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
-                                                </a>
-                                            </div>
-                                            <div class="col-auto d-none d-lg-block">
-                                                <!--
-                                                <%// if (posts[2].image) { %>
-                                                    <img src="data:image/jpeg;base64,<%=// posts[0].image.toString('base64') %>" alt="Dream Image" width="200" height="250" class="bd-placeholder-img">
-                                                <%// } else { %>
-                                                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">No image</text></svg>
-                                                <%// } %>
-                                                -->
-                                                <% if (posts.length > 2 && posts[2].image) { %>
-                                                    <img src="data:image/jpeg;base64,<%= posts[2].image.toString('base64') %>" alt="Dream Image" width="200" height="250" class="bd-placeholder-img">
-                                                <% } else { %>
-                                                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">No image</text></svg>
-                                                <% } %>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item ">
-                                    <div class="col-md-12 mx-auto">
-                                        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                                            <div class="col p-4 d-flex flex-column position-static">
-                                                <strong class="d-inline-block mb-2 text-primary-emphasis">Featured dream</strong>
-                                                <!--
-                                                <h3 class="mb-0"><%=// posts[0].title %> </h3>
-                                                <div class="mb-1 text-body-secondary"><%=// new Date(posts[0].date).toLocaleDateString() %> </div>
-                                                <p class="card-text mb-auto"><%=// posts[0].content ? posts[0].content.substring(0, 100) : '' %>...</p>
-                                                -->
-                                                <% if (posts.length > 0) { %>
-                                                    <h3 class="mb-0"><%= posts[0].title %> </h3>
-                                                    <div class="mb-1 text-body-secondary"><%= new Date(posts[0].date).toLocaleDateString() %> </div>
-                                                    <p class="card-text mb-auto"><%= posts[0].content ? posts[0].content.substring(0, 100) : '' %>...</p>
-                                                <% } else { %>
-                                                    <p>No dreams available to display.</p>
-                                                <% } %>
-                                                
-                                                <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-                                                    Continue reading
-                                                    <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
-                                                </a>
-                                            </div>
-                                            <div class="col-auto d-none d-lg-block">
-                                                <!--
-                                                <%// if (posts[0].image) { %>
-                                                    <img src="data:image/jpeg;base64,<%=// posts[0].image.toString('base64') %>" alt="Dream Image" width="200" height="250" class="bd-placeholder-img">
-                                                <%// } else { %>
-                                                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">No image</text></svg>
-                                                <%// } %>
-                                                -->
-                                                <% if (posts.length > 0 && posts[0].image) { %>
+                                                <% if (posts[1].image) { %>
                                                     <img src="data:image/jpeg;base64,<%= posts[0].image.toString('base64') %>" alt="Dream Image" width="200" height="250" class="bd-placeholder-img">
                                                 <% } else { %>
                                                     <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">No image</text></svg>
                                                 <% } %>
-                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item ">
+                                    <div class="col-md-12 mx-auto">
+                                        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                                            <div class="col p-4 d-flex flex-column position-static">
+                                                <strong class="d-inline-block mb-2 text-primary-emphasis">Featured dream</strong>
+                                                <h3 class="mb-0"><%= posts[2].title %> </h3>
+                                                <div class="mb-1 text-body-secondary"><%= new Date(posts[2].date).toLocaleDateString() %> </div>
+                                                <p class="card-text mb-auto"><%= posts[0].content ? posts[2].content.substring(0, 100) : '' %>...</p>
+                                                <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+                                                    Continue reading
+                                                    <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+                                                </a>
+                                            </div>
+                                            <div class="col-auto d-none d-lg-block">
+                                                <% if (posts[2].image) { %>
+                                                    <img src="data:image/jpeg;base64,<%= posts[0].image.toString('base64') %>" alt="Dream Image" width="200" height="250" class="bd-placeholder-img">
+                                                <% } else { %>
+                                                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">No image</text></svg>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item ">
+                                    <div class="col-md-12 mx-auto">
+                                        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                                            <div class="col p-4 d-flex flex-column position-static">
+                                                <strong class="d-inline-block mb-2 text-primary-emphasis">Featured dream</strong>
+                                                <h3 class="mb-0"><%= posts[0].title %> </h3>
+                                                <div class="mb-1 text-body-secondary"><%= new Date(posts[0].date).toLocaleDateString() %> </div>
+                                                <p class="card-text mb-auto"><%= posts[0].content ? posts[0].content.substring(0, 100) : '' %>...</p>
+                                                <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+                                                    Continue reading
+                                                    <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+                                                </a>
+                                            </div>
+                                            <div class="col-auto d-none d-lg-block">
+                                                <% if (posts[0].image) { %>
+                                                    <img src="data:image/jpeg;base64,<%= posts[0].image.toString('base64') %>" alt="Dream Image" width="200" height="250" class="bd-placeholder-img">
+                                                <% } else { %>
+                                                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">No image</text></svg>
+                                                <% } %>
                                             </div>
                                         </div>
                                     </div>
