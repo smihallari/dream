@@ -1,17 +1,4 @@
-// const express = require('express');
-// const router = express.Router();
-// const Post = require('../models/post');
 
-// router.get('/', async (req, res) => {
-//   const posts = await Post.find()
-//   .populate('author', 'username image') 
-//   .select('title category author image') 
-//   .lean();
-  
-//   res.render('dreamList',{ isLoggedIn: req.isLoggedIn, user: req.user,posts });
-// });
-
-// module.exports = router;
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/post');
@@ -19,7 +6,7 @@ const Post = require('../models/post');
 router.get('/', async (req, res) => {
   try {
     const currentPage = parseInt(req.query.page) || 1; // Current page (default: 1)
-    const limit = 2; // Posts per page
+    const limit = 5; // Posts per page
     const skip = (currentPage - 1) * limit;
     const goat = true;
 
@@ -58,7 +45,7 @@ router.get('/', async (req, res) => {
       next: currentPage < totalPages ? `/dreamList?page=${currentPage + 1}&filter=${req.query.filter || ''}&category=${req.query.category || ''}` : null,
     };
 
-    res.render('dreamList', { 
+    res.render('dreamList', {
       appliedFilter: req.query.filter || req.query.category || 'All Posts',
       pagination,
       posts,
@@ -66,7 +53,7 @@ router.get('/', async (req, res) => {
     });
   } catch (error) {
     console.error('Error fetching posts:', error);
-    res.render('dreamList', { 
+    res.render('dreamList', {
       appliedFilter: 'Error',
       pagination: { currentPage: 1, totalPages: 0, prev: null, next: null },
       posts: [],

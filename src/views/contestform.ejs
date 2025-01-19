@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <%pageName = 'New Dream';%>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%- include('partials/head') %>
@@ -15,13 +15,12 @@
     <div class="container">
       <div class="row">
         
-        <%- include('partials/contestsidebar') %>
+        <%- include('partials/dreamsidebar') %>
 
 
         <main class="col-md-9 main-content flex-column">
-          <%- include('partials/newEntryBanner') %>
           
-          <%- include('partials/contestEntryForm') %>
+          <%- include('partials/postadream') %>
         
           
         </main>

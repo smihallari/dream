@@ -5,7 +5,7 @@ const Post = require('../models/post');
 router.get('/', async (req, res) => {
   try {
     const currentPage = parseInt(req.query.page) || 1; // Current page (default: 1)
-    const limit = 10; // Posts per page
+    const limit = 5; // Posts per page
     const skip = (currentPage - 1) * limit;
     const goat = false;
 
@@ -61,7 +61,7 @@ router.get('/', async (req, res) => {
     });
   } catch (error) {
     console.error('Error fetching contest posts:', error);
-    res.render('contest', { 
+    res.render('contest', {
       appliedFilter: 'Error',
       pagination: { currentPage: 1, totalPages: 0, prev: null, next: null },
       posts: [],

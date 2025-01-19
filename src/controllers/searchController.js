@@ -1,125 +1,50 @@
 const Post = require('../models/post');
-const mongoose = require('mongoose');
-
+const User = require('../models/user');
 
 const searchPosts = async (req, res) => {
   try {
-    
-    const { query } = req.query;
-    const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+    const { q: query, page = 1 } = req.query;
+    const limit = 10; // Results per page
+    const skip = (page - 1) * limit;
+
     if (!query || query.trim() === '') {
-      return res.render('search', {  posts: [], message: 'Please enter a search term.', query: '', currentPage: 1, totalPages: 0 });
+      return res.render('search', {
+        posts: [],
+        users: [],
+        searchTerm: '',
+        pagination: { totalPages: 0, currentPage: 1, prevPage: null, nextPage: null },
+      });
     }
 
-    const limit = 10; 
-    const skip = (page - 1) * limit; 
+    // Search for posts
+    const postResults = await Post.find({
+      $or: [
+        { title: new RegExp(query, 'i') },
+        { content: new RegExp(query, 'i') },
+        { category: new RegExp(query, 'i') },
+      ],
+    })
+      .sort({ createdAt: -1 })
+      .limit(limit);
 
-    if (!query) {
-      return res.render('search', {  posts: [], message: 'Please enter a search term.', query, currentPage: 1, totalPages: 0 });
-    }
+    // Search for users
+    const userResults = await User.find({
+      $or: [
+        { username: new RegExp(query, 'i') },
+        { email: new RegExp(query, 'i') },
+      ],
+    })
+      .sort({ username: 1 })
+      .limit(limit);
 
-    const posts = await Post.aggregate([
-      {
-        $lookup: {
-          from: 'users', 
-          localField: 'author',
-          foreignField: '_id',
-          as: 'authorDetails'
-        }
-      },
-      {
-        $unwind: '$authorDetails'
-      },
-      {
-        $match: {
-          $or: [
-            { 'authorDetails.name': { $regex: query, $options: 'i' } },
-            { title: { $regex: query, $options: 'i' } },
-            { content: { $regex: query, $options: 'i' } },
-            { category: { $regex: query, $options: 'i' } }
-          ]
-        }
-      },
-      {
-        $skip: skip
-      },
-      {
-        $limit: limit
-      },
-      {
-        $project: {
-          title: 1,
-          category: 1,
-          content: 1,
-          date: 1,
-          'authorDetails.name': 1
-        }
-      }
-    ]);
-
-    const totalResults = await Post.aggregate([
-      {
-        $lookup: {
-          from: 'users',
-          localField: 'author',
-          foreignField: '_id',
-          as: 'authorDetails'
-        }
-      },
-      {
-        $unwind: '$authorDetails'
-      },
-      {
-        $match: {
-          $or: [
-            { 'authorDetails.name': { $regex: query, $options: 'i' } },
-            { title: { $regex: query, $options: 'i' } },
-            { content: { $regex: query, $options: 'i' } },
-            { category: { $regex: query, $options: 'i' } }
-          ]
-        }
-      },
-      {
-        $count: 'total'
-      }
-    ]);
-
-    const totalPages = Math.ceil((totalResults[0] ? totalResults[0].total : 0) / limit);
-
-    res.render('search', { 
-      posts: posts || [], 
-      query, 
-      currentPage: page,  
-      totalPages: totalPages || 0,
+    res.render('search', {
+      posts: postResults,
+      users: userResults,
+      searchTerm: query,
     });
   } catch (err) {
-    console.error('Error searching posts:', err);
+    console.error('Error searching:', err);
     res.status(500).send('Server error');
-  }
-};
-
-exports.searchPosts = async (req, res) => {
-  try {
-    const { query } = req.query; // extract search query from request
-
-    if (!query) {
-      return res.status(400).json({ message: 'Search query is required' });
-    }
-
-    const results = await Post.find({
-      $text: { $search: query }, // Search title and content
-    })
-      .sort({ createdAt: -1 }); // Sort by newest first
-      // .limit(10); // Limit to 10 results
-
-    if (results.length === 0) {
-      return res.status(404).json({ message: 'No posts found' });
-    }
-
-    res.status(200).json(results);
-  } catch (error) {
-    console.error('Search error:', error);
-    res.status(500).json({ message: 'An error occurred while searching', error });
   }
 };
 

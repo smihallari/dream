@@ -45,6 +45,7 @@ router.get('/', async (req, res) => {
       .select('title author date content image')
       .limit(3)
       .lean();
+
     // Aggregate posts by month and year for archives
     const archives = await Post.aggregate([
       {
@@ -67,7 +68,7 @@ router.get('/', async (req, res) => {
     }));
 
     // Render the index template with all the data
-    res.render('index', { 
+    res.render('index', {
       recentDreams,
       posts,
       archives: formattedArchives,
@@ -78,7 +79,7 @@ router.get('/', async (req, res) => {
     console.error('Error fetching data:', error);
 
     // Render with empty arrays in case of errors
-    res.render('index', { 
+    res.render('index', {
       recentDreams: [],
       posts: [],
       archives: [],

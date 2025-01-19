@@ -1,29 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <% pageName = "search: " + query; %>
+  <% pageName = "search: " + searchTerm; %>
   <%- include('partials/head') %>
 </head>
 <body>
   <%- include('partials/topbar') %>
-    <div class="container">
-    
-    <h1>Search Results</h1>
 
-    <% if (posts.length > 0) { %>
-      <ul>
-        <% posts.forEach(post => { %>
-          <li>
-            <h3><%= post.title %></h3>
-            <p><%= post.content.substring(0, 100) %>...</p>
-            <a href="/post/<%= post._id %>">Read more</a>
-          </li>
-        <% }) %>
-      </ul>
-    <% } else { %>
-      <p>No results found for "<%= query %>".</p>
-    <% } %>
+  <div class="container mt-4">
+    <!-- Search Term -->
+    <div class="mb-3">
+      <h5>Search Results for: "<%= searchTerm %>"</h5>
+    </div>
+  
+    <!-- Results Section -->
+    <div id="search-results">
+      <!-- Posts -->
+      <div>
+        <h6>Posts</h6>
+        <% if (posts.length > 0) { %>
+          <% posts.forEach((post) => { %>
+            <div class="post-card mb-3">
+              <a href="/posts/<%= post._id %>">
+                <h5><%= post.title %></h5>
+                <p><%= post.content %></p>
+              </a>
+            </div>
+          <% }); %>
+        <% } else { %>
+          <p>No posts found.</p>
+        <% } %>
+      </div>
+  
+      <!-- Users -->
+      <div class="mt-4">
+        <h6>Users</h6>
+        <% if (users.length > 0) { %>
+          <% users.forEach((user) => { %>
+            <div class="user-card mb-3">
+              <a href="/profile/<%= user._id %>">
+                <h5><%= user.username %></h5>
+                <p><%= user.email %></p>
+              </a>
+            </div>
+          <% }); %>
+        <% } else { %>
+          <p>No users found.</p>
+        <% } %>
+      </div>
+    </div>
   </div>
+  
   <%- include('partials/footer') %>
 </body>
 </html>

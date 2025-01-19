@@ -1,11 +1,28 @@
 <div class="d-flex text-muted pt-3">
-  <img class="bd-placeholder-img flex-shrink-0 me-2 rounded"
-  src="<%= post.author.image && post.author.image.length ? `data:image/jpeg;base64,${post.author.image.toString('base64')}` : '/photos/p.jpg' %>"
-   alt="Dream Image" width="32" height="32" >
-    <strong class="d-block text-gray-dark">
+  <!-- Dream Title -->
+  <div class="flex-grow-1">
+    <strong class="d-block text-gray-dark mb-1">
       <a href="#" class="text-decoration-none text-body"><%= post.title %></a>
-      
     </strong>
-    Category: <%= post.category %>
-  </p>
+    <!-- Author, Image and Other Info -->
+    <div class="d-flex align-items-start">
+      <% if (post.image) { %>
+        <img class="bd-placeholder-img flex-shrink-0 me-2 rounded"
+          src="data:image/jpeg;base64,<%= post.image.toString('base64') %>"
+          alt="Dream Image" width="32" height="32">
+      <% } else { %>
+        <img class="bd-placeholder-img flex-shrink-0 me-2 rounded"
+          src="photos/thumbnail.png"
+          alt="Default Image" width="32" height="32">
+      <% } %>
+      <p class="mb-2 text-muted">
+        <small>Posted on <%= new Date(post.createdAt).toLocaleDateString() %> by <%= post.author %></small>
+      </p>
+    </div>
+  </div>
+
+  <!-- Like and Favourite Buttons -->
+  <div class="ms-auto d-flex" >
+    <%- include('./likeAndFavouriteButtons') %>
+  </div>
 </div>

@@ -1,80 +1,80 @@
 <div class="container" style="margin-left: 25%">
-    <div class="col-md-8 order-md-1">
-      <h4 class="mb-3">Fill the entry form to enter our contest:</h4>
-      <form class="needs-validation" novalidate="">
-        <div class="mb-3">
-          <label for="username">Username</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">@</span>
-            </div>
-            <input type="text" class="form-control" id="username" placeholder="CURRENT USER" required="">
-            <div class="invalid-feedback" style="width: 100%;">
-              Your username is required.
-            </div>
+  <div class="col-md-8 order-md-1">
+    <h4 class="mb-3">Fill the entry form to enter our contest:</h4>
+    <form class="needs-validation" novalidate="">
+      <div class="mb-3">
+        <label for="username">Username</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">@</span>
+          </div>
+          <input type="text" class="form-control" id="username" placeholder="CURRENT USER" required="">
+          <div class="invalid-feedback" style="width: 100%;">
+            Your username is required.
           </div>
         </div>
-        <div class="d-block my-3">
-          <p class="lead">Have you taken part in a previous competition?</p>
-          <div class="custom-control custom-radio">
-            <input id="competedbefore" name="has-competed-before" type="radio" class="custom-control-input" checked="" required="">
-            <label class="custom-control-label" for="credit">Yes</label>
-          </div>
-          <div class="custom-control custom-radio">
-            <input id="notcompetedbefore" name="has-competed-before" type="radio" class="custom-control-input" required="">
-            <label class="custom-control-label" for="debit">No</label>
+      </div>
+      <div class="d-block my-3">
+        <p class="lead">Have you taken part in a previous competition?</p>
+        <div class="custom-control custom-radio">
+          <input id="competedbefore" name="has-competed-before" type="radio" class="custom-control-input" checked="" required="">
+          <label class="custom-control-label" for="credit">Yes</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input id="notcompetedbefore" name="has-competed-before" type="radio" class="custom-control-input" required="">
+          <label class="custom-control-label" for="debit">No</label>
+        </div>
+      </div>
+      
+      <div class="mb-3">
+        <label for="email">Email <span class="text-muted">(Optional)</span></label>
+        <input type="email" class="form-control" id="email" placeholder="user@example.com">
+        <div class="invalid-feedback">
+          Please enter a valid email address for updates.
+        </div>
+      </div>
+
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="thiscontestnotifications">
+        <label class="custom-control-label" for="thiscontestnotifications">I would like to receive notifications for this contest via email</label>
+      </div>
+
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="generalcontestnotifications">
+        <label class="custom-control-label" for="generalcontestnotifications">I would like to receive notifications for future contests via email</label>
+      </div>
+      <hr class="mb-4">
+      <div class="row">
+        <div class="col-md-5 mb-3">
+          <label for="competingdream">Select a dream to enter in the competition:</label>
+          <select class="custom-select d-block w-100" id="country" required="">
+            <option value="">Choose...</option>
+            <option>DREAM TITLE</option>
+          </select>
+          <div class="invalid-feedback">
+            Please select a dream to enter.
           </div>
         </div>
         
-        <div class="mb-3">
-          <label for="email">Email <span class="text-muted">(Optional)</span></label>
-          <input type="email" class="form-control" id="email" placeholder="user@example.com">
-          <div class="invalid-feedback">
-            Please enter a valid email address for updates.
-          </div>
+      </div>
+      <hr class="mb-4">
+      <p>
+        Please note that in order to keep the voting process impartial, your username and original title of the competing dream will be hidden.
+        You can give your dream a different title or submit it with our default competing title.
+      </p>
+      <input type="text" class="form-control" id="compdreamtitle" value="Sample text">
+      <br>
+      <div class="mb-4">
+        <label for="description">Write a short description <span class="text-muted">(Optional)</span></label>
+        <textarea type="text" rows="8" class="form-control" id="description" placeholder="e.g. why should your dream win? How would you summarize it in a few words?" required=""></textarea>
+        <div class="invalid-feedback">
+          You need to write something here.
         </div>
-
-        <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" id="thiscontestnotifications">
-          <label class="custom-control-label" for="thiscontestnotifications">I would like to receive notifications for this contest via email</label>
-        </div>
-
-        <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" id="generalcontestnotifications">
-          <label class="custom-control-label" for="generalcontestnotifications">I would like to receive notifications for future contests via email</label>
-        </div>
-        <hr class="mb-4">
-        <div class="row">
-          <div class="col-md-5 mb-3">
-            <label for="competingdream">Select a dream to enter in the competition:</label>
-            <select class="custom-select d-block w-100" id="country" required="">
-              <option value="">Choose...</option>
-              <option>DREAM TITLE</option>
-            </select>
-            <div class="invalid-feedback">
-              Please select a dream to enter.
-            </div>
-          </div>
-          
-        </div>
-        <hr class="mb-4">
-        <p>
-          Please note that in order to keep the voting process impartial, your username and original title of the competing dream will be hidden.
-          You can give your dream a different title or submit it with our default competing title.
-        </p>
-        <input type="text" class="form-control" id="compdreamtitle" value="Sample text">
-        <br>
-        <div class="mb-4">
-          <label for="description">Write a short description <span class="text-muted">(Optional)</span></label>
-          <textarea type="text" rows="8" class="form-control" id="description" placeholder="e.g. why should your dream win? How would you summarize it in a few words?" required=""></textarea>
-          <div class="invalid-feedback">
-            You need to write something here.
-          </div>
-        </div>
-        <div class="mb-4"></div>
-        <p class="lead mb-0 text-body-emphasis fw-bold">May the best dream win!</a></p>
-        <div class="mb-4"></div>
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Submit your dream now</button>
-      </form>
-    </div>
+      </div>
+      <div class="mb-4"></div>
+      <p class="lead mb-0 text-body-emphasis fw-bold">May the best dream win!</a></p>
+      <div class="mb-4"></div>
+      <button class="btn btn-primary btn-lg btn-block" type="submit">Submit your dream now</button>
+    </form>
   </div>
+</div>
