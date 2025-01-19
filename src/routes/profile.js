@@ -9,6 +9,7 @@ router.get('/:username', async (req, res) => {
     const profileUser = await User.findOne({ username: req.params.username }); 
     let allowedtoEdit = false;
     const user = req.user;
+    
     if(profileUser.id === req.user._id || req.user.role === 'admin'){
       allowedtoEdit = true;
     }
