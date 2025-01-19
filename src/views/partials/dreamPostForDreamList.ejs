@@ -15,7 +15,7 @@
   <!-- Title and Details Section -->
   <div class="flex-grow-1 d-flex flex-column justify-content-center">
     <strong class="d-block text-primary fs-5 mb-1">
-      <a href="#" class="text-decoration-none text-dark"><%= post.title %></a>
+      <a href="/post/<%= post._id %>" class="text-decoration-none text-dark"><%= post.title %></a>
     </strong>
     <p class="mb-0 text-secondary small">
       Posted <%= post.timeAgo %> by <a href="/profile/<%= post.authorId %>" class="text-decoration-none text-secondary"><%= post.author %></a>
