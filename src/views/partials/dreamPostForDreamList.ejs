@@ -1,28 +1,29 @@
-<div class="d-flex text-muted pt-3">
-  <!-- Dream Title -->
-  <div class="flex-grow-1">
-    <strong class="d-block text-gray-dark mb-1">
-      <a href="#" class="text-decoration-none text-body"><%= post.title %></a>
+<div class="d-flex text-muted pt-2 pb-2 border-bottom">
+  <!-- Image Section -->
+  <div class="flex-shrink-0 me-3">
+    <% if (post.image) { %>
+      <img class="rounded-custom" 
+        src="data:image/jpeg;base64,<%= post.image.toString('base64') %>" 
+        alt="Dream Image" width="80" height="80" style="object-fit: cover;">
+    <% } else { %>
+      <img class="rounded-custom" 
+        src="photos/thumbnail.png" 
+        alt="Default Image" width="80" height="80" style="object-fit: cover;">
+    <% } %>
+  </div>
+
+  <!-- Title and Details Section -->
+  <div class="flex-grow-1 d-flex flex-column justify-content-center">
+    <strong class="d-block text-primary fs-5 mb-1">
+      <a href="#" class="text-decoration-none text-dark"><%= post.title %></a>
     </strong>
-    <!-- Author, Image and Other Info -->
-    <div class="d-flex align-items-start">
-      <% if (post.image) { %>
-        <img class="bd-placeholder-img flex-shrink-0 me-2 rounded"
-          src="data:image/jpeg;base64,<%= post.image.toString('base64') %>"
-          alt="Dream Image" width="32" height="32">
-      <% } else { %>
-        <img class="bd-placeholder-img flex-shrink-0 me-2 rounded"
-          src="photos/thumbnail.png"
-          alt="Default Image" width="32" height="32">
-      <% } %>
-      <p class="mb-2 text-muted">
-        <small>Posted on <%= new Date(post.createdAt).toLocaleDateString() %> by <%= post.author %></small>
-      </p>
-    </div>
+    <p class="mb-0 text-secondary small">
+      Posted <%= post.timeAgo %> by <a href="/profile/<%= post.authorId %>" class="text-decoration-none text-secondary"><%= post.author %></a>
+    </p>
   </div>
 
   <!-- Like and Favourite Buttons -->
-  <div class="ms-auto d-flex" >
+  <div class="ms-auto d-flex align-items-center">
     <%- include('./likeAndFavouriteButtons') %>
   </div>
 </div>
