@@ -22,16 +22,13 @@ const errorHandler = require('./middleware/errorHandler');
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, '..', 'public')));
-app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(cookieParser(COOKIE_SECRET));
 
 // Middleware
 app.use(express.json());
 app.use(errorHandler);
 
-app.use((req, res, next) => {
-  res.removeHeader('Content-Security-Policy'); // Remove CSP
-  next();
-});
+
 app.use(session({
   secret: JWT_SECRET ,
   resave: false,
@@ -39,7 +36,10 @@ app.use(session({
   store: MongoStore.create({ mongoUrl: MONGO_URI }),
   cookie: { secure: false, httpOnly: true } 
 }));
-
+// app.use((req, res, next) => {
+//   res.removeHeader('Content-Security-Policy'); // Remove CSP
+//   next();
+// });
 // app.use(session({
 //   secret: process.env.SESSION_SECRET, // Use the session secret from keys.env
 //   resave: false,
@@ -88,13 +88,19 @@ app.use((req, res, next) => {
   res.locals.isLoggedIn = req.isLoggedIn || false;
   next();
 });
+const crypto = require('crypto');
+
 // app.use((req, res, next) => {
+//   const nonce = crypto.randomBytes(16).toString('base64'); 
+//   res.locals.nonce = nonce; 
 //   res.setHeader(
 //     'Content-Security-Policy',
-//     "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;"
+//     `script-src 'self' 'nonce-${nonce}' https://cdn.jsdelivr.net;`
 //   );
+
 //   next();
 // });
+
 
 app.use('/', indexRoute);
 app.use('/dreamList', dreamListRouter);

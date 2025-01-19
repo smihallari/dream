@@ -138,11 +138,18 @@
                             <div class="col-sm-12">
                               <button class="btn btn-info" type="submit">Save Profile</button>
                             </div>
+                            
                           </div>
                         </div>
                       </div>
                     </iv>
                   </div>
+                  </form>
+                  <form action="/profile_settings/<%= user.username %>/delete" method="post">
+                    
+                    <div class="col-sm-12">
+                      <button class="btn btn-info" type="submit">Delete Account</button>
+                    </div>
                   </form>
                 </div>
             </div>

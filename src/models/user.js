@@ -29,7 +29,11 @@ const UserSchema = new mongoose.Schema({
     role: 
         { type: String, default: 'user' },
     profilePic: 
-        { type: Buffer, default:''}
+        { type: Buffer, default:''},
+    favorites:
+        [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }]
+    
+
 
 }, { timestamps: true });
 

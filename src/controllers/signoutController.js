@@ -4,8 +4,7 @@ const logout = (req, res) => {
     if (err) {
       return res.status(500).json({ message: 'Failed to logout' });
     }
-    res.json({ message: 'Logout successful' });
+    
   });
 };
-
 module.exports = logout;

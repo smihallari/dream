@@ -14,8 +14,6 @@ const PostSchema = new mongoose.Schema({
         { type: Date, default: Date.now },
     category: 
         { type: String, required: true },
-    // likes: 
-    //     [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',  timestamp: { type: Date, default: Date.now } }],
     likes: 
         [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     
@@ -25,6 +23,15 @@ const PostSchema = new mongoose.Schema({
     commentsAllowed:{
         type: Boolean,default: true
     },
+    inContest: {
+        type: Boolean, default: false
+    },
+    isWinner: {
+        type: Boolean, default:false
+    },
+    contestVotes:
+        [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    
 
     
 

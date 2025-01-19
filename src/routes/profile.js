@@ -9,8 +9,7 @@ router.get('/:username', async (req, res) => {
     const profileUser = await User.findOne({ username: req.params.username }); 
     let allowedtoEdit = false;
     const user = req.user;
-    
-    if(profileUser.id === req.user._id || req.user.role === 'admin'){
+    if(profileUser.id === req.user.id || req.user.role === 'admin'){
       allowedtoEdit = true;
     }
     if (!profileUser) {
@@ -22,14 +21,24 @@ router.get('/:username', async (req, res) => {
       .populate('author', 'name') 
       .select('title content image ') 
       .lean();
-    res.render('profile', {  profileUser,user, isLoggedIn: req.isLoggedIn,posts,allowedtoEdit });
+    res.render('profile', { profileUser,user, isLoggedIn: req.isLoggedIn,posts,allowedtoEdit });
     
   } catch (error) {
     console.error(error);
     res.status(500).send('Failed to load profile');
   }
 });
-
+router.get('/:username/makeadmin', async (req, res) => {
+  const profileUser = await User.findOne({ username: req.params.username }); 
+  if (!profileUser) {
+    return res.status(404).send('User not found');
+  }
+  profileUser.role = 'admin';
+  const updatedUser = await User.findByIdAndUpdate(profileUser._id, updateFields, {
+    runValidators: true,
+    new: true,
+  });
+});
 // AUTH
 // router.get('/', isAuthenticated, (req, res) => {
 //   res.render('profile', { user: req.session.user });

@@ -1,7 +1,7 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
-
-// Render the profile settings page
+const Post = require('../models/post');
+const Comment = require('../models/comment');
 const getProfileSettings = async (req, res) => {
   try {
 
@@ -75,7 +75,7 @@ const updateProfileSettings = async (req, res) => {
     }
     
     if (req.user.role !== 'admin' || req.user.id === profileUser.id) {
-      req.session.user = updatedUser;
+      req.user = updatedUser;
     }
     res.redirect(`/profile/${updatedUser.username}`);
   } catch (error) {
@@ -87,5 +87,22 @@ const updateProfileSettings = async (req, res) => {
     });
   }
 };
- 
-module.exports = { getProfileSettings, updateProfileSettings };
+const deleteAccount = async (req, res) => {
+  try {
+    const { username } = req.params;
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+    
+    await Post.deleteMany({ author: user.id });
+    await Comment.deleteMany({ author: user.id });
+    await User.findByIdAndDelete(user.id);
+    
+    
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).send('Failed to delete account');
+  }
+};
+module.exports = { getProfileSettings, updateProfileSettings,deleteAccount };
