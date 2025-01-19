@@ -1,118 +1,38 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="">
-
-    <title>TITLE</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <%- include('partials/head') %>
+  
   </head>
 
-  <body class="bg-light">
+  <body class="bg-body-primary">
+
+    <%- include('partials/topbar') %>
 
     <div class="container">
-      <div class="py-5 ">
-        <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
-          <div class="container d-flex">
-              <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary flex-shrink-1">
-                  <div class="col-lg-12 px-0">
-                      <h1 class="display-4 fst-italic">Welcome to the Dreamshow.</h1>
-                      <p class="lead my-3">Dream. Compete. Win.</p>
-                      <p class="lead my-3">Our Dreamcatchr competitions let you dream big.<br>Enter your posted dreams in our competition and let other users vote for the best for a chance to win dreamy prizes!</p>
-                      <p class="lead mb-0 text-body-emphasis fw-bold">Make your dreams come true.</a></p>
-                  </div>
-              </div>
-          </div>
+      <div class="row">
+        
+        <%- include('partials/contestsidebar') %>
+
+
+        <main class="col-md-9 main-content flex-column">
+          <%- include('partials/newEntryBanner') %>
+          
+          <%- include('partials/contestEntryForm') %>
+        
+          
+        </main>
+
         </div>
-      </div>
+        </div>
 
         
-        <div class="">
-        <div class="col-md-8 order-md-1">
-          <h4 class="mb-3">Fill the entry form to enter our contest:</h4>
-          <form class="needs-validation" novalidate="">
-            <div class="mb-3">
-              <label for="username">Username</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">@</span>
-                </div>
-                <input type="text" class="form-control" id="username" placeholder="CURRENT USER" required="">
-                <div class="invalid-feedback" style="width: 100%;">
-                  Your username is required.
-                </div>
-              </div>
-            </div>
-            <div class="d-block my-3">
-              <p class="lead">Have you taken part in a previous competition?</p>
-              <div class="custom-control custom-radio">
-                <input id="competedbefore" name="has-competed-before" type="radio" class="custom-control-input" checked="" required="">
-                <label class="custom-control-label" for="credit">Yes</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input id="notcompetedbefore" name="has-competed-before" type="radio" class="custom-control-input" required="">
-                <label class="custom-control-label" for="debit">No</label>
-              </div>
-            </div>
-            
-            <div class="mb-3">
-              <label for="email">Email <span class="text-muted">(Optional)</span></label>
-              <input type="email" class="form-control" id="email" placeholder="user@example.com">
-              <div class="invalid-feedback">
-                Please enter a valid email address for updates.
-              </div>
-            </div>
-
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="thiscontestnotifications">
-              <label class="custom-control-label" for="thiscontestnotifications">I would like to receive notifications for this contest via email</label>
-            </div>
-
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="generalcontestnotifications">
-              <label class="custom-control-label" for="generalcontestnotifications">I would like to receive notifications for future contests via email</label>
-            </div>
-            <hr class="mb-4">
-            <div class="row">
-              <div class="col-md-5 mb-3">
-                <label for="competingdream">Select a dream to enter in the competition:</label>
-                <select class="custom-select d-block w-100" id="country" required="">
-                  <option value="">Choose...</option>
-                  <option>DREAM TITLE</option>
-                </select>
-                <div class="invalid-feedback">
-                  Please select a dream to enter.
-                </div>
-              </div>
-              
-            </div>
-            <hr class="mb-4">
-            <p>
-              Please note that in order to keep the voting process impartial, your username and original title of the competing dream will be hidden.
-              You can give your dream a different title or submit it with our default competing title.
-            </p>
-            <input type="text" class="form-control" id="compdreamtitle" value="Sample text">
-            <br>
-            <div class="mb-4">
-              <label for="description">Write a short description <span class="text-muted">(Optional)</span></label>
-              <textarea type="text" rows="8" class="form-control" id="description" placeholder="e.g. why should your dream win? How would you summarize it in a few words?" required=""></textarea>
-              <div class="invalid-feedback">
-                You need to write something here.
-              </div>
-            </div>
-            <div class="mb-4"></div>
-            <p class="lead mb-0 text-body-emphasis fw-bold">May the best dream win!</a></p>
-            <div class="mb-4"></div>
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Submit your dream now</button>
-          </form>
-        </div>
-      </div>
-      </div>
-    </div>
+        <%- include('partials/footer') %>
+        
+  
+      
   </body>
 </html>
