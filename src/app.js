@@ -80,6 +80,7 @@ const aboutRoute = require('./routes/about');
 const seePostRoute = require('./routes/oneDream');
 const postCommentRoute = require('./routes/comments');
 const enterContestRoute = require('./routes/enterContestRoute');
+const favoritesRoute = require('./routes/favorite');
 app.use((req, res, next) => {
   res.locals.currentPath = req.path;
   next();
@@ -108,6 +109,7 @@ app.use('/contest', contestRoutes);
 app.use('/search', searchRoutes);
 app.use('/post',seePostRoute);
 app.use('/comments',postCommentRoute);
+app.use('/favorite',favoritesRoute);
 app.use('/enter_contest', enterContestRoute);
 app.use((err, req, res, next) => {
   res.status(err.status || 500).render('error', {

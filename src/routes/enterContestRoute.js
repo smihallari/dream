@@ -6,7 +6,7 @@ const Post = require('../models/post');
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.get('/', (req, res) => {
+router.get('/', (req, res,next) => {
   res.render('contestform', { 
     isLoggedIn: req.isLoggedIn || false,
     username: req.user?.username || null,

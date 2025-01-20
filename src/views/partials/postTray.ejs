@@ -6,9 +6,10 @@
         <% if (post.image) { %>
           <img src="data:image/jpeg;base64,<%= post.image.toString('base64') %>" alt="Post Picture" class="img-fluid rounded" style="width: 100px; height: 100px; object-fit: cover;">
         <% } else { %>
-          <img src="/public/photos/default.png" alt="Default Picture" class="img-fluid rounded" style="width: 100px; height: 100px; object-fit: cover;">
+          <img src="/photos/thumbnail.png" alt="Default Picture" class="img-fluid rounded" style="width: 100px; height: 100px; object-fit: cover;">
         <% } %>
       </div>
+      
 
 
       <div class="post-details ms-3">

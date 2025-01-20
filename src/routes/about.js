@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-router.get('/', async (req, res) => {
+router.get('/', async (req, res,next) => {
     try{
       res.render('about',{ 
         isLoggedIn: req.isLoggedIn || false,
