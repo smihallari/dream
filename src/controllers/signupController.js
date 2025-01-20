@@ -4,6 +4,7 @@ const { check, validationResult } = require('express-validator');
 const User = require('../models/user');
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
+const signinController = require('./signinController');
 
 const signup = [
   check('name', 'Name is required').not().isEmpty(),
@@ -40,7 +41,7 @@ const signup = [
 
       await user.save();
      
-      res.redirect('/signin');
+      res.json({ success: true, redirectUrl: '/' });
     } catch (err) {
       res.redirect('/signup');
       console.error('Error during signup:', err);

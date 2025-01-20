@@ -66,6 +66,14 @@
           });
           const data = await res.json();
           alert(res.ok ? 'Signup successful!' : data.message || 'Signup failed');
+        //   if(res.ok) window.location.href='/signin';
+          
+            if (res.ok) {
+                token = data.token; 
+                window.location.href = data.redirectUrl;
+            } else {
+                alert(data.message || 'Login failed');
+            }
         //   window.location.href='/signin';
         });
         </script>

@@ -3,9 +3,7 @@ const { check, validationResult } = require('express-validator');
 const User = require('../models/user');
 
 
-const login = [
-  check('email', 'Please include a valid email').isEmail(),
-  check('password', 'Password is required').exists(),
+const login = 
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
@@ -24,13 +22,13 @@ const login = [
       res.locals.user = user;
       
       res.json({ success: true, redirectUrl: '/' });
-    } catch (err) {
+    } catch (error) {
       error.message = 'error during login';
                 error.status = 500;
                 next(error);
     }
   }
-];
+;
 
 
-module.exports = login;
+module.exports = {login};
