@@ -15,7 +15,9 @@ router.post('/:username/delete', async (req, res, next) => {
       await signoutController(req, res);
       res.redirect('/');
     } catch (error) {
-      next(error); 
+      error.message = 'Error deleting account';
+      error.status = 400;
+      next(error);
     }
   });
 module.exports = router;

@@ -71,7 +71,7 @@ router.get('/', async (req, res) => {
     }));
 
     // Render the index templa te with all the data
-    console.log(req.user);
+    
     res.render('index', {
       recentDreams,
       posts,
@@ -81,7 +81,9 @@ router.get('/', async (req, res) => {
       user: req.user || null,
     });
   } catch (error) {
-    console.error('Error fetching data:', error);
+    error.message = 'Error fetching data';
+    error.status = 500;
+    next(error);
 
     // Render with empty arrays in case of errors
     res.render('index', {

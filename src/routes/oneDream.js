@@ -8,7 +8,9 @@ router.get('/:id', async (req, res) => {
     const post = await Post.findById(req.params.id).populate('author');
 
     if (!post) {
-      return res.status(404).send('Post not found');
+      const error = new Error('Post not found');
+      error.status = 404; 
+      return next(error);
     }
     const userId = req.user._id;
     const comments = await Comment.find({ post: req.params.id }).populate('author');
@@ -22,9 +24,10 @@ router.get('/:id', async (req, res) => {
       liked = false;
     }
     res.render('post', { post, comments,liked });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server Error');
+  } catch (error) {
+    error.message = 'Server error';
+    error.status = 500;
+    next(error);
   }
 });
 

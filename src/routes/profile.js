@@ -4,35 +4,68 @@ const User = require('../models/user');
 const Post = require('../models/post');
 // const { isAuthenticated, hasRole } = require('../middleware/authenticationWare');
 
-router.get('/:username', async (req, res) => {
+router.get('/:username', async (req, res,next) => {
   try {
     const profileUser = await User.findOne({ username: req.params.username }); 
+    if(!profileUser){
+      const error = new Error('User not found');
+      error.status = 404; 
+      return next(error);
+    }
     let allowedtoEdit = false;
     const user = req.user;
+
+    // ||profileUser.id === req.user._id
     
-    if(user &&(profileUser.id === req.user.id ||profileUser.id === req.user._id ||req.user.role === 'admin')){
+    if(user &&(profileUser.id === req.user.id ||req.user.role === 'admin')){
       allowedtoEdit = true;
     }
-    if (!profileUser) {
-      return res.status(404).send('User not found');
-    }
-    const posts = await Post.find({ author: profileUser._id }) 
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = 2;
+    const skip = (page-1)*limit;
+    
+    const totalPosts = await Post.countDocuments({ author: profileUser._id });
+    const posts = await Post.find({ author: profileUser._id })
       .sort({ createdAt: -1 })
-      .limit(3)
-      .populate('author', 'name') 
-      .select('title content image ') 
+      .skip(skip)
+      .limit(limit)
+      .populate('author', 'name')
+      .select('title content image')
       .lean();
-    res.render('profile', { profileUser,user, isLoggedIn: req.isLoggedIn,posts,allowedtoEdit });
+
+    const totalPages = Math.ceil(totalPosts / limit);
+
+    res.render('profile', {
+      profileUser,
+      user,
+      isLoggedIn: req.isLoggedIn,
+      posts,
+      allowedtoEdit,
+      currentPage: page,
+      totalPages
+    });
+
+    // const posts = await Post.find({ author: profileUser._id }) 
+    //   .sort({ createdAt: -1 })
+    //   .limit(3)
+    //   .populate('author', 'name') 
+    //   .select('title content image ') 
+    //   .lean();
+    // res.render('profile', { profileUser,user, isLoggedIn: req.isLoggedIn,posts,allowedtoEdit });
     
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Failed to load profile');
+    error.message = 'Failed to load profile';
+    error.status = 500;
+    next(error);
   }
 });
 router.get('/:username/makeadmin', async (req, res) => {
   const profileUser = await User.findOne({ username: req.params.username }); 
   if (!profileUser) {
-    return res.status(404).send('User not found');
+    const error = new Error('User not found');
+      error.status = 404; 
+      return next(error);
   }
   profileUser.role = 'admin';
   const updatedUser = await User.findByIdAndUpdate(profileUser._id, updateFields, {
@@ -40,33 +73,5 @@ router.get('/:username/makeadmin', async (req, res) => {
     new: true,
   });
 });
-// AUTH
-// router.get('/', isAuthenticated, (req, res) => {
-//   res.render('profile', { user: req.session.user });
-// });
-
-// router.get('/admin', hasRole('admin'), (req, res) => {
-//   res.send('Admin Access Granted');
-// });
-
-// COOKIE
-// Set Cookie
-// router.get('/set-cookie', (req, res) => {
-//   res.cookie('theme', 'dark', { httpOnly: true, maxAge: 3600000 });
-//   res.send('Cookie set');
-// });
-
-// Read Cookie
-// router.get('/read-cookie', (req, res) => {
-//   const theme = req.cookies.theme;
-//   res.send(`Theme: ${theme}`);
-// });
-
-// Clear Cookie
-// router.get('/clear-cookie', (req, res) => {
-//   res.clearCookie('theme');
-//   res.send('Cookie cleared');
-// });
-
 
 module.exports = router;

@@ -8,7 +8,9 @@ const addComment = async (req, res) => {
         const post = await Post.findById(req.params.id);
         
         if (!post) {
-            return res.status(404).send('Post not found');
+            const error = new Error('Post not found');
+            error.status = 404; 
+            return next(error);
         }
         const comment = new Comment({
             content: req.body.content,
@@ -21,8 +23,9 @@ const addComment = async (req, res) => {
         
         res.redirect('/post/'+post.id);
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Failed to add comment');
+        error.message = 'Failed to add comment';
+        error.status = 500;
+        next(error);
     }
 };
 

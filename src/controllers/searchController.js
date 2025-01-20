@@ -24,6 +24,7 @@ const searchPosts = async (req, res) => {
       ],
     })
       .sort({ createdAt: -1 })
+      .populate('author', 'username') 
       .limit(limit);
 
     const userResults = await User.find({
@@ -41,8 +42,9 @@ const searchPosts = async (req, res) => {
       searchTerm: query,
     });
   } catch (err) {
-    console.error('Error searching:', err);
-    res.status(500).send('Server error');
+    error.message = 'Error searching';
+                error.status = 500;
+                next(error);
   }
 };
 

@@ -22,9 +22,10 @@ const createPost = async (req, res) => {
           .resize(300, 300)
           .jpeg({ quality: 80 })
           .toBuffer();
-      } catch (err) {
-        console.error('Failed to download image from URL:', err.message);
-        return res.status(400).json({ error: 'Invalid image URL' });
+      } catch (error) {
+        error.message = 'invalid image url';
+                error.status = 500;
+                next(error);
       }
     }
 
@@ -42,8 +43,9 @@ const createPost = async (req, res) => {
 
     res.redirect('/dreamList');
   } catch (error) {
-    console.error(error.message);
-    res.status(500).send('Failed to create post');
+    error.message = 'Failed to create post';
+    error.status = 500;
+    next(error);
   }
 };
 

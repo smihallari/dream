@@ -8,7 +8,9 @@ router.post('/', async (req, res, next) => {
     await signoutController(req, res);
     res.redirect('/');
   } catch (error) {
-    next(error); 
+    error.message = 'Error signing out';
+    error.status = 500;
+    next(error);
   }
 });
 module.exports = router;

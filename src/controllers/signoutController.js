@@ -1,8 +1,10 @@
 const logout = (req, res) => {
 
-  req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).json({ message: 'Failed to logout' });
+  req.session.destroy((error) => {
+    if (error) {
+      const error = new Error('failed to logout');
+      error.status = 500; 
+      return next(error);
     }
     
   });

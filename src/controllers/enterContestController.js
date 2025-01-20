@@ -23,9 +23,10 @@ const enterContest = async(req, res) => {
                 .resize(300, 300)
                 .jpeg({ quality: 80})
                 .toBuffer();
-            }catch (err) {
-                console.error('Failed to download image from URL:', err.message);
-                return res.status(400).json({ error: 'Invalid image URL' });
+            }catch (error) {
+                error.message = 'Invalid image url';
+                error.status = 400;
+                next(error);
             }
         }
         
@@ -51,8 +52,9 @@ const enterContest = async(req, res) => {
             },
         });
     } catch (error) {
-        console.error(error.message);
-        res.status(500).send('Failed to create new contest post');
+        error.message = 'Failed to create new contest post';
+                error.status = 500;
+                next(error);
     }
 };
 

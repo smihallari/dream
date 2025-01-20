@@ -17,14 +17,12 @@
                           <div class="d-flex flex-column align-items-center text-center">
                             
                             <% if (!profileUser.profilePic.toString('base64') || profileUser.profilePic.toString('base64') === '') { %>
-                              <p>inside</p>
+                              
                               <img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="150" height="150">
                               <% } else { %>
                                 <img  src="data:image/jpeg;base64,<%= profileUser.profilePic.toString('base64') %>"
                                 alt="Profile Avatar"
                                 width="150"
-                                
-                                
                                 class="rounded-circle me-2"
                               />
                               
@@ -102,7 +100,8 @@
         <div class="container rounded bg-white mt-5 mb-5">
           <div class="row justify-content-center">
             <div class="col-md-8">
-              <h2 class="my-4 text-center">Latest Dreams Posted :</h2>
+              <h2 class="my-4 text-center"><%=profileUser.username+"'s" %> posted dreams:</h2>
+
               <div id="post-results" class="my-3 p-3 bg-body rounded shadow-sm">
                 <% if (posts.length > 0) { %>
                   <% posts.forEach(post => { %>
@@ -113,6 +112,33 @@
                 <% } %>
               </div>
             </div>
+
+            <nav aria-label="Page navigation">
+              <ul class="pagination justify-content-center">
+                <% if (currentPage > 1) { %>
+                  <li class="page-item">
+                    <a class="page-link" href="?page=<%= currentPage - 1 %>" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                <% } %>
+      
+                <% for (let i = 1; i <= totalPages; i++) { %>
+                  <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                    <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                  </li>
+                <% } %>
+      
+                <% if (currentPage < totalPages) { %>
+                  <li class="page-item">
+                    <a class="page-link" href="?page=<%= currentPage + 1 %>" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                <% } %>
+              </ul>
+            </nav>
+
           </div>
         </div>
         <%- include('partials/footer') %>

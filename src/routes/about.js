@@ -7,8 +7,9 @@ router.get('/', async (req, res) => {
         user: req.user || null,
           });
     }catch(error){
-        console.error(error);
-        res.status(500).send('Failed to load about page');
+      error.message = 'Failed to load about page';
+      error.status = 500;
+      next(error);
     }
 });
 module.exports = router;

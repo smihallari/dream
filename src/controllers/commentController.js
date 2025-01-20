@@ -6,7 +6,9 @@ const addComment = async (req, res) => {
     
     const post = await Post.findById(req.params.id);
     if (!post) {
-      return res.status(404).send('Post not found');
+      const error = new Error('Post not found');
+      error.status = 404; 
+      return next(error);
     }
     console.log("\n\n"+req.user._id);
     const newComment = new Comment({
@@ -22,8 +24,9 @@ const addComment = async (req, res) => {
 
     res.json({ message: 'Comment added', comment: newComment });
   } catch (err) {
-    console.error('Error adding comment:', err);
-    res.status(500).send('Server error');
+    error.message = 'Error adding comment';
+    error.status = 500;
+    next(error);
   }
 };
 

@@ -23,9 +23,7 @@ const signup = [
       const existingUserName = await User.findOne({ username });
       
       if (existingUserName) return res.status(400).json({ message: 'Username already in use' });
-      console.log("getiting");
       if (existingUserEmail) return res.status(400).json({ message: 'Email already in use' });
-      console.log("sdhskjdhsjdh");
       
       // const salt = await bcrypt.genSalt(10);
       // const hashedPassword = await bcrypt.hash(password, salt);

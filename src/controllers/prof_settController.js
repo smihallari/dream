@@ -98,7 +98,9 @@ const deleteAccount = async (req, res) => {
     const { username } = req.params;
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(404).send('User not found');
+      const error = new Error('User not found');
+      error.status = 404; 
+      return next(error);
     }
     
     await Post.deleteMany({ author: user.id });
@@ -107,8 +109,9 @@ const deleteAccount = async (req, res) => {
     
     
   } catch (error) {
-    console.error('Error deleting user:', error);
-    res.status(500).send('Failed to delete account');
+    error.message = 'Failed to delete account';
+                error.status = 500;
+                next(error);
   }
 };
 module.exports = { getProfileSettings, updateProfileSettings,deleteAccount };
