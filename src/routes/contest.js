@@ -4,8 +4,8 @@ const Post = require('../models/post');
 
 router.get('/', async (req, res) => {
   try {
-    const currentPage = parseInt(req.query.page) || 1; // Current page (default: 1)
-    const limit = 5; // Posts per page
+    const currentPage = parseInt(req.query.page) || 1; 
+    const limit = 5; 
     const skip = (currentPage - 1) * limit;
     const goat = false;
 
@@ -13,27 +13,27 @@ router.get('/', async (req, res) => {
     let appliedFilter = 'Current Competitors';
 
     const filters = {};
-    let sort = { createdAt: -1 }; // Default sort by newest
+    let sort = { createdAt: -1 };
 
     if (filter === 'competitors') {
-      filters.isWinner = false; // Current competitors
+      filters.isWinner = false; 
       appliedFilter = 'Current Competitors';
     } else if (filter === 'newestWinners') {
-      filters.isWinner = true; // Newest winners
+      filters.isWinner = true; 
       sort = { createdAt: -1 };
       appliedFilter = 'Newest Winners';
     } else if (filter === 'popularWinners') {
-      filters.isWinner = true; // Popular winners
+      filters.isWinner = true; 
       sort = { popularity: -1 };
       appliedFilter = 'Popular Winners';
     } else if (filter === 'halloffame') {
-      filters.isWinner = true; // Hall of fame
-      filters.accolades = { $exists: true, $ne: null }; // Winners with accolades
+      filters.isWinner = true; 
+      filters.accolades = { $exists: true, $ne: null }; 
       appliedFilter = 'Hall of Fame';
     }
 
     if (req.query.category) {
-      filters.category = req.query.category; // Filter by category
+      filters.category = req.query.category; 
       appliedFilter = `Category: ${req.query.category}`;
     }
 

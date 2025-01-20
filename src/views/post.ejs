@@ -9,11 +9,11 @@
       }
         
     #commentsContainer {
-        max-height: 400px; /* Limit height for scrolling if many comments */
+        max-height: 400px; 
         overflow-y: auto;
     }
     textarea#commentInput {
-        resize: none; /* Disable resizing for better layout control */
+        resize: none; 
     } 
     
     .dream-post-container {
@@ -56,15 +56,13 @@
 
     <div class="container">
       <div class="row">
-        <!-- Sidebar -->
+        
         <%- include('partials/dreamsidebar') %>
         
         <main class="col-md-9 main-content">
-          <!-- Include the tray for applied filter and navigation -->
+          
           <%- include('partials/postTray', { post: post }) %>
         
-          <!-- Placeholder for post results -->
-          
           </div>
         </main>
     

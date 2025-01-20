@@ -4,7 +4,7 @@ const User = require('../models/user');
 const searchPosts = async (req, res) => {
   try {
     const { q: query, page = 1 } = req.query;
-    const limit = 10; // Results per page
+    const limit = 5; 
     const skip = (page - 1) * limit;
 
     if (!query || query.trim() === '') {
@@ -16,7 +16,6 @@ const searchPosts = async (req, res) => {
       });
     }
 
-    // Search for posts
     const postResults = await Post.find({
       $or: [
         { title: new RegExp(query, 'i') },
@@ -27,7 +26,6 @@ const searchPosts = async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(limit);
 
-    // Search for users
     const userResults = await User.find({
       $or: [
         { username: new RegExp(query, 'i') },

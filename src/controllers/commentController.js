@@ -1,6 +1,6 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
-// Post a comment on a post (authentication required)
+
 const addComment = async (req, res) => {
   try {
     

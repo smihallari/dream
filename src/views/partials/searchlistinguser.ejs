@@ -1,5 +1,4 @@
 <div class="d-flex text-muted pt-2 pb-2 border-bottom">
-    <!-- Image Section -->
     <div class="flex-shrink-0 me-3">
       <% if (user.profilePic) { %>
         <img class="rounded-custom" 
@@ -11,8 +10,7 @@
           alt="Default Image" width="80" height="80" style="object-fit: cover;">
       <% } %>
     </div>
-  
-    <!-- Title and Details Section -->
+
     <div class="flex-grow-1 d-flex flex-column justify-content-center">
       <strong class="d-block text-primary fs-5 mb-1">
         <a href="/profile/<%= user._id %>" class="text-decoration-none text-dark"><%= user.username %></a>

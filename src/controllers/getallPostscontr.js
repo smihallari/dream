@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
         .populate('comments')
         .lean();
 
-      // Filter likes within the last 6 hours and count them
+      // filter likes within the last 6 hours and count them
       const postsWithCounts = posts.map(post => {
         const recentLikes = post.likes.filter(like => new Date(like.timestamp) >= sixHoursAgo);
         return {
@@ -30,12 +30,11 @@ router.get('/', async (req, res) => {
         };
       });
 
-      // Sort posts by 6 hours ago likes in descendng order
+      // sorts posts by 6 hours ago likes in descendng order
       postsWithCounts.sort((a, b) => b.recentLikesCount - a.recentLikesCount);
       res.render('posts', {  posts: postsWithCounts });
 
     } else {
-      // newest or oldest posts
       const sortCriteria = order === 'oldest' ? { createdAt: 1 } : { createdAt: -1 };
       posts = await Post.find().populate('comments').sort(sortCriteria).lean();
 
@@ -54,7 +53,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Like a post (authentication required)
+// auth required to like a post
 router.post('/posts/:id/like', authentication, async (req, res) => {
     try{
         const userId = req.user._id;

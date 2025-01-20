@@ -17,7 +17,6 @@ const getProfileSettings = async (req, res) => {
   }
 };
 
-// Handle profile settings update
 const updateProfileSettings = async (req, res) => {
   try {
     const { username } = req.params;

@@ -2,7 +2,7 @@
   document.addEventListener('DOMContentLoaded', () => {
       if ('<%= isLoggedIn%>' === 'true') {
           document.body.addEventListener('click', async (e) => {
-              // Logout button logic
+          
               if (e.target.id === 'logoutbutton') {
                   e.preventDefault();
                   const res = await fetch('/signout', {
@@ -21,9 +21,9 @@
                   }
               }
   
-              // Profile button logic
+            
               if (e.target.id === 'profile') {
-                  e.preventDefault(); // Prevent default `#` navigation
+                  e.preventDefault(); 
                   const username = '<%= user.username %>';
                   window.location.href = `/profile/${username}`;
               }

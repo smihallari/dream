@@ -10,14 +10,14 @@ const enterContest = async(req, res) => {
         let isInContest = true;
 
         if(req.file){
-            //Handling uploaded file
+            
             imageBuffer = await sharp(req.file.buffer)
             .resize(300,300)
             .jpeg({ quality: 80 })
             .toBuffer();
         } else if (imageUrl){
             try{
-                //Handling image url 
+                
                 const response = await axios.get(imageUrl, { responseType: 'arraybuffer'});
                 imageBuffer = await sharp(response.data)
                 .resize(300, 300)

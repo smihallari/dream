@@ -13,7 +13,7 @@
         </a>
       <% } %>
 
-      <!-- Render page numbers -->
+      
       <% for (let i = 1; i <= pagination.totalPages; i++) { %>
         <a href="/dreamList?page=<%= i %>" 
            class="btn btn-sm <%= i === pagination.currentPage ? 'btn-primary' : 'btn-outline-primary' %> me-2">

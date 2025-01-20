@@ -1,6 +1,6 @@
 <li class="card mb-3 border-0 bg-body-secondary">
   <div class="d-flex">
-    <!-- Left: Image -->
+
     <div class="flex-shrink-0">
       <a href="/posts/<%= dream._id %>">
         <% if (dream.image) { %>
@@ -16,21 +16,21 @@
       </a>
     </div>
 
-    <!-- Right: Text Content -->
+
     <div class="flex-grow-1 ms-3" style="margin-top: 6%;">
-      <!-- Title -->
+
       <h5 class="mb-1">
         <a href="/post/<%= dream._id %>" class="text-decoration-none text-dark">
           <%= dream.title %>
         </a>
       </h5>
-      <!-- Author -->
+
       <small class="text-muted">
         by <a href="/profile/<%= dream.authorId %>" class="text-decoration-none text-body-secondary">
           <%= dream.author %>
         </a>
       </small>
-      <!-- Date -->
+
       <small class="d-block text-body-secondary">
         <%= dream.timeAgo %>
       </small>

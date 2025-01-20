@@ -1,7 +1,7 @@
 <div class="post-container">
-  <!-- Post Header -->
+
   <div class="post-header d-flex">
-    <!-- Picture -->
+
     <div class="post-picture">
       <% if (post.image) { %>
         <img src="data:image/jpeg;base64,<%= post.image.toString('base64') %>" alt="Post Picture" class="img-fluid rounded" style="width: 100px; height: 100px; object-fit: cover;">
@@ -10,7 +10,7 @@
       <% } %>
     </div>
 
-    <!-- Details -->
+
     <div class="post-details ms-3">
       <h3 class="post-title mb-1"><%= post.title %></h3>
       <p class="post-meta text-muted mb-1">
@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <!-- Body of the Post -->
+
   <div class="post-body mt-3" style="word-wrap: break-word; overflow-wrap: break-word;">
     <p><%= post.content %></p>
   </div>
@@ -35,11 +35,10 @@
     </button>
   </div>
 
-  <!-- Comments Section -->
+
   <div class="post-comments mt-4">
     <h5>Comments</h5>
-    
-    <!-- Comment Form -->
+
     <form action="/comments/<%= post.id %>/comment" method="POST" class="mb-3">
       <div class="mb-2">
         <textarea name="comment" class="form-control" rows="2" placeholder="Write a comment..."></textarea>
@@ -47,9 +46,7 @@
       <button type="submit" class="btn btn-primary">Post Comment</button>
     </form>
 
-    
 
-    <!-- Comment List -->
     <div class="comment-list">
       <% comments.forEach(comment => { %>
         <%- include('./partials/comment', { comment }) %>

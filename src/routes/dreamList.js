@@ -7,8 +7,8 @@ const Post = require('../models/post');
 
 router.get('/', async (req, res) => {
   try {
-    const currentPage = parseInt(req.query.page) || 1; // Current page (default: 1)
-    const limit = 5; // Posts per page
+    const currentPage = parseInt(req.query.page) || 1; 
+    const limit = 5; 
     const skip = (currentPage - 1) * limit;
     const goat = true;
 
@@ -16,25 +16,25 @@ router.get('/', async (req, res) => {
 
     const filters = {};
     if (req.query.filter === 'Newest posts') {
-      filters.sort = { createdAt: -1 }; // Newest dreams
+      filters.sort = { createdAt: -1 }; 
     } else if (req.query.filter === 'Top this week') {
       const oneWeekAgo = new Date();
       oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-      filters.createdAt = { $gte: oneWeekAgo }; // Dreams from the last week
+      filters.createdAt = { $gte: oneWeekAgo }; 
     } else if (req.query.filter === 'Top of all time') {
-      filters.sort = { popularity: -1 }; // All time popular dreams
+      filters.sort = { popularity: -1 }; 
     } else if (req.query.filter === 'Contest winners') {
-      filters.isWinner = true; // Contest winners
+      filters.isWinner = true; 
     }
 
     if (req.query.category) {
-      filters.category = req.query.category; // Filter by category
+      filters.category = req.query.category; 
     }
 
     const posts = await Post.find(filters)
       .skip(skip)
       .limit(limit)
-      .sort(filters.sort || { createdAt: -1 }) // Default sort by newest
+      .sort(filters.sort || { createdAt: -1 }) 
       .lean();
 
     const totalPosts = await Post.countDocuments(filters);
@@ -65,7 +65,4 @@ router.get('/', async (req, res) => {
   }
 });
 
-
-
-// router.use('/posts', require('./posts'));
 module.exports = router;

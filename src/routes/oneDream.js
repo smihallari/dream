@@ -69,20 +69,16 @@ const router = express.Router();
 const Post = require('../models/post');
 const Comment = require('../models/comment');
 
-// GET: Fetch a single post and its comments
 router.get('/:id', async (req, res) => {
   try {
-    // Find the post by ID and populate author details
     const post = await Post.findById(req.params.id).populate('author');
 
     if (!post) {
       return res.status(404).send('Post not found');
     }
 
-    // Fetch comments related to the post
     const comments = await Comment.find({ post: req.params.id }).populate('author');
 
-    // Render the post page with the post and comments data
     res.render('post', { post, comments });
   } catch (err) {
     console.error(err);
@@ -90,7 +86,6 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST: Add a new comment to the post
 router.post('/:id/comments', async (req, res) => {
   try {
     const { comment } = req.body;
@@ -99,17 +94,12 @@ router.post('/:id/comments', async (req, res) => {
       return res.status(400).send('Comment cannot be empty');
     }
 
-    // Create a new comment
     const newComment = new Comment({
       text: comment,
       post: req.params.id,
-      author: req.user._id, // Assuming `req.user` contains the logged-in user's info
+      author: req.user._id, 
     });
-
-    // Save the comment to the database
     await newComment.save();
-
-    // Redirect back to the post page
     res.redirect(`/oneDream/${req.params.id}`);
   } catch (err) {
     console.error(err);

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Post = require('../models/post'); // Assuming you have a Post model
+const Post = require('../models/post'); 
 const authentication = require('../middleware/authenticationWare');
 const Comment = require('../models/comment');
 const addComment = async (req, res) => {

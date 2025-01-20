@@ -116,6 +116,7 @@ app.use('/search', searchRoutes);
 app.use('/post',seePostRoute);
 app.use('/comments',postCommentRoute);
 app.use('/enter_contest', enterContestRoute);
+
 mongoose.connect(MONGO_URI)// warnigns from node to remove unified topology and urlparser
   .then(() => {
     const now = new Date();

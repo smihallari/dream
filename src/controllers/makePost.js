@@ -9,13 +9,11 @@ const createPost = async (req, res) => {
     let imageBuffer = null;
 
     if (req.file) {
-      // Handle uploaded file
       imageBuffer = await sharp(req.file.buffer)
         .resize(300, 300)
         .jpeg({ quality: 80 })
         .toBuffer();
     } else if (imageUrl) {
-      // Handle image from URL
       try {
         const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
         imageBuffer = await sharp(response.data)
