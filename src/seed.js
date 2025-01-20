@@ -4,29 +4,40 @@ const User = require("./models/user");
 const Post = require("./models/post");
 const Comment = require("./models/comment");
 
-const MONGO_URI = process.env.MONGO_URI;
+const MONGO_URI = "mongodb://mongo:27017/dreamdb";
 
-// Connect to MongoDB
 (async function seedDatabase() {
   try {
-    await mongoose.connect("mongodb://localhost:27017/DreamCatchrDB", {
+    await mongoose.connect(MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
     console.log("Connected to MongoDB");
 
-    // Clear existing data
-    // await User.deleteMany({});
-    // await Post.deleteMany({});
-    // await Comment.deleteMany({});
+    await User.deleteMany({});
+    await Post.deleteMany({});
+    await Comment.deleteMany({});
 
     // Create users
     const users = [];
-    for (let i = 0; i < 50; i++) {
-      users.push({
+
+    users.push({
+        name: "firstName",
+        surname: "lastName",
+        username: "DreamAdmin",
+        email: "admin@dreamcatchr.com",
+        bio: "Dreamcatchr Admin",
+        role: "admin",
+        profilepic: "default",
+        favorites: [],
+        password: "abc123",
+      });
+
+    for (let i = 0; i < 12; i++) {
+        users.push({
         name: faker.person.firstName(),
         surname: faker.person.lastName(),
-        username: faker.internet.userName(),
+        username: `${firstName.toLowerCase()}${lastName.toLowerCase()}${faker.number.int({ min: 1, max: 999 })}`,
         email: faker.internet.email(),
         bio: faker.lorem.sentence(),
         password: faker.internet.password(),
@@ -46,7 +57,7 @@ const MONGO_URI = process.env.MONGO_URI;
     ];
 
     const posts = [];
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 60; i++) {
       const author = faker.helpers.arrayElement(createdUsers);
       const likes = faker.helpers.shuffle(
         createdUsers.filter(u => u._id.toString() !== author._id.toString())
@@ -81,7 +92,7 @@ const MONGO_URI = process.env.MONGO_URI;
     // Create comments
     const comments = [];
     for (const post of createdPosts) {
-      const numComments = faker.number.int({ min: 1, max: 10 });
+      const numComments = faker.number.int({ min: 0, max: 2 });
       for (let i = 0; i < numComments; i++) {
         const author = faker.helpers.arrayElement(
           createdUsers.filter(u => u._id.toString() !== post.author.toString())
