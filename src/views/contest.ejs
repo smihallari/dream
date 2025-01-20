@@ -26,9 +26,13 @@
         
           <!-- Placeholder for post results -->
           <div id="post-results" class="my-3 p-3 bg-body rounded shadow-sm">
-            <% posts.forEach(post => { %>
-              <%- include('partials/dreamForContest', { post }) %>
-            <% }); %>
+            <% if (posts.length > 0) { %>
+              <% posts.forEach(post => { %>
+                <%- include('partials/dreamForContest', { post }) %>
+              <% }); %>
+            <% } else { %>
+              <%- include('partials/emptyPost') %>
+            <% } %>
           </div>
         </main>
         

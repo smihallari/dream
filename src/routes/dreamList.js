@@ -12,18 +12,18 @@ router.get('/', async (req, res) => {
     const skip = (currentPage - 1) * limit;
     const goat = true;
 
-    const filter = req.query.filter || 'newest';
+    const filter = req.query.filter || 'Newest posts';
 
     const filters = {};
-    if (req.query.filter === 'newest') {
+    if (req.query.filter === 'Newest posts') {
       filters.sort = { createdAt: -1 }; // Newest dreams
-    } else if (req.query.filter === 'week') {
+    } else if (req.query.filter === 'Top this week') {
       const oneWeekAgo = new Date();
       oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
       filters.createdAt = { $gte: oneWeekAgo }; // Dreams from the last week
-    } else if (req.query.filter === 'alltime') {
+    } else if (req.query.filter === 'Top of all time') {
       filters.sort = { popularity: -1 }; // All time popular dreams
-    } else if (req.query.filter === 'winners') {
+    } else if (req.query.filter === 'Contest winners') {
       filters.isWinner = true; // Contest winners
     }
 

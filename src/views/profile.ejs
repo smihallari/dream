@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <%pageName = profileUser.username%>    
+        <%pageName = profileUser.username+"'s Profile";%>    
         <%- include('./partials/head') %>
     </head>
     <body>
@@ -73,7 +73,7 @@
                           <hr>
                           <div class="row">
                             <div class="col-sm-12">
-                              <form action="/profile_settings/<%= profileUser.username %>" method="GET">
+                              <form action="/profile/settings/<%= profileUser.username %>" method="GET">
                                 <button class="btn btn-primary profile-button"  id="edit_profile" type="submit" >Edit Profile</button></div>
                             </form>
                             </div>
@@ -87,24 +87,23 @@
             
             
         <div class="container rounded bg-white mt-5 mb-5">
-            <div class="row">
-                <div class="container">
-                    <h2 class="my-4">Latest Dreams Posted :</h2>
-                    <div class="row">
-                      <% posts.forEach(post => { %>
-                        <%- include('partials/dreamForProfile', { post: post }) %>
-                      <% }); %>
-                        
-                    </div>
-
-                    
-                    
-                    <!-- /.row -->
-                </div>
-  <!-- /.container -->
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <h2 class="my-4 text-center">Latest Dreams Posted :</h2>
+              <div id="post-results" class="my-3 p-3 bg-body rounded shadow-sm">
+                <% if (posts.length > 0) { %>
+                  <% posts.forEach(post => { %>
+                    <%- include('partials/dreamForProfile', { post: post }) %>
+                  <% }); %>
+                <% } else { %>
+                  <%- include('partials/emptyPost') %>
+                <% } %>
+              </div>
             </div>
+          </div>
         </div>
-        
+        <%- include('partials/footer') %>
+    
     </body>
     
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <% pageName = "Dreams"; %>
+    <% pageName = "Dreams: "+appliedFilter; %>
     <%- include('./partials/head') %>
     <style>
       .rounded-custom {
@@ -28,9 +28,13 @@
         
           <!-- Placeholder for post results -->
           <div id="post-results" class="my-3 p-3 bg-body rounded shadow-sm">
-            <% posts.forEach(post => { %>
-              <%- include('partials/dreamPostForDreamlist', { post }) %>
-            <% }); %>
+            <% if (posts.length > 0) { %>
+              <% posts.forEach(post => { %>
+                <%- include('partials/dreamPostForDreamlist', { post }) %>
+              <% }); %>
+            <% } else { %>
+              <%- include('partials/emptyPost') %>
+            <% } %>
           </div>
         </main>
         

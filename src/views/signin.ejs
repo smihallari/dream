@@ -13,10 +13,9 @@
 
 
   <body>
-    <br><br>
-    <div class="text-center col-md-2 offset-md-5">
-      <form class="form-signin" id="signin-form" action="signin" method="POST">
-        <img class="mb-4" src="/photos/banner.png" alt="" width="512" height="128">
+    <div class="d-flex justify-content-center" style="margin-top: 120px;">
+      <form class="form-signin text-center" id="signin-form" action="signin" method="POST" style="width: 100%; max-width: 400px;">
+        <img src="/photos/banner.png" alt="Banner" width="512" height="128" style="display: block; margin: 0 auto;">
         <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
@@ -27,7 +26,7 @@
             <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block mb-4" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block mb-4" type="submit">Sign in</button><br>
         <button class="btn btn-lg btn-ternary btn-block mb-4" type="button" onclick="window.location.href='signup'">Sign up instead</button>
         <p class="mt-5 mb-3 text-muted">© Dreamcatchr 2025</p>
       </form>

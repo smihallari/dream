@@ -109,7 +109,7 @@ app.use('/signin',signInRoute);
 app.use('/signout',signOutRoute);
 app.use('/create_post',postDreamRoute);
 app.use('/profile',profileRoute);
-app.use('/profile_settings',profileSettingsRoute);
+app.use('/profile/settings',profileSettingsRoute);
 app.use('/about',aboutRoute);
 app.use('/contest', contestRoutes);
 app.use('/search', searchRoutes);
