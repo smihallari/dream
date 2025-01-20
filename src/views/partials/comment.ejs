@@ -1,6 +1,14 @@
-<div class="comment">
+<div class="comment d-flex justify-content-between align-items-center">
+  <div>
     <p><strong><a href="/profile/<%=comment.author.username %>"><%= comment.author.username %></a></strong> <%= new Date(comment.createdAt).toLocaleDateString() %></p>
     <p><%= comment.content %></p>
   </div>
+  <% if(user.role=== 'admin' || comment.author.username === user.username){ %>
+    <form action="/comments/<%= post._id %>/<%= comment._id %>/deletecomment" method="POST">
+      <button type="submit" class="btn btn-danger btn-sm">Delete Comment</button>
+  </form>
+  <% }%>
+</div>
+
   <hr>
 

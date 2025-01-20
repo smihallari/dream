@@ -45,12 +45,7 @@
       <div class="row">
         <div class="col-md-5 mb-3">
           <label for="competingdream">Select a dream to enter in the competition:</label>
-          <select class="custom-select d-block w-100" id="dream" name="dreamId" required="">
-            <option value="">Choose...</option>
-            <% user.posts.forEach(function(dream) { %>
-              <option value="<%= dream._id %>"><%= post.title %></option>
-            <% }); %>
-          </select>
+          
           <div class="invalid-feedback">
             Please select a dream to enter.
           </div>

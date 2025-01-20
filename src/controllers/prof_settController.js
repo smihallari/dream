@@ -77,7 +77,6 @@ const updateProfileSettings = async (req, res) => {
     }
     
     if(req.user._id === updatedUser.id ||req.user.id === updatedUser.id ){
-      
       req.user = updatedUser;
       req.session.user = updatedUser;
       res.locals.user = req.user;
@@ -114,4 +113,34 @@ const deleteAccount = async (req, res) => {
                 next(error);
   }
 };
-module.exports = { getProfileSettings, updateProfileSettings,deleteAccount };
+
+const deleteProfilePicture = async (req, res, next) => {
+  try {
+    const { username } = req.params;
+
+    // Find the user by username
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    // Clear the profile picture
+    user.profilePic = undefined;
+    await user.save();
+
+    // Update session and locals if applicable
+    if(req.user._id === user.id || req.user.id === user.id ){
+      req.user = user;
+      req.session.user = user;
+      res.locals.user = req.user;
+    }
+
+    res.redirect(`/profile/settings/${username}`);
+  } catch (error) {
+    console.error('Error deleting profile picture:', error);
+    res.status(500).send('Failed to delete profile picture');
+  }
+};
+
+
+module.exports = { getProfileSettings, updateProfileSettings,deleteAccount,deleteProfilePicture };

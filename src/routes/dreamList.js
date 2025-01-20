@@ -3,8 +3,6 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/post');
 
-
-
 router.get('/', async (req, res) => {
   try {
     const currentPage = parseInt(req.query.page) || 1; 
@@ -14,31 +12,64 @@ router.get('/', async (req, res) => {
 
     const filter = req.query.filter || 'Newest posts';
 
-    const filters = {};
-    if (req.query.filter === 'Newest posts') {
-      filters.sort = { createdAt: -1 }; 
-    } else if (req.query.filter === 'Top this week') {
+    const query = {};
+    let sort = { createdAt: -1 }; // Default sorting for "Newest posts"
+
+    if (filter === 'Newest posts') {
+      sort = { createdAt: -1 }; 
+    } else if (filter === 'Top this week') {
       const oneWeekAgo = new Date();
       oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-      filters.createdAt = { $gte: oneWeekAgo }; 
-    } else if (req.query.filter === 'Top of all time') {
-      filters.sort = { popularity: -1 }; 
-    } else if (req.query.filter === 'Contest winners') {
-      filters.isWinner = true; 
+      query.createdAt = { $gte: oneWeekAgo }; 
+      sort = { popularity: -1 }; // Assuming "popularity" exists in the schema
+    } else if (filter === 'Top of all time') {
+      // Top posts by likes, handled via aggregation below
+      sort = null;
+    } else if (filter === 'Contest winners') {
+      query.isWinner = true; 
     }
 
     if (req.query.category) {
-      filters.category = req.query.category; 
+      query.category = req.query.category; 
     }
 
-    const posts = await Post.find(filters)
-      .skip(skip)
-      .limit(limit)
-      .sort(filters.sort || { createdAt: -1 })
-      .populate('author', 'username') 
-      .lean();
+    let posts;
+    let totalPosts;
 
-    const totalPosts = await Post.countDocuments(filters);
+    if (filter === 'Top of all time') {
+      // Aggregation for sorting by likes.length
+      const aggregationPipeline = [
+        { $match: query },
+        {
+          $addFields: {
+            likeCount: { $size: { $ifNull: ['$likes', []] } }, // Calculate likes length
+          },
+        },
+        { $sort: { likeCount: -1 } }, // Sort by likeCount in descending order
+        { $skip: skip }, // Skip for pagination
+        { $limit: limit }, // Limit for pagination
+      ];
+
+      const countPipeline = [
+        { $match: query },
+      ];
+
+      [posts, totalPosts] = await Promise.all([
+        Post.aggregate(aggregationPipeline).exec(),
+        Post.aggregate(countPipeline).count('total').exec().then(res => res[0]?.total || 0),
+      ]);
+    } else {
+      // Standard query for other filters
+      posts = await Post.find(query)
+        .skip(skip)
+        .limit(limit)
+        .sort(sort) // Apply sorting here
+        .populate('author', 'username') 
+        .lean();
+
+      totalPosts = await Post.countDocuments(query);
+    }
+
     const totalPages = Math.ceil(totalPosts / limit);
 
     const pagination = {
@@ -47,8 +78,6 @@ router.get('/', async (req, res) => {
       prev: currentPage > 1 ? `/dreamList?page=${currentPage - 1}&filter=${req.query.filter || ''}&category=${req.query.category || ''}` : null,
       next: currentPage < totalPages ? `/dreamList?page=${currentPage + 1}&filter=${req.query.filter || ''}&category=${req.query.category || ''}` : null,
     };
-
-
 
     res.render('dreamList', {
       appliedFilter: req.query.filter || req.query.category || 'All Posts',
@@ -65,5 +94,7 @@ router.get('/', async (req, res) => {
     });
   }
 });
+
+
 
 module.exports = router;

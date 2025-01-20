@@ -3,7 +3,7 @@
   <div class="dropdown">
     <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
       
-      <% if (user && user.profilePic && user.profilePic.data) { %>
+      <% if (user && user.profilePic && user.profilePic.data && user.profilePic.data.length > 0) { %>
         <img 
           src="data:image/jpeg;base64,<%= Buffer.from(user.profilePic.data).toString('base64') %>" 
           alt="Profile Avatar"
@@ -13,7 +13,7 @@
         />
         <% } else { %>
           
-        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="32" >
+        <img src="/photos/avatar7.png" width="32" >
       <% } %>
       <% if (user.username) { %>
         <p style="color:black"><%= user.username %></p>

@@ -41,6 +41,7 @@ router.get('/', async (req, res) => {
       .skip(skip)
       .limit(limit)
       .sort(sort)
+      .populate('author', 'username') 
       .lean();
 
     const totalPosts = await Post.countDocuments(filters);

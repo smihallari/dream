@@ -42,15 +42,7 @@ const enterContest = async(req, res) => {
 
         await newContestPost.save();
 
-        res.status(201).json({
-            message: 'Contest post created succesfully', 
-            post: {
-                id: newContestPost._id,
-                author: newContestPost.author,
-                title: newContestPost.title,
-                content: newContestPost.content,
-            },
-        });
+        res.redirect('/contest');
     } catch (error) {
         error.message = 'Failed to create new contest post';
                 error.status = 500;

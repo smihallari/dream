@@ -7,11 +7,11 @@
 
     <div class="d-flex justify-content-center text-center">
       <div class="col-md-8 order-md-1">
-        <form class="needs-validation" novalidate="">
+        <form class="needs-validation" action="/post/<%= post.id%>/edit" method="POST">
           <div class="row">
             <div class="col-md-12 mb-4">
               <label for="title"><h4 class="mb-4">Edit title</h4></label>
-              <input type="text" class="form-control" id="title" value="TITLE GOES HERE" required="">
+              <input type="text" class="form-control" name="newTitle" id="title" value="<%=post.title %>" required="">
               <div class="invalid-feedback">
                 Title cannot be empty.
               </div>
@@ -21,22 +21,21 @@
 
           <div class="mb-4">
             <label for="dream"><h4 class="mb-3">Edit dream</h4></label>
-            <textarea type="text" rows="8" class="form-control" id="dream" required="">PREFILL VALUE GOES HERE</textarea>
-            <div class="invalid-feedback">
-              Text field cannot be empty.
-            </div>
+            <input type="text" class="form-control" id="title" name="newContent" value="<%=post.content %>" >
+            
           </div>
 
           <div class="mb-3">
             <div class="col-md-6 mb-3 offset-md-3">
               <label for="dreamcat">Edit category</label>
-              <select class="custom-select d-block w-100" id="dreamcat" required="">
+              <select class="custom-select d-block w-100" id="category" name="newCategory" >
                 <option value="">Choose a category</option>
-                <option>OPTION_VAR</option>
+                <option>Delirious</option>
+                <option>Simple</option>
+                <option>Historic</option>
+                <option>Harambe</option>
               </select>
-              <div class="invalid-feedback">
-                Please choose a category.
-              </div>
+              
             </div>
 
           </div>
@@ -50,24 +49,12 @@
             
             
           </div>
-          <hr class="mb-4">
-            
-          <div class="custom-control custom-checkbox col-md-6 mb-3 offset-md-3">
-            <input type="checkbox" class="custom-control-input" id="allowcomments">
-            <label class="custom-control-label" for="allowcomments">Allow comments on my dream</label>
-          </div>
-          <div class="custom-control custom-checkbox col-md-6 mb-3 offset-md-3">
-            <input type="checkbox" class="custom-control-input" id="ispublic">
-            <label class="custom-control-label" for="ispublic">Make my dream public</label>
-          </div>
-
-          <hr class="mb-4">
-
           <h4 class="mb-4">All finished?</h4>
           <button class="btn btn-primary btn-md btn-block" type="submit">Update my dream</button>
-          <button class="btn btn-danger btn-md btn-block" type="submit">Delete my dream</button>
+          
           <div class="mb-4"></div>
         </form>
+        <form action="/post/<%= post.id%>/delete" method="POST"> <button class="btn btn-danger btn-md btn-block" type="submit">Delete my dream</button></form>
       </div>
     </div>
     </div>

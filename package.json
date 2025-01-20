@@ -34,7 +34,6 @@
   "dependencies": {
     "@faker-js/faker": "^9.4.0",
     "axios": "^1.7.9",
-    "bcrpyt": "^2.0.0",
     "bcryptjs": "^2.4.3",
     "connect-mongo": "^5.1.0",
     "cookie-parser": "^1.4.7",
@@ -46,7 +45,6 @@
     "express-session": "^1.18.1",
     "express-validator": "^7.2.1",
     "faker": "^6.6.6",
-    "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
     "method-override": "^3.0.0",
     "mongoose": "^8.9.5",

@@ -15,9 +15,18 @@
       <div class="post-details ms-3">
         <h3 class="post-title mb-1"><%= post.title %></h3>
         <p class="post-meta text-muted mb-1">
-          By <a href="/profile/<%= post.author.username%>"><strong><%= post.author.username %></strong></a> | <%= post.timeAgo %> ago | Category: <strong><%= post.category %></strong>
+          
+          By <a href="/profile/<%= post.author.username%>"><strong><%= post.author.username %></strong></a> 
+          
+          | <%= post.timeAgo %> ago | Category: <strong><%= post.category %></strong>
         </p>
+        <% if((post.author.username === user.username) ||( user.role === 'admin') ) {%>
+        <form class="align-self-end" action="/post/<%= post.id%>/edit">
+          <button class="btn btn-sm btn-secondary" >Edit Post</button>
+        </form>
+        <% } %>
       </div>
+      
     </div>
 
 
@@ -28,7 +37,7 @@
 
     <!-- Like and Favourite Options -->
     <div class="post-actions mt-3">
-      <span><%=  post.likes.length %> Likes</span>
+      <span><%=  post.likes.length %> Likes  </span> 
     </div>
     <div class="post-actions mt-3">
       <% if(liked){ %>
@@ -44,9 +53,12 @@
         </button>
       </form>
         <% }%>
-      <button class="btn btn-outline-warning" onclick="favouritePost('<%= post.id %>')">
+        
+        <form action="/post/<%=post.id%>/favorite" method="POST">
+      <button class="btn btn-outline-warning" type="submit">
         <i class="far fa-heart"></i> Favourite 
       </button>
+    </form>
     </div>
 
 

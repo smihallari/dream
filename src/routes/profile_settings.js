@@ -7,6 +7,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 router.get('/:username', profileController.getProfileSettings);
 
+router.post('/:username/deletephoto', profileController.deleteProfilePicture);
 
 router.post('/:username',upload.single('profileImage'), profileController.updateProfileSettings);
 router.post('/:username/delete', async (req, res, next) => {

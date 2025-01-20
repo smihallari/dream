@@ -17,7 +17,7 @@
                           <div class="d-flex flex-column align-items-center text-center">
                             <% if (!profileUser.profilePic.toString('base64') || profileUser.profilePic.toString('base64') === '') { %>
                               
-                              <img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="150" height="150"
+                              <img src="/photos/avatar7.png" width="150" height="150"
                               class="rounded-circle me-2">
                               <% } else { %>
                                 <img  src="data:image/jpeg;base64,<%= profileUser.profilePic.toString('base64') %>"

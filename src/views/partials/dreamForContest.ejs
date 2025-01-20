@@ -18,7 +18,7 @@
       <a href="/post/<%= post._id %>" class="text-decoration-none text-dark"><%= post.title %></a>
     </strong>
     <p class="mb-0 text-secondary small">
-      Posted <%= post.timeAgo %> by <a href="/profile/<%= post.authorId %>" class="text-decoration-none text-secondary"><%= post.author %></a>
+      Posted <%= post.timeAgo %> in Category: <%= post.category %>
     </p>
   </div>
 

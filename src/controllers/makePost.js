@@ -2,7 +2,7 @@ const Post = require('../models/post');
 const sharp = require('sharp');
 const axios = require('axios');
 
-const createPost = async (req, res) => {
+const createPost = async (req, res,next) => {
   try {
     
     const { title, category,content, imageUrl,commentsAllowed } = req.body;
@@ -28,21 +28,21 @@ const createPost = async (req, res) => {
                 next(error);
       }
     }
-
+    const commentsAllowedBool = commentsAllowed === 'on';
     const newPost = new Post({
       author,
       title,
       category,
       content,
       image: imageBuffer,
-      commentsAllowed
+      commentsAllowedBool
       
     });
-    
     await newPost.save();
-
     res.redirect('/dreamList');
   } catch (error) {
+    console.log(error.stack);
+
     error.message = 'Failed to create post';
     error.status = 500;
     next(error);
