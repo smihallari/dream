@@ -2,6 +2,7 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const Post = require('../models/post');
 const Comment = require('../models/comment');
+
 const getProfileSettings = async (req, res) => {
   try {
 
@@ -18,13 +19,13 @@ const getProfileSettings = async (req, res) => {
 };
 
 const updateProfileSettings = async (req, res) => {
+  
   try {
     const { username } = req.params;
     const { 
       newName, newSurname, newUsername, newEmail, newPassword, newBio, 
       newTwitter, newFacebook, newInstagram 
     } = req.body;
-
     const profileUser = await User.findOne({ username });
     if (!profileUser) {
       return res.status(404).send('User not found');
@@ -40,7 +41,9 @@ const updateProfileSettings = async (req, res) => {
       facebook: newFacebook || profileUser.facebook,
       instagram: newInstagram || profileUser.instagram,
     };
-
+    if (req.file) {
+      updateFields.profilePic = req.file.buffer; // Store the image as a buffer
+    }
     if (newPassword && newPassword.trim() !== '') {
       const hashedPassword = await bcrypt.hash(newPassword, 10);
       updateFields.password = hashedPassword;
@@ -73,9 +76,13 @@ const updateProfileSettings = async (req, res) => {
       return res.status(404).send('User not found');
     }
     
-    if (req.user.role !== 'admin' || req.user.id === profileUser.id) {
+    if(req.user._id === updatedUser.id ||req.user.id === updatedUser.id ){
+      
       req.user = updatedUser;
+      req.session.user = updatedUser;
+      res.locals.user = req.user;
     }
+    
     res.redirect(`/profile/${updatedUser.username}`);
   } catch (error) {
     console.error('Error updating user:', error);

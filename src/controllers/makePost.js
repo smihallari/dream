@@ -4,10 +4,12 @@ const axios = require('axios');
 
 const createPost = async (req, res) => {
   try {
-    const { title, category,content, imageUrl } = req.body;
-    const author = req.user.id;
+    
+    const { title, category,content, imageUrl,commentsAllowed } = req.body;
+    const author = req.user.id || req.user._id;
+    
+    
     let imageBuffer = null;
-
     if (req.file) {
       imageBuffer = await sharp(req.file.buffer)
         .resize(300, 300)
@@ -32,20 +34,13 @@ const createPost = async (req, res) => {
       category,
       content,
       image: imageBuffer,
+      commentsAllowed
       
     });
-
+    
     await newPost.save();
 
-    res.status(201).json({
-      message: 'Post created successfully',
-      post: {
-        id: newPost._id,
-        author: newPost.author,
-        title: newPost.title,
-        content: newPost.content,
-      },
-    });
+    res.redirect('/dreamList');
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Failed to create post');

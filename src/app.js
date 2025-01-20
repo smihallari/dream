@@ -16,17 +16,21 @@ const JWT_SECRET = process.env.JWT_SECRET
 const COOKIE_SECRET = process.env.COOKIE_SECRET
 const cookieParser = require('cookie-parser');
 const methodOverride = require('method-override');
+// const multer = require('multer');
+// const upload = multer();
 
+// app.use(upload.none()); 
 const errorHandler = require('./middleware/errorHandler');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, '..', 'public')));
-app.use(cookieParser(COOKIE_SECRET));
+// app.use(cookieParser(COOKIE_SECRET));
 
+app.use(cookieParser());
 // Middleware
 app.use(express.json());
-app.use(errorHandler);
+// app.use(errorHandler);
 
 
 app.use(session({
@@ -88,18 +92,7 @@ app.use((req, res, next) => {
   res.locals.isLoggedIn = req.isLoggedIn || false;
   next();
 });
-const crypto = require('crypto');
 
-// app.use((req, res, next) => {
-//   const nonce = crypto.randomBytes(16).toString('base64'); 
-//   res.locals.nonce = nonce; 
-//   res.setHeader(
-//     'Content-Security-Policy',
-//     `script-src 'self' 'nonce-${nonce}' https://cdn.jsdelivr.net;`
-//   );
-
-//   next();
-// });
 
 
 app.use('/', indexRoute);

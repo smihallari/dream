@@ -33,6 +33,7 @@ router.get('/', async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(3)
       .select('title createdAt image _id')
+      .populate('author', 'username') 
       .lean();
 
     recentDreams.forEach(dream => {
@@ -41,9 +42,10 @@ router.get('/', async (req, res) => {
 
     // Fetch posts for the carousel
     const posts = await Post.find()
-      .populate('author', 'name')
+      
       .select('title author date content image')
       .limit(3)
+      .populate('author', 'username')
       .lean();
 
     // Aggregate posts by month and year for archives
@@ -68,6 +70,7 @@ router.get('/', async (req, res) => {
     }));
 
     // Render the index template with all the data
+    
     res.render('index', {
       recentDreams,
       posts,

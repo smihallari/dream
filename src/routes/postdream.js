@@ -19,5 +19,5 @@ router.get('/', async (req, res) => {
     res.render('signin',{  isLoggedIn: req.isLoggedIn, user: req.user,posts });
   }});
 
-router.post('/create', upload.single('image'), createPost);
+router.post('/create', upload.single('dreamimage'), createPost);
 module.exports = router;

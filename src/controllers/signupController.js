@@ -23,7 +23,10 @@ const signup = [
       const existingUserName = await User.findOne({ username });
       
       if (existingUserName) return res.status(400).json({ message: 'Username already in use' });
+      console.log("getiting");
       if (existingUserEmail) return res.status(400).json({ message: 'Email already in use' });
+      console.log("sdhskjdhsjdh");
+      
       // const salt = await bcrypt.genSalt(10);
       // const hashedPassword = await bcrypt.hash(password, salt);
       // for some reason, even without the salt,
@@ -38,11 +41,10 @@ const signup = [
       });
 
       await user.save();
-      // const payload = { user: { id: user.id } };
-      // const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
-
+     
       res.redirect('/signin');
     } catch (err) {
+      res.redirect('/signup');
       console.error('Error during signup:', err);
       res.status(500).send('Server error');
     }

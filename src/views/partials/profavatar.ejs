@@ -2,13 +2,18 @@
 <% if (isLoggedIn) { %>
   <div class="dropdown">
     <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-      <img
-        src="<%= user.profilePic ? user.profilePic : 'https://bootdey.com/img/Content/avatar/avatar7.png' %>"
-        alt="Profile Avatar"
-        width="32"
-        height="32"
-        class="rounded-circle me-2"
-      />
+      <% if (user && user.profilePic && user.profilePic.data) { %>
+        <img 
+          src="data:image/jpeg;base64,<%= Buffer.from(user.profilePic.data).toString('base64') %>" 
+          alt="Profile Avatar"
+          width="32"
+          height="32"
+          class="rounded-circle me-2"
+        />
+        <% } else { %>
+          
+        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="32" >
+      <% } %>
       <% if (user.username) { %>
         <p style="color:black"><%= user.username %></p>
       <% } %>

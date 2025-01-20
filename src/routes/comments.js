@@ -4,6 +4,7 @@ const Post = require('../models/post');
 const authentication = require('../middleware/authenticationWare');
 const Comment = require('../models/comment');
 const addComment = async (req, res) => {
+    console.log("reaching here");
     try {
         const post = await Post.findById(req.params.id);
         
@@ -12,7 +13,7 @@ const addComment = async (req, res) => {
         }
         const comment = new Comment({
             content: req.body.content,
-            author: req.user._id,
+            author: req.user.id,
             post: req.params.id
         });
         await comment.save();
@@ -25,6 +26,6 @@ const addComment = async (req, res) => {
     }
 };
 
-router.post('/:id/comment', authentication, addComment);
+router.post('/:id/comment', addComment);
 
 module.exports = router;
