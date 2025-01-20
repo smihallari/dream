@@ -2,6 +2,7 @@
 <% if (isLoggedIn) { %>
   <div class="dropdown">
     <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+      
       <% if (user && user.profilePic && user.profilePic.data) { %>
         <img 
           src="data:image/jpeg;base64,<%= Buffer.from(user.profilePic.data).toString('base64') %>" 

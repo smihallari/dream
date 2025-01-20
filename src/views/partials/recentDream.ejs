@@ -2,7 +2,7 @@
   <div class="d-flex">
 
     <div class="flex-shrink-0">
-      <a href="/posts/<%= dream._id %>">
+      <a href="/post/<%= dream._id %>">
         <% if (dream.image) { %>
           <img src="data:image/jpeg;base64,<%= dream.image.toString('base64') %>" 
                alt="<%= dream.title %>" 

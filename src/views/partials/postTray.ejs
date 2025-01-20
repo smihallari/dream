@@ -30,19 +30,29 @@
       <span><%=  post.likes.length %> Likes</span>
     </div>
     <div class="post-actions mt-3">
-      <button class="btn btn-outline-primary me-2" onclick="likePost('<%= post.id %>')">
-        <i class="fas fa-thumbs-up"></i> Like </span>
+      <% if(liked){ %>
+        <form action="/post/<%=post.id%>/like" method="POST">
+      <button class="btn btn-outline-primary me-2" type="submit" >
+        <i class="fas fa-thumbs-up"></i> Unlike </span>
       </button>
+      </form>
+      <% }else{%>
+        <form action="/post/<%=post.id%>/like" method="POST">
+        <button class="btn btn-outline-primary me-2"   type="submit">
+          <i class="far fa-thumbs-up"></i> Like </span>
+        </button>
+      </form>
+        <% }%>
       <button class="btn btn-outline-warning" onclick="favouritePost('<%= post.id %>')">
-        <i class="fas fa-heart"></i> Favourite 
+        <i class="far fa-heart"></i> Favourite 
       </button>
     </div>
 
 
     <div class="post-comments mt-4">
       <h5>Comments</h5>
-
-      <form action="/comments/<%= post.id %>/comment" method="POST" class="mb-3"></form>
+      
+      <form action="/comments/<%=post.id%>/comment" method="POST" class="mb-3">
         <div class="mb-2">
           <textarea name="content" id="content" class="form-control" rows="2" placeholder="Write a comment..."></textarea>
         </div>

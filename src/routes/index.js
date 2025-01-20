@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/post');
+const User = require('../models/user');
 const monthNames = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'
@@ -69,13 +70,14 @@ router.get('/', async (req, res) => {
       monthName: monthNames[archive._id.month - 1]
     }));
 
-    // Render the index template with all the data
-    
+    // Render the index templa te with all the data
+    console.log(req.user);
     res.render('index', {
       recentDreams,
       posts,
       archives: formattedArchives,
       isLoggedIn: req.isLoggedIn || false,
+      
       user: req.user || null,
     });
   } catch (error) {

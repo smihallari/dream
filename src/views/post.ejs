@@ -113,27 +113,7 @@
             likeButton.classList.add('far');
         }
       });
-      document.getElementById('commentForm').addEventListener('submit', async function(event) {
-        event.preventDefault();
-        const form = event.target;
-        const action = form.action;
-        const commentContent = document.getElementById('commentInput').value;
-        
-        const response = await fetch(action, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ content: commentContent })
-        });
-        if (response.ok) {
-            console.log("response ok");
-            const data = await response.json();
-            location.reload();
-        } else {
-            console.error('Failed to post comment');
-        }
-    });
+      
     
   </script>
   </body>

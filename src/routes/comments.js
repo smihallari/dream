@@ -4,7 +4,6 @@ const Post = require('../models/post');
 const authentication = require('../middleware/authenticationWare');
 const Comment = require('../models/comment');
 const addComment = async (req, res) => {
-    console.log("reaching here");
     try {
         const post = await Post.findById(req.params.id);
         
@@ -13,19 +12,20 @@ const addComment = async (req, res) => {
         }
         const comment = new Comment({
             content: req.body.content,
-            author: req.user.id,
+            author: req.user._id,
             post: req.params.id
         });
         await comment.save();
         post.comments.push(comment);
         await post.save();
-        res.json({ success: true, comment });
+        
+        res.redirect('/post/'+post.id);
     } catch (error) {
         console.error(error);
         res.status(500).send('Failed to add comment');
     }
 };
 
-router.post('/:id/comment', addComment);
+router.post('/:id/comment',authentication, addComment);
 
 module.exports = router;

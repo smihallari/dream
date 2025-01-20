@@ -20,8 +20,9 @@ const login = [
 
       console.log('User logged in:', user.email);
       
-      req.session.user = { id: user.id, email: user.email , username: user.username, role: user.role };
-      res.locals.user = req.session.user;
+      req.session.user = { id: user.id, email: user.email , username: user.username, role: user.role , profilePic: user.profilePic };
+      res.locals.user = user;
+
       // req.session.user = { id: user._id, role: user.role, name: user.name };
       // res.status(200).json({ message: 'Login successful', user: req.session.user });
 
