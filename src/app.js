@@ -109,7 +109,7 @@ app.use('/contest', contestRoutes);
 app.use('/search', searchRoutes);
 app.use('/post',seePostRoute);
 app.use('/comments',postCommentRoute);
-app.use('/favorite',favoritesRoute);
+app.use('/profile/favorites',favoritesRoute);
 app.use('/enter_contest', enterContestRoute);
 app.use((err, req, res, next) => {
   res.status(err.status || 500).render('error', {

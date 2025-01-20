@@ -20,7 +20,7 @@ const getFavoritesForUser = async (userId) => {
 };
 
 // GET /favorite
-router.get('/favorites/:username', async (req, res,next) => {
+router.get('/:username', async (req, res,next) => {
     try {
       const { username } = req.params;
       const profileUser = await User.findOne({ username: req.params.username });
